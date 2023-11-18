@@ -3,7 +3,9 @@ import FormHeader from './FormHeader';
 export default function Form() {
   return (
     <>
-      <FormHeader />
+      <div className='pt-5'>
+        <FormHeader />
+      </div>
     </>
   );
 }

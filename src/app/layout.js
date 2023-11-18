@@ -1,4 +1,5 @@
 import localFont from 'next/font/local';
+import '@/scss/main.scss';
 
 const greo = localFont({
   src: [
