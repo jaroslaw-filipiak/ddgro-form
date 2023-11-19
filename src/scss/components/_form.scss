@@ -1,0 +1,23 @@
+.step--wrapper {
+  min-height: calc(100vh - 128px - 20px);
+
+  /* 
+
+  pb-32 class in FormHeader = 128px
+  pt-5 class in Form.js = 20px;
+
+  */
+}
+
+.question-indicator {
+  @apply flex w-7 h-7 rounded-full items-center justify-center text-black text-base font-bold bg-[#D9D9D9] cursor-pointer transition-all hover:bg-main hover:text-white;
+}
+
+.step-2 {
+  .selected {
+    &::before {
+      content: url('/assets/checkbox-circle.svg');
+      @apply absolute -left-3 -top-4;
+    }
+  }
+}

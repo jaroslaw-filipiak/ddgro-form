@@ -1,8 +1,8 @@
 import Form from '@/components/form/Form';
 
-export default function Gallery() {
+export default function FrontPage() {
   return (
-    <main className='container'>
+    <main className='container min-h-screen'>
       <Form />
     </main>
   );
