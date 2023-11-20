@@ -111,7 +111,7 @@ export default function Step3() {
             {/* mobile btn */}
             <div className='w-full flex items-center justify-center mt-20 mb-16'>
               <button className='btn btn--main btn--rounded'>
-                Następny krok
+                Odbierz PDF
                 <img className='ml-5' src='/assets/arrow-next.svg' />
               </button>
             </div>
