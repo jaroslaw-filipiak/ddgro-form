@@ -15,6 +15,7 @@ export default function Form() {
       <div className='pt-5 d-flex flex-col items-between justify-between'>
         <FormAside />
         <FormHeader />
+        {/* <StepSwitcher activeStep={Step1} /> */}
         {/* <Step1 /> */}
         <Step7 />
       </div>
