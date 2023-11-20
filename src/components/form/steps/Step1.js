@@ -4,11 +4,11 @@ export default function Step1() {
       <section>
         <div className='step--wrapper bg-[#f7f5f5] relative'>
           {/* label absolute */}
-          <div class='absolue inline-flex left-0 top-0 bg-main pt-3 pb-3 pl-8 pr-8 text-white font-bold text-base'>
+          <div className='absolue inline-flex left-0 top-0 bg-main pt-3 pb-3 pl-8 pr-8 text-white font-bold text-base'>
             Wybór nawierzchni tarasu
           </div>
           {/* content + padding */}
-          <div class='step--inner pt-20 pb-20 pl-10 pr-10'>
+          <div className='step--inner pt-20 pb-20 pl-10 pr-10'>
             <div className='p3 text-4xl font-bold text-center'>
               Co będzie na tarasie ?
             </div>
@@ -36,7 +36,7 @@ export default function Step1() {
               </div>
             </div>
             {/* mobile btn */}
-            <div class='w-full flex items-center justify-center mt-20 mb-16'>
+            <div className='w-full flex items-center justify-center mt-20 mb-16'>
               <button className='btn btn--main btn--rounded'>
                 Następny krok
                 <img className='ml-5' src='/assets/arrow-next.svg' alt='' />

@@ -4,7 +4,7 @@ export default function Step3() {
       <section>
         <div className='step--wrapper step-2 bg-[#f7f5f5]  relative'>
           {/* label absolute */}
-          <div class='absolue inline-flex left-0 top-0 bg-main pt-3 pb-3 pl-8 pr-8 text-white font-bold text-base'>
+          <div className='absolue inline-flex left-0 top-0 bg-main pt-3 pb-3 pl-8 pr-8 text-white font-bold text-base'>
             Rodzaj podparcia
           </div>
           {/* content + padding */}
@@ -77,7 +77,7 @@ export default function Step3() {
             </div>
 
             {/* mobile btn */}
-            <div class='w-full flex items-center justify-center mt-20 mb-16'>
+            <div className='w-full flex items-center justify-center mt-20 mb-16'>
               <button className='btn btn--main btn--rounded'>
                 Następny krok
                 <img className='ml-5' src='/assets/arrow-next.svg' alt='' />
