@@ -2,7 +2,7 @@ export default function Step3() {
   return (
     <>
       <section>
-        <div className='step--wrapper step-2 bg-[#f7f5f5]  relative'>
+        <div className='step--wrapper step-3 bg-[#f7f5f5]  relative'>
           {/* label absolute */}
           <div className='absolue inline-flex left-0 top-0 bg-main pt-3 pb-3 pl-8 pr-8 text-white font-bold text-base'>
             Rodzaj podparcia
