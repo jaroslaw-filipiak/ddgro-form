@@ -13,23 +13,36 @@ import Step6 from './steps/Step6';
 import Step7 from './steps/Step7';
 
 export default function Form() {
-  const steps = [
-    <Step1 key={1} />,
-    <Step2 key={2} />,
-    <Step3 key={3} />,
-    <Step4 key={4} />,
-    <Step5 key={5} />,
-    <Step6 key={6} />,
-    <Step7 key={7} />,
-  ];
+  const [activeStep, setActiveStep] = useState(3);
+  const [isFormAsideOpen, setFormAsideVisibility] = useState(false);
 
-  const [activeStep, setActiveStep] = useState(1);
+  const steps = [
+    <Step1 activeStep={activeStep} setActiveStep={setActiveStep} key={1} />,
+    <Step2 activeStep={activeStep} setActiveStep={setActiveStep} key={2} />,
+    <Step3 activeStep={activeStep} setActiveStep={setActiveStep} key={3} />,
+    <Step4 activeStep={activeStep} setActiveStep={setActiveStep} key={4} />,
+    <Step5 activeStep={activeStep} setActiveStep={setActiveStep} key={5} />,
+    <Step6 activeStep={activeStep} setActiveStep={setActiveStep} key={6} />,
+    <Step7
+      activeStep={activeStep}
+      setActiveStep={setActiveStep}
+      setFormAsideVisibility={setFormAsideVisibility}
+      key={7}
+    />,
+  ];
 
   return (
     <>
       <div className='pt-5 d-flex flex-col items-between justify-between'>
-        {activeStep === 7 ? <FormAside /> : null}
-        <FormHeader />
+        {isFormAsideOpen ? (
+          <FormAside setFormAsideVisibility={setFormAsideVisibility} />
+        ) : null}
+        <FormHeader
+          activeStep={activeStep}
+          setActiveStep={setActiveStep}
+          isFormAsideOpen={isFormAsideOpen}
+          setFormAsideVisibility={setFormAsideVisibility}
+        />
         {steps[activeStep - 1]}
       </div>
     </>

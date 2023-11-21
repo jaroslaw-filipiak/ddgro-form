@@ -1,4 +1,4 @@
-export default function Step2() {
+export default function Step2({ activeStep, setActiveStep }) {
   return (
     <>
       <section>
@@ -55,7 +55,10 @@ export default function Step2() {
 
             {/* mobile btn */}
             <div className='w-full flex items-center justify-center mt-20 mb-16'>
-              <button className='btn btn--main btn--rounded'>
+              <button
+                onClick={() => setActiveStep(activeStep + 1)}
+                className='btn btn--main btn--rounded'
+              >
                 Następny krok
                 <img className='ml-5' src='/assets/arrow-next.svg' alt='' />
               </button>

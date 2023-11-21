@@ -1,10 +1,13 @@
-export default function FormAside() {
+export default function FormAside({ setFormAsideVisibility }) {
   return (
     <>
       <div className='relative'>
         <div className='fixed left-0 top-0 z-20 bg-main w-[670px] h-screen p-10 sm:p-16  md:pt-24 md:pl-16 lg:pr-16'>
-          <button className='absolute z-50 right-12 top-10'>
-            {/* <img src='/assets/close-btn.svg' /> */}
+          <button className='absolute z-50 right-12 top-10 hover:opacity-80 transition-all'>
+            <img
+              onClick={() => setFormAsideVisibility(false)}
+              src='/assets/close.png'
+            />
           </button>
           <p className='font-bold text-4xl text-white mb-12'>
             Odbierz PDF z <br />
