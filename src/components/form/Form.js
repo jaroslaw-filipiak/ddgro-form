@@ -13,21 +13,23 @@ import Step6 from './steps/Step6';
 import Step7 from './steps/Step7';
 
 export default function Form() {
-  const [activeStep, setActiveStep] = useState(1);
   const steps = [
-    <Step1 />,
-    <Step2 />,
-    <Step3 />,
-    <Step4 />,
-    <Step5 />,
-    <Step6 />,
-    <Step7 />,
+    <Step1 key={1} />,
+    <Step2 key={2} />,
+    <Step3 key={3} />,
+    <Step4 key={4} />,
+    <Step5 key={5} />,
+    <Step6 key={6} />,
+    <Step7 key={7} />,
   ];
+
+  const [activeStep, setActiveStep] = useState(1);
+
   return (
     <>
       <div className='pt-5 d-flex flex-col items-between justify-between'>
         {activeStep === 7 ? <FormAside /> : null}
-        <FormHeader activeStep={activeStep - 1} setActiveStep={setActiveStep} />
+        <FormHeader />
         {steps[activeStep - 1]}
       </div>
     </>

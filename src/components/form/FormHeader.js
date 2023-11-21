@@ -1,6 +1,6 @@
 import FormNav from './FormNav';
 
-export default function FormHeader({ activeStep, setActiveStep }) {
+export default function FormHeader() {
   return (
     <>
       <section className='pb-32 h-12'>
@@ -9,7 +9,7 @@ export default function FormHeader({ activeStep, setActiveStep }) {
             <img src='/assets/logo.svg' alt='logo' />
           </div>
           <div className='w-full'>
-            <FormNav activeStep={activeStep} setActiveStep={setActiveStep} />
+            <FormNav />
           </div>
         </div>
       </section>
