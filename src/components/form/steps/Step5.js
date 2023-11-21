@@ -33,7 +33,7 @@ export default function Step3() {
               <div class='series--accesories flex flex-col gap-6'>
                 {/* loop items */}
                 <div>
-                  <label for='option1'>
+                  <label htmlFor='option1'>
                     <input
                       type='checkbox'
                       id='option1'
@@ -60,7 +60,7 @@ export default function Step3() {
                 </div>
 
                 <div className='selected'>
-                  <label for='option2'>
+                  <label htmlFor='option2'>
                     <input
                       type='checkbox'
                       id='option2'

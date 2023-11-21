@@ -12,7 +12,7 @@ export default function Step3() {
             <div className='flex flex-wrap items-start justify-center'>
               {/* items */}
               <div className='w-6/12 border flex flex-col items-center justify-center p-5'>
-                <label for='type1'>
+                <label htmlFor='type1'>
                   <img
                     className='max-w-full'
                     src='/assets/type-1.png'
@@ -28,7 +28,7 @@ export default function Step3() {
               </div>
 
               <div className='w-6/12 border flex flex-col items-center justify-center p-5'>
-                <label for='type2'>
+                <label htmlFor='type2'>
                   <img
                     className='max-w-full'
                     src='/assets/type-2.png'
@@ -44,7 +44,7 @@ export default function Step3() {
               </div>
 
               <div className='w-6/12 border flex flex-col items-center justify-center p-5'>
-                <label for='type3'>
+                <label htmlFor='type3'>
                   <img
                     className='max-w-full'
                     src='/assets/type-3.png'
@@ -60,7 +60,7 @@ export default function Step3() {
               </div>
 
               <div className='w-6/12 border flex flex-col items-center justify-center p-5'>
-                <label for='type4'>
+                <label htmlFor='type4'>
                   <img
                     className='max-w-full'
                     src='/assets/type-4.png'
