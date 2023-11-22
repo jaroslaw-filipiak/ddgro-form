@@ -1,5 +1,9 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { changeType } from '@/store/slices/formSlice';
+import {
+  changeType,
+  changeTotalArea,
+  changeCount,
+} from '@/store/slices/formSlice';
 import InputRow from '../controls/InputRow';
 
 export default function Step2({ activeStep, setActiveStep }) {
@@ -56,8 +60,20 @@ export default function Step2({ activeStep, setActiveStep }) {
 
               <div className='w-8/12 pl-20 flex flex-col gap-5'>
                 {/* forType: 'wood, slab or all' */}
-                <InputRow forType='all' title='Łączna powierzchnia' />
-                <InputRow forType='all' title='Ilość tarasów/ balkonów' />
+                <InputRow
+                  onChange={(e) =>
+                    dispatch(changeTotalArea(Number(e.target.value)))
+                  }
+                  forType='all'
+                  title='Łączna powierzchnia'
+                />
+                <InputRow
+                  onChange={(e) =>
+                    dispatch(changeCount(Number(e.target.value)))
+                  }
+                  forType='all'
+                  title='Ilość tarasów/ balkonów'
+                />
                 <InputRow forType='slab' title='Szczelina pomiedzy płytami' />
                 <InputRow
                   forType='all'

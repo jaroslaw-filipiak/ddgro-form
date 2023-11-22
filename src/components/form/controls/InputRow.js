@@ -8,9 +8,11 @@ import {
   useDisclosure,
 } from '@nextui-org/react';
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { changeTotalArea } from '@/store/slices/formSlice';
 
-export default function InputRow({ forType, title }) {
+export default function InputRow({ forType, title, onChange, value }) {
+  const dispatch = useDispatch();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const type = useSelector((state) => state.form.type);
   return (
@@ -31,6 +33,8 @@ export default function InputRow({ forType, title }) {
             className='text-base pl-10 pr-10 pt-5 pb-5 text-center font-medium'
             placeholder='ilość m2'
             type='text'
+            value={value}
+            onChange={onChange}
           />
         </div>
       ) : null}
