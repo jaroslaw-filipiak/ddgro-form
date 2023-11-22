@@ -1,4 +1,9 @@
+import { useSelector, useDispatch } from 'react-redux';
+import { changeType } from '@/store/slices/formSlice';
+
 export default function Step1({ activeStep, setActiveStep }) {
+  const type = useSelector((state) => state.form.type);
+  const dispatch = useDispatch();
   return (
     <>
       <section>
@@ -14,7 +19,12 @@ export default function Step1({ activeStep, setActiveStep }) {
             </div>
             {/* items */}
             <div className='flex items-center justify-center gap-10 mt-16'>
-              <div className='flex flex-col items-center justify-center cursor-pointer hover:opacity-90 transition transition-all'>
+              <div
+                onClick={() => dispatch(changeType('slab'))}
+                className={`${
+                  type === 'slab' ? 'selected' : ''
+                } relative flex flex-col items-center justify-center cursor-pointer hover:opacity-90 transition-all`}
+              >
                 <img
                   className='max-w-full'
                   src='/assets/plyty-img.png'
@@ -24,7 +34,12 @@ export default function Step1({ activeStep, setActiveStep }) {
                   Płyty
                 </p>
               </div>
-              <div className='flex flex-col items-center justify-center cursor-pointer hover:opacity-90 transition transition-all'>
+              <div
+                onClick={() => dispatch(changeType('wood'))}
+                className={`${
+                  type === 'wood' ? 'selected' : ''
+                } relative flex flex-col items-center justify-center cursor-pointer hover:opacity-90 transition-all`}
+              >
                 <img
                   className='max-w-full'
                   src='/assets/deski-img.png'

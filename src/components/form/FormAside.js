@@ -1,10 +1,11 @@
 // Now we can use the React-Redux hooks to let React components interact with the Redux store. We can read data from the store with useSelector, and dispatch actions using useDispatch
 
 import { useSelector, useDispatch } from 'react-redux';
-import { changeEmail } from '@/store/slices/formSlice';
+import { changeEmail, changeNameSurname } from '@/store/slices/formSlice';
 
 export default function FormAside({ setFormAsideVisibility }) {
   const email = useSelector((state) => state.form.email);
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -18,7 +19,7 @@ export default function FormAside({ setFormAsideVisibility }) {
           </button>
           <p className='font-bold text-4xl text-white mb-12'>
             Odbierz PDF z <br />
-            indywidualną ofertą {email}
+            indywidualną ofertą
           </p>
 
           {/* imię nazwisko */}
@@ -30,6 +31,7 @@ export default function FormAside({ setFormAsideVisibility }) {
               Imię i nazwisko
             </label>
             <input
+              onChange={(e) => dispatch(changeNameSurname(e.target.value))}
               className='text-base pl-10 pr-10 pt-5 pb-5 text-center font-medium rounded-md'
               placeholder='Imię, nazwisko'
               name='name'
@@ -47,6 +49,7 @@ export default function FormAside({ setFormAsideVisibility }) {
               Adres email
             </label>
             <input
+              onChange={(e) => dispatch(changeEmail(e.target.value))}
               className='text-base pl-10 pr-10 pt-5 pb-5 text-center font-medium rounded-md'
               placeholder='Wpisz adres email'
               name='email'

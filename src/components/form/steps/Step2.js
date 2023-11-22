@@ -1,4 +1,10 @@
+import { useSelector, useDispatch } from 'react-redux';
+import { changeType } from '@/store/slices/formSlice';
+import InputRow from '../controls/InputRow';
+
 export default function Step2({ activeStep, setActiveStep }) {
+  const dispatch = useDispatch();
+  const type = useSelector((state) => state.form.type);
   return (
     <>
       <section>
@@ -11,8 +17,14 @@ export default function Step2({ activeStep, setActiveStep }) {
           <div className='step--inner pt-20 pb-20 pl-10 pr-10'>
             <div className='flex items-start justify-center '>
               <div className='w-4/12  flex flex-col items-center justify-start'>
+                {/* TODO: move to another component */}
                 <div className='flex flex-col items-center justify-center gap-10 '>
-                  <div className='relative selected flex items-center justify-center cursor-pointer gap-7 hover:opacity-90 transition-all'>
+                  <div
+                    onClick={() => dispatch(changeType('slab'))}
+                    className={`${
+                      type === 'slab' ? 'selected' : ''
+                    } relative flex items-center justify-center cursor-pointer gap-7 hover:opacity-90 transition-all`}
+                  >
                     <img
                       className='max-w-[177px]'
                       src='/assets/plyty-img.png'
@@ -22,7 +34,12 @@ export default function Step2({ activeStep, setActiveStep }) {
                       Płyty
                     </p>
                   </div>
-                  <div className='relative flex  items-center justify-center cursor-pointer gap-7 hover:opacity-90  transition-all'>
+                  <div
+                    onClick={() => dispatch(changeType('wood'))}
+                    className={`${
+                      type === 'wood' ? 'selected' : ''
+                    } relative flex items-center justify-center cursor-pointer gap-7 hover:opacity-90 transition-all`}
+                  >
                     <img
                       className='max-w-[177px]'
                       src='/assets/deski-img.png'
@@ -35,21 +52,11 @@ export default function Step2({ activeStep, setActiveStep }) {
                 </div>
               </div>
               {/* inputs */}
-              <div className='w-8/12 pl-20'>
-                <div className='input-row  flex items-center justify-between'>
-                  <div className='flex items-center justify-start gap-3'>
-                    <p className='text-opacity-50 text-xl font-medium text-black'>
-                      Łączna powierzchnia
-                    </p>
-                    <div className='question-indicator'>?</div>
-                  </div>
 
-                  <input
-                    className='text-base pl-10 pr-10 pt-5 pb-5 text-center font-medium'
-                    placeholder='ilość m2'
-                    type='text'
-                  />
-                </div>
+              <div className='w-8/12 pl-20 flex flex-col gap-5'>
+                <InputRow title='Łączna powierzchnia' />
+                <InputRow />
+                <InputRow />
               </div>
             </div>
 
