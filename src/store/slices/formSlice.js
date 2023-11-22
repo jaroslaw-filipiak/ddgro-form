@@ -25,6 +25,9 @@ export const formSlice = createSlice({
     changeNameSurname: (state, action) => {
       state.name_surname = action.payload;
     },
+    changeSupportType: (state, action) => {
+      state.support_type = action.payload;
+    },
   },
 });
 
@@ -36,6 +39,7 @@ export const {
   changeEmail,
   changeNameSurname,
   changeType,
+  changeSupportType,
 } = formSlice.actions;
 
 export default formSlice.reducer;
