@@ -55,9 +55,28 @@ export default function Step2({ activeStep, setActiveStep }) {
               {/* inputs */}
 
               <div className='w-8/12 pl-20 flex flex-col gap-5'>
-                <InputRow title='Łączna powierzchnia' />
-                <InputRow />
-                <InputRow />
+                {/* forType: 'wood, slab or all' */}
+                <InputRow forType='all' title='Łączna powierzchnia' />
+                <InputRow forType='all' title='Ilość tarasów/ balkonów' />
+                <InputRow forType='slab' title='Szczelina pomiedzy płytami' />
+                <InputRow
+                  forType='all'
+                  title='Najniższy punkt wysokości tarasu'
+                />
+                <InputRow
+                  forType='all'
+                  title='Najwyższy punkt wysokości tarasu'
+                />
+                <InputRow forType='wood' title='Grubość tarasu' />
+                <InputRow forType='wood' title='Odległość pomiędzy legarami' />
+                <InputRow
+                  forType='wood'
+                  title='Odległość pomiedzy wspornikami pod legarem'
+                />
+                <InputRow forType='wood' title='Wysokość legara' />
+                <InputRow forType='slab' title='Szerokość płyty' />
+                <InputRow forType='slab' title='Długość płyty' />
+                <InputRow forType='slab' title='Grubość płyty' />
               </div>
             </div>
 

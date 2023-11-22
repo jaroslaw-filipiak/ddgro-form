@@ -8,36 +8,39 @@ import {
   useDisclosure,
 } from '@nextui-org/react';
 
-export default function InputRow({ title }) {
+import { useSelector } from 'react-redux';
+
+export default function InputRow({ forType, title }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const type = useSelector((state) => state.form.type);
   return (
     <>
-      <div className='input-row  flex items-center justify-between'>
-        <div className='flex items-center justify-start gap-3'>
-          <p className='text-opacity-50 text-xl font-medium text-black'>
-            {title}
-          </p>
+      {forType === type || forType === 'all' ? (
+        <div className='input-row  flex items-center justify-between'>
+          <div className='flex items-center justify-start gap-3'>
+            <p className='text-opacity-50 text-xl font-medium text-black'>
+              {title}
+            </p>
 
-          <div onClick={onOpen} className='question-indicator'>
-            ?
+            <div onClick={onOpen} className='question-indicator'>
+              ?
+            </div>
           </div>
+
+          <input
+            className='text-base pl-10 pr-10 pt-5 pb-5 text-center font-medium'
+            placeholder='ilość m2'
+            type='text'
+          />
         </div>
+      ) : null}
 
-        <input
-          className='text-base pl-10 pr-10 pt-5 pb-5 text-center font-medium'
-          placeholder='ilość m2'
-          type='text'
-        />
-      </div>
       {/*  modal */}
-
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className='flex flex-col gap-1'>
-                Modal Title
-              </ModalHeader>
+              <ModalHeader className='flex flex-col gap-1'>{title}</ModalHeader>
               <ModalBody>
                 <p>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -49,21 +52,10 @@ export default function InputRow({ title }) {
                   Nullam pulvinar risus non risus hendrerit venenatis.
                   Pellentesque sit amet hendrerit risus, sed porttitor quam.
                 </p>
-                <p>
-                  Magna exercitation reprehenderit magna aute tempor cupidatat
-                  consequat elit dolor adipisicing. Mollit dolor eiusmod sunt ex
-                  incididunt cillum quis. Velit duis sit officia eiusmod Lorem
-                  aliqua enim laboris do dolor eiusmod. Et mollit incididunt
-                  nisi consectetur esse laborum eiusmod pariatur proident Lorem
-                  eiusmod et. Culpa deserunt nostrud ad veniam.
-                </p>
               </ModalBody>
               <ModalFooter>
-                <Button color='danger' variant='light' onPress={onClose}>
-                  Close
-                </Button>
-                <Button color='primary' onPress={onClose}>
-                  Action
+                <Button radius='lg' color='primary' onPress={onClose}>
+                  Zamknij
                 </Button>
               </ModalFooter>
             </>
