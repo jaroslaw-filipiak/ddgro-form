@@ -5,6 +5,7 @@ import InputRow from '../controls/InputRow';
 export default function Step2({ activeStep, setActiveStep }) {
   const dispatch = useDispatch();
   const type = useSelector((state) => state.form.type);
+
   return (
     <>
       <section>

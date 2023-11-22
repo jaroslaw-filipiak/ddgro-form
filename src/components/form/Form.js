@@ -6,6 +6,7 @@
 import { store } from '@/store/index';
 import { Provider } from 'react-redux';
 import { useState } from 'react';
+import { NextUIProvider } from '@nextui-org/system';
 import FormHeader from './FormHeader';
 import FormAside from './FormAside';
 
@@ -18,7 +19,7 @@ import Step6 from './steps/Step6';
 import Step7 from './steps/Step7';
 
 export default function Form() {
-  const [activeStep, setActiveStep] = useState(3);
+  const [activeStep, setActiveStep] = useState(1);
   const [isFormAsideOpen, setFormAsideVisibility] = useState(false);
 
   const steps = [
@@ -38,20 +39,22 @@ export default function Form() {
 
   return (
     <>
-      <Provider store={store}>
-        <div className='pt-5 d-flex flex-col items-between justify-between'>
-          {isFormAsideOpen ? (
-            <FormAside setFormAsideVisibility={setFormAsideVisibility} />
-          ) : null}
-          <FormHeader
-            activeStep={activeStep}
-            setActiveStep={setActiveStep}
-            isFormAsideOpen={isFormAsideOpen}
-            setFormAsideVisibility={setFormAsideVisibility}
-          />
-          {steps[activeStep - 1]}
-        </div>
-      </Provider>
+      <NextUIProvider>
+        <Provider store={store}>
+          <div className='pt-5 d-flex flex-col items-between justify-between'>
+            {isFormAsideOpen ? (
+              <FormAside setFormAsideVisibility={setFormAsideVisibility} />
+            ) : null}
+            <FormHeader
+              activeStep={activeStep}
+              setActiveStep={setActiveStep}
+              isFormAsideOpen={isFormAsideOpen}
+              setFormAsideVisibility={setFormAsideVisibility}
+            />
+            {steps[activeStep - 1]}
+          </div>
+        </Provider>
+      </NextUIProvider>
     </>
   );
 }
