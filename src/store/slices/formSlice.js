@@ -3,8 +3,9 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   type: null, // slab or wood
   total_area: 0,
-  count: 2,
-  medium_size: null,
+  count: 0,
+  medium_size: 0,
+  sqrt: 0,
   value: 0,
   support_type: null, // 1 , 2 , 3 , 4
   name_surname: '',
@@ -26,10 +27,12 @@ export const formSlice = createSlice({
     changeTotalArea: (state, action) => {
       state.total_area = action.payload;
       state.medium_size = Math.round(action.payload / state.count);
+      state.sqrt = Math.round(Math.sqrt(state.medium_size));
     },
     changeCount: (state, action) => {
       state.count = action.payload;
       state.medium_size = Math.round(state.total_area / action.payload);
+      state.sqrt = Math.round(Math.sqrt(state.medium_size));
     },
     changeNameSurname: (state, action) => {
       state.name_surname = action.payload;
