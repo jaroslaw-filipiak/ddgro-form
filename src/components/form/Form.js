@@ -1,5 +1,10 @@
 'use client';
 
+// use client means that this code will be executed on browser , so i can use Provieder for
+// redux
+
+import { store } from '@/store/index';
+import { Provider } from 'react-redux';
 import { useState } from 'react';
 import FormHeader from './FormHeader';
 import FormAside from './FormAside';
@@ -33,18 +38,20 @@ export default function Form() {
 
   return (
     <>
-      <div className='pt-5 d-flex flex-col items-between justify-between'>
-        {isFormAsideOpen ? (
-          <FormAside setFormAsideVisibility={setFormAsideVisibility} />
-        ) : null}
-        <FormHeader
-          activeStep={activeStep}
-          setActiveStep={setActiveStep}
-          isFormAsideOpen={isFormAsideOpen}
-          setFormAsideVisibility={setFormAsideVisibility}
-        />
-        {steps[activeStep - 1]}
-      </div>
+      <Provider store={store}>
+        <div className='pt-5 d-flex flex-col items-between justify-between'>
+          {isFormAsideOpen ? (
+            <FormAside setFormAsideVisibility={setFormAsideVisibility} />
+          ) : null}
+          <FormHeader
+            activeStep={activeStep}
+            setActiveStep={setActiveStep}
+            isFormAsideOpen={isFormAsideOpen}
+            setFormAsideVisibility={setFormAsideVisibility}
+          />
+          {steps[activeStep - 1]}
+        </div>
+      </Provider>
     </>
   );
 }
