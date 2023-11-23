@@ -74,6 +74,7 @@ export default function Step2({ activeStep, setActiveStep }) {
                   onChange={(e) =>
                     dispatch(changeTotalArea(Number(e.target.value)))
                   }
+                  value={useSelector((state) => state.form.total_area)}
                   forType='all'
                   title='Łączna powierzchnia'
                   placeholder='ilośc m2'
@@ -83,6 +84,7 @@ export default function Step2({ activeStep, setActiveStep }) {
                   onChange={(e) =>
                     dispatch(changeCount(Number(e.target.value)))
                   }
+                  value={useSelector((state) => state.form.count)}
                   forType='all'
                   title='Ilość tarasów/ balkonów'
                   placeholder='szt.'
@@ -92,6 +94,7 @@ export default function Step2({ activeStep, setActiveStep }) {
                   onChange={(e) =>
                     dispatch(changeGapBetweenSlabs(Number(e.target.value)))
                   }
+                  value={useSelector((state) => state.form.gap_between_slabs)}
                   forType='slab'
                   title='Szczelina pomiedzy płytami'
                   placeholder='mm'
@@ -102,6 +105,7 @@ export default function Step2({ activeStep, setActiveStep }) {
                   onChange={(e) =>
                     dispatch(chageLowest(Number(e.target.value)))
                   }
+                  value={useSelector((state) => state.form.lowest)}
                   forType='all'
                   title='Najniższy punkt wysokości tarasu'
                   placeholder='mm'
@@ -111,6 +115,7 @@ export default function Step2({ activeStep, setActiveStep }) {
                   onChange={(e) =>
                     dispatch(changeHighest(Number(e.target.value)))
                   }
+                  value={useSelector((state) => state.form.highest)}
                   forType='all'
                   title='Najwyższy punkt wysokości tarasu'
                   placeholder='mm'
@@ -120,6 +125,7 @@ export default function Step2({ activeStep, setActiveStep }) {
                   onChange={(e) =>
                     dispatch(changeTerraceThickness(Number(e.target.value)))
                   }
+                  value={useSelector((state) => state.form.terrace_thickness)}
                   forType='wood'
                   title='Grubość tarasu'
                   placeholder='mm'
@@ -131,6 +137,9 @@ export default function Step2({ activeStep, setActiveStep }) {
                       changeDistanceBetweenJoists(Number(e.target.value))
                     )
                   }
+                  value={useSelector(
+                    (state) => state.form.distance_between_joists
+                  )}
                   forType='wood'
                   title='Odległość pomiędzy legarami'
                   placeholder='mm'
@@ -144,6 +153,10 @@ export default function Step2({ activeStep, setActiveStep }) {
                       )
                     )
                   }
+                  value={useSelector(
+                    (state) =>
+                      state.form.istance_between_supports_under_the_joist
+                  )}
                   forType='wood'
                   title='Odległość pomiedzy wspornikami pod legarem'
                   placeholder='mm'
@@ -154,6 +167,7 @@ export default function Step2({ activeStep, setActiveStep }) {
                   onChange={(e) =>
                     dispatch(changeJoistHeight(Number(e.target.value)))
                   }
+                  value={useSelector((state) => state.form.joist_height)}
                   forType='wood'
                   title='Wysokość legara'
                   placeholder='mm'
@@ -164,6 +178,7 @@ export default function Step2({ activeStep, setActiveStep }) {
                   onChange={(e) =>
                     dispatch(changeSlabWidth(Number(e.target.value)))
                   }
+                  value={useSelector((state) => state.form.slab_width)}
                   forType='slab'
                   title='Szerokość płyty'
                   placeholder='mm'
@@ -173,6 +188,7 @@ export default function Step2({ activeStep, setActiveStep }) {
                   onChange={(e) =>
                     dispatch(changeSlabLength(Number(e.target.value)))
                   }
+                  value={useSelector((state) => state.form.slab_length)}
                   forType='slab'
                   title='Długość płyty'
                   placeholder='mm'
@@ -182,6 +198,7 @@ export default function Step2({ activeStep, setActiveStep }) {
                   onChange={(e) =>
                     dispatch(changeSlabThickness(Number(e.target.value)))
                   }
+                  value={useSelector((state) => state.form.slab_thickness)}
                   forType='slab'
                   title='Grubość płyty'
                   placeholder='mm'
