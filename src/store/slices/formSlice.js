@@ -6,6 +6,8 @@ const initialState = {
   count: 0,
   medium_size: 0,
   sqrt: 0,
+  tiles_per_row: null,
+  sum_of_tiles: null,
   value: 0,
   support_type: null, // 1 , 2 , 3 , 4
   name_surname: '',

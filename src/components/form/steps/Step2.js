@@ -66,6 +66,7 @@ export default function Step2({ activeStep, setActiveStep }) {
                   }
                   forType='all'
                   title='Łączna powierzchnia'
+                  placeholder='ilośc m2'
                 />
                 <InputRow
                   onChange={(e) =>
@@ -73,26 +74,58 @@ export default function Step2({ activeStep, setActiveStep }) {
                   }
                   forType='all'
                   title='Ilość tarasów/ balkonów'
+                  placeholder='szt.'
                 />
-                <InputRow forType='slab' title='Szczelina pomiedzy płytami' />
+                <InputRow
+                  forType='slab'
+                  title='Szczelina pomiedzy płytami'
+                  placeholder='mm'
+                />
                 <InputRow
                   forType='all'
                   title='Najniższy punkt wysokości tarasu'
+                  placeholder='mm'
                 />
                 <InputRow
                   forType='all'
                   title='Najwyższy punkt wysokości tarasu'
+                  placeholder='mm'
                 />
-                <InputRow forType='wood' title='Grubość tarasu' />
-                <InputRow forType='wood' title='Odległość pomiędzy legarami' />
+                <InputRow
+                  forType='wood'
+                  title='Grubość tarasu'
+                  placeholder='mm'
+                />
+                <InputRow
+                  forType='wood'
+                  title='Odległość pomiędzy legarami'
+                  placeholder='mm'
+                />
                 <InputRow
                   forType='wood'
                   title='Odległość pomiedzy wspornikami pod legarem'
+                  placeholder='mm'
                 />
-                <InputRow forType='wood' title='Wysokość legara' />
-                <InputRow forType='slab' title='Szerokość płyty' />
-                <InputRow forType='slab' title='Długość płyty' />
-                <InputRow forType='slab' title='Grubość płyty' />
+                <InputRow
+                  forType='wood'
+                  title='Wysokość legara'
+                  placeholder='mm'
+                />
+                <InputRow
+                  forType='slab'
+                  title='Szerokość płyty'
+                  placeholder='mm'
+                />
+                <InputRow
+                  forType='slab'
+                  title='Długość płyty'
+                  placeholder='mm'
+                />
+                <InputRow
+                  forType='slab'
+                  title='Grubość płyty'
+                  placeholder='mm'
+                />
               </div>
             </div>
 

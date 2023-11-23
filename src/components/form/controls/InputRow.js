@@ -11,7 +11,13 @@ import {
 import { useSelector, useDispatch } from 'react-redux';
 import { changeTotalArea } from '@/store/slices/formSlice';
 
-export default function InputRow({ forType, title, onChange, value }) {
+export default function InputRow({
+  forType,
+  title,
+  onChange,
+  value,
+  placeholder,
+}) {
   const dispatch = useDispatch();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const type = useSelector((state) => state.form.type);
@@ -31,7 +37,7 @@ export default function InputRow({ forType, title, onChange, value }) {
 
           <input
             className='text-base pl-10 pr-10 pt-5 pb-5 text-center font-medium'
-            placeholder='ilość m2'
+            placeholder={placeholder}
             type='text'
             value={value}
             onChange={onChange}
