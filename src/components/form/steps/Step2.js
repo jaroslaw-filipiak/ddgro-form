@@ -3,6 +3,16 @@ import {
   changeType,
   changeTotalArea,
   changeCount,
+  chageLowest,
+  changeHighest,
+  changeGapBetweenSlabs,
+  changeTerraceThickness,
+  changeDistanceBetweenJoists,
+  changeDistanceBetweenSupportsUnderTheJoist,
+  changeJoistHeight,
+  changeSlabWidth,
+  changeSlabLength,
+  changeSlabThickness,
 } from '@/store/slices/formSlice';
 import InputRow from '../controls/InputRow';
 
@@ -68,6 +78,7 @@ export default function Step2({ activeStep, setActiveStep }) {
                   title='Łączna powierzchnia'
                   placeholder='ilośc m2'
                 />
+                {/* count */}
                 <InputRow
                   onChange={(e) =>
                     dispatch(changeCount(Number(e.target.value)))
@@ -76,52 +87,101 @@ export default function Step2({ activeStep, setActiveStep }) {
                   title='Ilość tarasów/ balkonów'
                   placeholder='szt.'
                 />
+                {/* gap between slabs */}
                 <InputRow
+                  onChange={(e) =>
+                    dispatch(changeGapBetweenSlabs(Number(e.target.value)))
+                  }
                   forType='slab'
                   title='Szczelina pomiedzy płytami'
                   placeholder='mm'
                 />
+
+                {/* lowest */}
                 <InputRow
+                  onChange={(e) =>
+                    dispatch(chageLowest(Number(e.target.value)))
+                  }
                   forType='all'
                   title='Najniższy punkt wysokości tarasu'
                   placeholder='mm'
                 />
+                {/* highest */}
                 <InputRow
+                  onChange={(e) =>
+                    dispatch(changeHighest(Number(e.target.value)))
+                  }
                   forType='all'
                   title='Najwyższy punkt wysokości tarasu'
                   placeholder='mm'
                 />
+                {/* changeTerraceThickness */}
                 <InputRow
+                  onChange={(e) =>
+                    dispatch(changeTerraceThickness(Number(e.target.value)))
+                  }
                   forType='wood'
                   title='Grubość tarasu'
                   placeholder='mm'
                 />
+                {/* changeDistanceBetweenJoists */}
                 <InputRow
+                  onChange={(e) =>
+                    dispatch(
+                      changeDistanceBetweenJoists(Number(e.target.value))
+                    )
+                  }
                   forType='wood'
                   title='Odległość pomiędzy legarami'
                   placeholder='mm'
                 />
+                {/* changeDistanceBetweenSupportsUnderTheJoist */}
                 <InputRow
+                  onChange={(e) =>
+                    dispatch(
+                      changeDistanceBetweenSupportsUnderTheJoist(
+                        Number(e.target.value)
+                      )
+                    )
+                  }
                   forType='wood'
                   title='Odległość pomiedzy wspornikami pod legarem'
                   placeholder='mm'
                 />
+
+                {/* changeJoistHeight */}
                 <InputRow
+                  onChange={(e) =>
+                    dispatch(changeJoistHeight(Number(e.target.value)))
+                  }
                   forType='wood'
                   title='Wysokość legara'
                   placeholder='mm'
                 />
+
+                {/* changeSlabWidth */}
                 <InputRow
+                  onChange={(e) =>
+                    dispatch(changeSlabWidth(Number(e.target.value)))
+                  }
                   forType='slab'
                   title='Szerokość płyty'
                   placeholder='mm'
                 />
+                {/* changeSlabLength */}
                 <InputRow
+                  onChange={(e) =>
+                    dispatch(changeSlabLength(Number(e.target.value)))
+                  }
                   forType='slab'
                   title='Długość płyty'
                   placeholder='mm'
                 />
+                {/* changeSlabThickness */}
                 <InputRow
+                  onChange={(e) =>
+                    dispatch(changeSlabThickness(Number(e.target.value)))
+                  }
                   forType='slab'
                   title='Grubość płyty'
                   placeholder='mm'
