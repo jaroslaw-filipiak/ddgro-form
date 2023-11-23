@@ -155,7 +155,7 @@ export default function Step2({ activeStep, setActiveStep }) {
                   }
                   value={useSelector(
                     (state) =>
-                      state.form.istance_between_supports_under_the_joist
+                      state.form.distance_between_supports_under_the_joist
                   )}
                   forType='wood'
                   title='Odległość pomiedzy wspornikami pod legarem'
