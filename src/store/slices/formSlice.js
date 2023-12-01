@@ -20,6 +20,8 @@ const initialState = {
   sum_of_tiles: null,
   value: null,
   support_type: null, // 1 , 2 , 3 , 4
+  main_system: null, // spiral, standard, max, alu, raptor
+  additional_accessories: [],
   name_surname: '',
   email: '',
   proffestion: '',
@@ -32,6 +34,8 @@ export const formSlice = createSlice({
   reducers: {
     changeType: (state, action) => {
       state.type = action.payload;
+      // reset main system when type is changed
+      state.main_system = null;
     },
     changeEmail: (state, action) => {
       state.email = action.payload;
@@ -82,6 +86,12 @@ export const formSlice = createSlice({
     changeSupportType: (state, action) => {
       state.support_type = action.payload;
     },
+    changeMainSystem: (state, action) => {
+      state.main_system = action.payload;
+    },
+    setAdditionalAccessories: (state, action) => {
+      state.additional_accessories = action.payload;
+    },
   },
 });
 
@@ -106,6 +116,8 @@ export const {
   changeSlabWidth,
   changeSlabLength,
   changeSlabThickness,
+  changeMainSystem,
+  setAdditionalAccessories,
 } = formSlice.actions;
 
 export default formSlice.reducer;

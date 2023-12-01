@@ -1,4 +1,12 @@
+import { useState } from 'react';
+
 export default function Step6({ activeStep, setActiveStep }) {
+  const [selected, setSelected] = useState(null);
+
+  const handleChange = (event) => {
+    console.log(event.target.value);
+  };
+
   return (
     <>
       <section>
