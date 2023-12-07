@@ -5,7 +5,8 @@
 
 import { store } from '@/store/index';
 import { Provider } from 'react-redux';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+
 import { NextUIProvider } from '@nextui-org/system';
 import FormHeader from './FormHeader';
 import FormAside from './FormAside';
@@ -18,7 +19,7 @@ import Step5 from './steps/Step5';
 import Step6 from './steps/Step6';
 import Step7 from './steps/Step7';
 
-export default function Form(accesories) {
+export default function Form() {
   const [activeStep, setActiveStep] = useState(1);
   const [isFormAsideOpen, setFormAsideVisibility] = useState(false);
 
@@ -27,12 +28,7 @@ export default function Form(accesories) {
     <Step2 activeStep={activeStep} setActiveStep={setActiveStep} key={2} />,
     <Step3 activeStep={activeStep} setActiveStep={setActiveStep} key={3} />,
     <Step4 activeStep={activeStep} setActiveStep={setActiveStep} key={4} />,
-    <Step5
-      accesories={accesories}
-      activeStep={activeStep}
-      setActiveStep={setActiveStep}
-      key={5}
-    />,
+    <Step5 activeStep={activeStep} setActiveStep={setActiveStep} key={5} />,
     <Step6 activeStep={activeStep} setActiveStep={setActiveStep} key={6} />,
     <Step7
       activeStep={activeStep}

@@ -1,15 +1,16 @@
-export default function Step7({
-  activeStep,
-  setActiveStep,
-  setFormAsideVisibility,
-}) {
+import { useSelector, useDispatch } from 'react-redux';
+
+export default function Step7({ setFormAsideVisibility }) {
+  const state = useSelector((state) => state.form);
+
   return (
     <>
       <section>
         <div className='step--wrapper step-7 bg-[#f7f5f5]  relative'>
           {/* label absolute */}
-          <div className='absolue inline-flex left-0 top-0  text-white font-bold text-base flex flex-col gap-1 items-start justify-center'>
+          <div className='absolue inline-flex left-0 top-0  text-white font-bold text-bas flex-col gap-1 items-start justify-center'>
             <p className='bg-main pt-3 pb-3 pl-8 pr-8'>Podsumowanie</p>
+            {state.type}
           </div>
           {/* content + padding */}
           <div className='step--inner pt-20 pb-20 pl-10 pr-10 lg:w-10/12 mx-auto'>

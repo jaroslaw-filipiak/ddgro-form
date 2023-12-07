@@ -1,43 +1,43 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setAdditionalAccessories } from '@/store/slices/formSlice';
+import {
+  setAccesories,
+  setAdditionalAccessories,
+} from '@/store/slices/formSlice';
 
-export default function Step5({ activeStep, setActiveStep, props }) {
+export default function Step5({ activeStep, setActiveStep }) {
   const dispatch = useDispatch();
   const main_system = useSelector((state) => state.form.main_system);
   const type = useSelector((state) => state.form.type);
-  const checkedItemsFromStore = useSelector(
-    (state) => state.form.dditional_accessories
+  const accesories = useSelector((state) => state.form.accesories);
+  const filteredItems = useSelector(
+    (state) => state.form.additional_accessories
   );
+
   const [checkedItems, setCheckedItems] = useState([]);
-  const [accesories, setAccesories] = useState([]);
-  const [loading, isLoading] = useState(true);
+  const [data, setData] = useState([]);
+  const [loading, isLoading] = useState(false);
 
   useEffect(() => {
-    fetch('https://ddgro-api.test/api/accesories')
-      .then((response) => response.json())
-      .then((data) => {
-        setAccesories(data?.data || []);
-        isLoading(false);
-      });
+    setCheckedItems(filteredItems);
+    console.log('use effect');
   }, []);
 
   const onChangeValue = (event) => {
-    const item = document.querySelector(`.item-${event.target.id}`);
-
+    // const item = document.querySelector(`.item-${event.target.id}`);
+    console.log('onchangevalue');
     if (event.target.checked) {
-      accesories;
       const newCheckedItems = [...checkedItems, event.target.id];
       setCheckedItems([...checkedItems, event.target.id]);
       dispatch(setAdditionalAccessories(newCheckedItems));
-      item.classList.add('selected__top-left');
+      // item.classList.add('selected__top-left');
     } else {
       const newCheckedItems = checkedItems.filter(
         (item) => item !== event.target.id
       );
       setCheckedItems(newCheckedItems);
       dispatch(setAdditionalAccessories(newCheckedItems));
-      item.classList.remove('selected__top-left');
+      // item.classList.remove('selected__top-left');
     }
   };
 
@@ -53,11 +53,12 @@ export default function Step5({ activeStep, setActiveStep, props }) {
           </div>
           {/* content + padding */}
           <div className='step--inner pt-20 pb-20 pl-10 pr-10 lg:w-10/12 mx-auto'>
-            {/* one serie db info */}z-20
+            {/* one serie db info */}
             <div className='series--info'>
               <header className='flex items-center justify-start gap-10'>
                 <div>
                   <p>Wybrany główny system: </p>
+
                   <p className='text-4xl font-bold text-black text-opacity-70'>
                     Seria&nbsp;
                     {main_system &&
@@ -84,9 +85,15 @@ export default function Step5({ activeStep, setActiveStep, props }) {
                     return (
                       <div
                         key={item.id}
-                        className={`relative hover:opacity-80 input-accesories--wrapper item-${item.id} `}
+                        className={`relative hover:opacity-80 input-accesories--wrapper ${
+                          checkedItems.filter((checked) =>
+                            checked.includes(item.id)
+                          ).length > 0
+                            ? 'selected__top-left'
+                            : ''
+                        }`}
                       >
-                        <label className='cursor-pointer  ' htmlFor={item.id}>
+                        <label className='cursor-pointer' htmlFor={item.id}>
                           <input
                             type='checkbox'
                             id={item.id}
@@ -100,7 +107,7 @@ export default function Step5({ activeStep, setActiveStep, props }) {
                               <img src='/assets/placeholder-96-68.png' />
                               <div>
                                 <p className='text-2xl font-bold text-black text-opacity-70 '>
-                                  {item.name} {item.id}
+                                  {item.name}
                                 </p>
                                 <p className=' text-lg text-black text-opacity-50 font-normal'>
                                   {/* Dzięki prawidłowo zaprojektowanej konstrukcji

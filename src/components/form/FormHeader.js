@@ -1,4 +1,7 @@
 import FormNav from './FormNav';
+import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { setAccesories } from '@/store/slices/formSlice';
 
 export default function FormHeader({
   activeStep,
@@ -6,6 +9,16 @@ export default function FormHeader({
   isFormAsideOpen,
   setFormAsideVisibility,
 }) {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    fetch('https://ddgro-api.test/api/accesories')
+      .then((response) => response.json())
+      .then((data) => {
+        dispatch(setAccesories(data?.data || []));
+      });
+  }, []);
+
   return (
     <>
       <section className='pb-32 h-12'>

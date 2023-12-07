@@ -26,6 +26,7 @@ const initialState = {
   email: '',
   proffestion: '',
   terms_accepted: false,
+  accesories: [],
 };
 
 export const formSlice = createSlice({
@@ -92,6 +93,9 @@ export const formSlice = createSlice({
     setAdditionalAccessories: (state, action) => {
       state.additional_accessories = action.payload;
     },
+    setAccesories: (state, action) => {
+      state.accesories = action.payload;
+    },
   },
 });
 
@@ -118,6 +122,7 @@ export const {
   changeSlabThickness,
   changeMainSystem,
   setAdditionalAccessories,
+  setAccesories,
 } = formSlice.actions;
 
 export default formSlice.reducer;
