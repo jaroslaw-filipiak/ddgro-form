@@ -27,6 +27,7 @@ const initialState = {
   proffestion: '',
   terms_accepted: false,
   accesories: [],
+  products: [],
 };
 
 export const formSlice = createSlice({
@@ -96,6 +97,9 @@ export const formSlice = createSlice({
     setAccesories: (state, action) => {
       state.accesories = action.payload;
     },
+    setProducts: (state, action) => {
+      state.products = action.payload;
+    },
   },
 });
 
@@ -123,6 +127,7 @@ export const {
   changeMainSystem,
   setAdditionalAccessories,
   setAccesories,
+  setProducts,
 } = formSlice.actions;
 
 export default formSlice.reducer;

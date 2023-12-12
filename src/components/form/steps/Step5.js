@@ -5,6 +5,16 @@ import {
   setAdditionalAccessories,
 } from '@/store/slices/formSlice';
 
+import {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Button,
+  useDisclosure,
+} from '@nextui-org/react';
+
 export default function Step5({ activeStep, setActiveStep }) {
   const dispatch = useDispatch();
   const main_system = useSelector((state) => state.form.main_system);
@@ -17,6 +27,7 @@ export default function Step5({ activeStep, setActiveStep }) {
   const [checkedItems, setCheckedItems] = useState([]);
   const [data, setData] = useState([]);
   const [loading, isLoading] = useState(false);
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   useEffect(() => {
     setCheckedItems(filteredItems);
@@ -44,6 +55,50 @@ export default function Step5({ activeStep, setActiveStep }) {
   return (
     <>
       <section>
+        {/*  modal */}
+        <Modal
+          size='3xl'
+          isDismissable={false}
+          isOpen={isOpen}
+          onOpenChange={onOpenChange}
+        >
+          <ModalContent>
+            {(onClose) => (
+              <>
+                <ModalHeader className='flex flex-col gap-1'>
+                  Kolejny krok
+                </ModalHeader>
+                <ModalBody>
+                  <p>
+                    W kolejnym kroku masz możliwość ręcznego dodania produktów z
+                    całego asortymentu ddgro. Jest to krok dodatkowy
+                    umożliwiający dodanie dodatkowej ilość produktów do
+                    zamówienia. Jeżeli nie chcesz dodawać dodatkowych produktów,
+                    kliknij przycisk "Przechodze do podsumowania" w prawym
+                    dolnym rogu.
+                  </p>
+                </ModalBody>
+                <ModalFooter>
+                  <Button
+                    radius='lg'
+                    color='primary'
+                    onPress={() => setActiveStep(activeStep + 1)}
+                  >
+                    Tak, chce dodać dodatkowe produkty samodzielnie
+                  </Button>
+                  <Button
+                    radius='lg'
+                    color='primary'
+                    onPress={() => setActiveStep(activeStep + 2)}
+                  >
+                    Nie ,przechodze do podsumowania
+                  </Button>
+                </ModalFooter>
+              </>
+            )}
+          </ModalContent>
+        </Modal>
+
         <div className='step--wrapper step-5 bg-[#f7f5f5] '>
           {/* label absolute */}
           <div className='absolue inline-flex left-0 top-0  text-white font-bold text-base  flex-col gap-1 items-start justify-center'>
@@ -128,10 +183,7 @@ export default function Step5({ activeStep, setActiveStep }) {
             </div>
             {/* mobile btn */}
             <div className='w-full flex items-center justify-center mt-20 mb-16'>
-              <button
-                onClick={() => setActiveStep(activeStep + 1)}
-                className='btn btn--main btn--rounded'
-              >
+              <button onClick={onOpen} className='btn btn--main btn--rounded'>
                 Następny krok
                 <img className='ml-5' src='/assets/arrow-next.svg' alt='' />
               </button>
