@@ -28,6 +28,7 @@ const initialState = {
   terms_accepted: false,
   accesories: [],
   products: [],
+  productsWithExtraValues: [],
 };
 
 export const formSlice = createSlice({
@@ -99,6 +100,16 @@ export const formSlice = createSlice({
     },
     setProducts: (state, action) => {
       state.products = action.payload;
+      state.productsWithExtraValues = action.payload;
+    },
+    addExtraCountToProduct: (state, action) => {
+      const product = state.productsWithExtraValues.find(
+        (item) => item.id === action.payload.id
+      );
+
+      product.extra = action.payload.count;
+      // console.log(product);
+      console.log(action.payload);
     },
   },
 });
@@ -128,6 +139,7 @@ export const {
   setAdditionalAccessories,
   setAccesories,
   setProducts,
+  addExtraCountToProduct,
 } = formSlice.actions;
 
 export default formSlice.reducer;

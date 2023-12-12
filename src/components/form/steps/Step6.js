@@ -125,7 +125,7 @@ export default function Step6({ activeStep, setActiveStep }) {
       case 'actions':
         return (
           <div className='relative flex justify-end items-center gap-2'>
-            <ItemCounter key={product.id} item={product.id} />
+            <ItemCounter key={product.id} item={product} />
           </div>
         );
       default:

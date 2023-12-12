@@ -20,7 +20,7 @@ import Step6 from './steps/Step6';
 import Step7 from './steps/Step7';
 
 export default function Form() {
-  const [activeStep, setActiveStep] = useState(6);
+  const [activeStep, setActiveStep] = useState(1);
   const [isFormAsideOpen, setFormAsideVisibility] = useState(false);
 
   const steps = [

@@ -31,7 +31,6 @@ export default function Step5({ activeStep, setActiveStep }) {
 
   useEffect(() => {
     setCheckedItems(filteredItems);
-    console.log('use effect');
   }, [filteredItems]);
 
   const onChangeValue = (event) => {
