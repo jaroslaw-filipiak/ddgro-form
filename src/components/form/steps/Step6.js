@@ -17,7 +17,6 @@ import {
 
 import { SearchIcon } from './SearchIcon';
 import { ChevronDownIcon } from './ChevronDownIcon';
-// import { columns, products, statusOptions } from './data';
 import { capitalize } from './utils';
 import { ItemCounter } from './ItemCounter';
 
@@ -32,7 +31,6 @@ export default function Step6({ activeStep, setActiveStep }) {
     fetch('https://ddgro-api.test/api/products')
       .then((response) => response.json())
       .then((data) => {
-        // dispatch(setAccesories(data?.data || []));
         setProducts(data?.data || []);
       });
   }, []);
@@ -41,7 +39,7 @@ export default function Step6({ activeStep, setActiveStep }) {
     { name: 'id', uid: 'id', sortable: true },
     { name: 'Nazwa', uid: 'name', sortable: true },
     { name: 'Seria', uid: 'series', sortable: true },
-    // { name: 'Akcje', uid: 'actions', sortable: false },
+    { name: 'Akcje', uid: 'actions', sortable: false },
   ];
 
   const statusOptions = [
@@ -54,12 +52,6 @@ export default function Step6({ activeStep, setActiveStep }) {
 
   const [selected, setSelected] = useState(null);
   const INITIAL_VISIBLE_COLUMNS = ['id', 'name', 'series', 'actions'];
-
-  const statusColorMap = {
-    active: 'success',
-    paused: 'danger',
-    vacation: 'warning',
-  };
 
   const [filterValue, setFilterValue] = useState('');
   const [selectedKeys, setSelectedKeys] = useState(new Set([]));
@@ -139,7 +131,7 @@ export default function Step6({ activeStep, setActiveStep }) {
       case 'actions':
         return (
           <div className='relative flex justify-end items-center gap-2'>
-            <ItemCounter item={product} />
+            <ItemCounter key='product.id' item={product.id} />
           </div>
         );
       default:
@@ -274,14 +266,13 @@ export default function Step6({ activeStep, setActiveStep }) {
       <section>
         <div className='step--wrapper step-6 bg-[#f7f5f5]  relative'>
           {/* label absolute */}
-          <div className='absolue inline-flex left-0 top-0  text-white font-bold text-base flex flex-col gap-1 items-start justify-center'>
+          <div className='absolute left-0 top-0  text-white font-bold text-base flex flex-col gap-1 items-start justify-center'>
             <div className='bg-main pt-3 pb-3 pl-8 pr-8'>
               Dodaj ręcznie dodatkowe ilości produktów
             </div>
             <div className=' bg-red-500 pt-3 pb-3 pl-8 pr-8 flex items-center gap-3 w-full'>
               <div>
                 <svg
-                  xmlns='http://www.w3.org/2000/svg'
                   className='icon icon-tabler icon-tabler-alert-circle-filled'
                   width='24'
                   height='24'
@@ -307,7 +298,7 @@ export default function Step6({ activeStep, setActiveStep }) {
             </div>
           </div>
           {/* content + padding */}
-          <div className='step--inner pt-20 pb-20 pl-10 pr-10 lg:w-10/12 mx-auto'>
+          <div className='step--inner pt-40 pb-20 pl-10 pr-10 lg:w-10/12 mx-auto'>
             {/* one serie db info */}
             <div className='series--info'>
               <header className='flex items-center justify-start gap-10'>
@@ -331,7 +322,7 @@ export default function Step6({ activeStep, setActiveStep }) {
                   // classNames={{
                   //   wrapper: 'max-h-[382px]',
                   // }}
-                  selectedKeys={selectedKeys}
+                  // selectedKeys={selectedKeys}
                   selectionMode='multiple'
                   sortDescriptor={sortDescriptor}
                   topContent={topContent}
