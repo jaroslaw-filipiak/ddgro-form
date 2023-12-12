@@ -74,8 +74,8 @@ export default function Step5({ activeStep, setActiveStep }) {
                     całego asortymentu ddgro. Jest to krok dodatkowy
                     umożliwiający dodanie dodatkowej ilość produktów do
                     zamówienia. Jeżeli nie chcesz dodawać dodatkowych produktów,
-                    kliknij przycisk "Przechodze do podsumowania" w prawym
-                    dolnym rogu.
+                    kliknij przycisk Przechodze do podsumowania w prawym dolnym
+                    rogu.
                   </p>
                 </ModalBody>
                 <ModalFooter>
