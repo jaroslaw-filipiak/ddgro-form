@@ -19,21 +19,15 @@ import { SearchIcon } from './SearchIcon';
 import { ChevronDownIcon } from './ChevronDownIcon';
 import { capitalize } from './utils';
 import { ItemCounter } from './ItemCounter';
+import { useSelector, useDispatch } from 'react-redux';
 
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
 export default function Step6({ activeStep, setActiveStep }) {
-  const [products, setProducts] = useState([]);
-
-  useEffect(() => {
-    fetch('https://ddgro-api.test/api/products')
-      .then((response) => response.json())
-      .then((data) => {
-        setProducts(data?.data || []);
-      });
-  }, []);
+  const dispatch = useDispatch();
+  const products = useSelector((state) => state.form.products);
 
   const columns = [
     { name: 'id', uid: 'id', sortable: true },
@@ -131,7 +125,7 @@ export default function Step6({ activeStep, setActiveStep }) {
       case 'actions':
         return (
           <div className='relative flex justify-end items-center gap-2'>
-            <ItemCounter key='product.id' item={product.id} />
+            <ItemCounter key={product.id} item={product.id} />
           </div>
         );
       default:
@@ -306,6 +300,9 @@ export default function Step6({ activeStep, setActiveStep }) {
                   <p className='text-4xl font-bold text-black text-opacity-70'>
                     Przeglądaj cały asortyment DDGRO
                   </p>
+                  <pre>
+                    <code>{selectedKeys}</code>
+                  </pre>
                 </div>
               </header>
               <p className='text-2xl font-bold text-black text-opacity-70 pt-4 pb-9'>

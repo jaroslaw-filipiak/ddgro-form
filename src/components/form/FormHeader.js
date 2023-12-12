@@ -1,7 +1,7 @@
 import FormNav from './FormNav';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
-import { setAccesories } from '@/store/slices/formSlice';
+import { setAccesories, setProducts } from '@/store/slices/formSlice';
 
 export default function FormHeader({
   activeStep,
@@ -16,6 +16,14 @@ export default function FormHeader({
       .then((response) => response.json())
       .then((data) => {
         dispatch(setAccesories(data?.data || []));
+      });
+  }, []);
+
+  useEffect(() => {
+    fetch('https://ddgro-api.test/api/products')
+      .then((response) => response.json())
+      .then((data) => {
+        dispatch(setProducts(data?.data || []));
       });
   }, []);
 
