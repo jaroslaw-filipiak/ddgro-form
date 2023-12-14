@@ -12,7 +12,7 @@ const initialState = {
   distance_between_supports_under_the_joist: null,
   joist_height: null,
   slab_width: null,
-  slab_length: null,
+  slab_height: null,
   slab_thickness: null,
   medium_size: null,
   sqrt: null,
@@ -20,7 +20,7 @@ const initialState = {
   sum_of_tiles: null,
   value: null,
   support_type: null, // 1 , 2 , 3 , 4
-  main_system: null, // spiral, standard, max, alu, raptor
+  main_system: null, // spiral, standard, max, alu, additional_accesoriesraptor
   additional_accessories: [],
   name_surname: '',
   email: '',
@@ -29,6 +29,20 @@ const initialState = {
   accesories: [],
   products: [],
   productsWithExtraValues: [],
+  slabs_count: 0,
+  supports_count: 0,
+  // ============================
+  LA: null,
+  LA_INT: null,
+  WB: null,
+  LA_INT_H: null,
+  NO_PAYERS_PER_ROW: null,
+  NO_PAYERS_PER_COLUMN: null,
+  TOTAL_NO_PAYERS: null,
+  TOTAL_NO_PEDESTALS: null,
+  NO_PEDESTALS_AT_TOP_AND_BOTTOM_EDGES: null,
+  NO_PEDESTALS_BETWEEN_ROWS: null,
+  NO_INTERMEDIATE_ROWS_OD_PEDESTALS: null,
 };
 
 export const formSlice = createSlice({
@@ -75,7 +89,7 @@ export const formSlice = createSlice({
       state.slab_width = action.payload;
     },
     changeSlabLength: (state, action) => {
-      state.slab_length = action.payload;
+      state.slab_height = action.payload;
     },
     changeSlabThickness: (state, action) => {
       state.slab_thickness = action.payload;
@@ -111,6 +125,72 @@ export const formSlice = createSlice({
       // console.log(product);
       console.log(action.payload);
     },
+    calculateLA: (state) => {
+      /*
+       * Uklad płyt regularny
+       * L = L/a
+       * LA_INT = integer L/a
+       * WB = W/b
+       * LA_INT_H = integer L/a (YZ42 / row 42 on szacus)
+       * */
+
+      const L = Math.sqrt(state.total_area / state.count) * 1000;
+
+      const r = (L * 12 + L) / (state.slab_width * 12 + state.slab_width);
+      const r2 = (L * 12 + L) / (state.slab_height * 12 + state.slab_height);
+      console.log(r2);
+      console.log(L);
+      console.log(state.slab_height);
+
+      state.LA = r;
+      state.LA_INT = Math.floor(r);
+      state.WB = r2;
+      state.LA_INT_H = Math.floor(r2);
+
+      // NO_PAYERS_PER_ROW
+      if (state.LA === state.LA_INT) {
+        const res = state.LA_INT;
+        state.NO_PAYERS_PER_ROW = res;
+      } else {
+        const res = state.LA_INT + 1;
+        state.NO_PAYERS_PER_ROW = res;
+      }
+
+      // NO_PAYERS_PER_COLUMN
+      if (state.WB === state.LA_INT_H) {
+        const res = state.LA_INT_H;
+        state.NO_PAYERS_PER_COLUMN = res;
+      } else {
+        const res = state.LA_INT_H + 1;
+        state.NO_PAYERS_PER_COLUMN = res;
+      }
+
+      // TOTAL_NO_PAYERS
+      const tnp = state.NO_PAYERS_PER_ROW * state.NO_PAYERS_PER_COLUMN;
+      state.TOTAL_NO_PAYERS = tnp;
+    },
+    calculateHowManyTitlesCanFillTheSquare: (state, action) => {
+      const tilesPerRow = Math.floor((state.sqrt * 1000) / state.slab_width);
+      const tilesPerRow2 = Math.floor((state.sqrt * 1000) / state.slab_width);
+      const tilesPerRow3 = Math.floor((state.sqrt * 1000) / state.slab_width);
+      const sumOfTiles = tilesPerRow * tilesPerRow;
+
+      state.slabs_count = sumOfTiles;
+      state.tiles_per_row = tilesPerRow;
+      console.log(tilesPerRow);
+      console.log(tilesPerRow2);
+      console.log(tilesPerRow3);
+    },
+    calculateSupportsCount: (state, action) => {
+      if (state.support_type === 'type1' || state.support_type === 'type2') {
+        console.log(state.support_type);
+        const totalSupports =
+          (state.tiles_per_row + 1) * (state.tiles_per_row + 1);
+        state.supports_count = totalSupports;
+      } else {
+        console.log(state.support_type);
+      }
+    },
   },
 });
 
@@ -140,6 +220,9 @@ export const {
   setAccesories,
   setProducts,
   addExtraCountToProduct,
+  calculateHowManyTitlesCanFillTheSquare,
+  calculateSupportsCount,
+  calculateLA,
 } = formSlice.actions;
 
 export default formSlice.reducer;

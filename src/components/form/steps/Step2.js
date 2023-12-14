@@ -188,7 +188,7 @@ export default function Step2({ activeStep, setActiveStep }) {
                   onChange={(e) =>
                     dispatch(changeSlabLength(Number(e.target.value)))
                   }
-                  value={useSelector((state) => state.form.slab_length)}
+                  value={useSelector((state) => state.form.slab_height)}
                   forType='slab'
                   title='Długość płyty'
                   placeholder='mm'

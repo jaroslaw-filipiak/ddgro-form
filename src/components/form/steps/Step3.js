@@ -1,5 +1,9 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { changeSupportType } from '@/store/slices/formSlice';
+import {
+  changeSupportType,
+  calculateHowManyTitlesCanFillTheSquare,
+  calculateSupportsCount,
+} from '@/store/slices/formSlice';
 
 export default function Step3({ activeStep, setActiveStep }) {
   const dispatch = useDispatch();
