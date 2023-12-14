@@ -59,13 +59,13 @@ export const formSlice = createSlice({
     },
     changeTotalArea: (state, action) => {
       state.total_area = action.payload;
-      state.medium_size = Math.round(action.payload / state.count);
-      state.sqrt = Math.round(Math.sqrt(state.medium_size));
+      state.medium_size = Math.floor(action.payload / state.count);
+      state.sqrt = Math.floor(Math.sqrt(state.medium_size));
     },
     changeCount: (state, action) => {
       state.count = action.payload;
-      state.medium_size = Math.round(state.total_area / action.payload);
-      state.sqrt = Math.round(Math.sqrt(state.medium_size));
+      state.medium_size = Math.floor(state.total_area / action.payload);
+      state.sqrt = Math.floor(Math.sqrt(state.medium_size));
     },
     changeGapBetweenSlabs: (state, action) => {
       state.gap_between_slabs = action.payload;
@@ -184,8 +184,9 @@ export const formSlice = createSlice({
     calculateSupportsCount: (state, action) => {
       if (state.support_type === 'type1' || state.support_type === 'type2') {
         console.log(state.support_type);
+        console.log(state.tiles_per_row);
         const totalSupports =
-          (state.tiles_per_row + 1) * (state.tiles_per_row + 1);
+          (state.NO_PAYERS_PER_ROW + 1) * (state.NO_PAYERS_PER_ROW + 1);
         state.supports_count = totalSupports;
       } else {
         console.log(state.support_type);
