@@ -29,7 +29,7 @@ const initialState = {
   accesories: [],
   products: [],
   productsWithExtraValues: [],
-  slabs_count: 0,
+  // slabs_count: 0,
   supports_count: 0,
   // ============================
   LA: null,
@@ -175,7 +175,7 @@ export const formSlice = createSlice({
       const tilesPerRow3 = Math.floor((state.sqrt * 1000) / state.slab_width);
       const sumOfTiles = tilesPerRow * tilesPerRow;
 
-      state.slabs_count = sumOfTiles;
+      // state.slabs_count = sumOfTiles;
       state.tiles_per_row = tilesPerRow;
       console.log(tilesPerRow);
       console.log(tilesPerRow2);
@@ -187,7 +187,7 @@ export const formSlice = createSlice({
         console.log(state.tiles_per_row);
         const totalSupports =
           (state.NO_PAYERS_PER_ROW + 1) * (state.NO_PAYERS_PER_ROW + 1);
-        state.supports_count = totalSupports;
+        state.supports_count = totalSupports * state.count;
       } else {
         console.log(state.support_type);
       }
