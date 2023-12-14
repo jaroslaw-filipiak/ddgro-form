@@ -29,7 +29,11 @@ const initialState = {
   accesories: [],
   products: [],
   productsWithExtraValues: [],
-  // slabs_count: 0,
+  // ============================
+  /*
+   * finalne wyliczenie * b5 (liczba tarasów)
+   */
+  slabs_count: 0,
   supports_count: 0,
   // ============================
   LA: null,
@@ -182,15 +186,38 @@ export const formSlice = createSlice({
       console.log(tilesPerRow3);
     },
     calculateSupportsCount: (state, action) => {
-      if (state.support_type === 'type1' || state.support_type === 'type2') {
+      if (state.support_type === 'type1') {
         console.log(state.support_type);
         console.log(state.tiles_per_row);
         const totalSupports =
           (state.NO_PAYERS_PER_ROW + 1) * (state.NO_PAYERS_PER_ROW + 1);
         state.supports_count = totalSupports * state.count;
-      } else {
+      } else if (state.support_type === 'type2') {
+        console.log(state.support_type);
+      } else if (state.support_type === 'type3') {
+        /*
+         *
+         * Podparcie na rogach / przesunięcie
+         *
+         */
+
+        state.NO_INTERMEDIATE_ROWS_OD_PEDESTALS =
+          state.NO_PAYERS_PER_COLUMN - 1;
+
+        state.NO_PEDESTALS_AT_TOP_AND_BOTTOM_EDGES =
+          state.NO_PAYERS_PER_ROW + 1;
+        const totalSupports =
+          2 * state.NO_PEDESTALS_AT_TOP_AND_BOTTOM_EDGES +
+          state.NO_INTERMEDIATE_ROWS_OD_PEDESTALS *
+            state.NO_PEDESTALS_BETWEEN_ROWS;
+
+        state.supports_count = totalSupports * state.count;
+      } else if (state.support_type === 'type4') {
         console.log(state.support_type);
       }
+    },
+    calculateSlabsCount: (state) => {
+      state.slabs_count = state.TOTAL_NO_PAYERS * state.count;
     },
   },
 });
@@ -224,6 +251,7 @@ export const {
   calculateHowManyTitlesCanFillTheSquare,
   calculateSupportsCount,
   calculateLA,
+  calculateSlabsCount,
 } = formSlice.actions;
 
 export default formSlice.reducer;

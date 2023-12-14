@@ -4,6 +4,7 @@ import {
   calculateHowManyTitlesCanFillTheSquare,
   calculateSupportsCount,
   calculateLA,
+  calculateSlabsCount,
 } from '@/store/slices/formSlice';
 
 function capitalizeFirstLetter(string) {
@@ -32,6 +33,7 @@ export default function Step7({ setFormAsideVisibility }) {
     dispatch(calculateLA());
     dispatch(calculateHowManyTitlesCanFillTheSquare());
     dispatch(calculateSupportsCount());
+    dispatch(calculateSlabsCount());
   }
 
   return (
