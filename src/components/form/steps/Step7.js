@@ -32,8 +32,8 @@ export default function Step7({ setFormAsideVisibility }) {
 
     dispatch(calculateLA());
     dispatch(calculateHowManyTitlesCanFillTheSquare());
-    dispatch(calculateSupportsCount());
     dispatch(calculateSlabsCount());
+    dispatch(calculateSupportsCount());
   }
 
   return (
@@ -116,62 +116,34 @@ export default function Step7({ setFormAsideVisibility }) {
 
             <div className='summary mt-20 pb-9'>
               <p className='text-2xl font-bold text-black text-opacity-70 pb-9'>
-                Zestawienie
+                Wynik:
               </p>
 
               <div class='square--wrapper'></div>
 
-              {/* {przewidzIloscPlyt(562, 60, 60)} */}
-
-              {/* <ul>
+              <ul>
                 <li className='flex items-center justify-between border-b border-black border-opacity-50 p-6'>
                   <p className='text-xl text-black text-opacity-50 font-normal'>
-                    Wspornik PV14/17:
+                    Wsporników:
                   </p>
                   <div className='flex items-center'>
-                    <input
-                      className='text-base pl-10 pr-10 pt-5 pb-5 text-center font-medium'
-                      placeholder='100 sztuk'
-                      type='text'
-                    />
                     <p className='text-black text-opacity-50 text-base pl-4'>
-                      / 3 worki (40sztuk / worek )
+                      {state?.supports_count}
                     </p>
                   </div>
                 </li>
 
                 <li className='flex items-center justify-between border-b border-black border-opacity-50 p-6'>
                   <p className='text-xl text-black text-opacity-50 font-normal'>
-                    Wspornik PV14/17:
+                    Liczba płyt:
                   </p>
                   <div className='flex items-center'>
-                    <input
-                      className='text-base pl-10 pr-10 pt-5 pb-5 text-center font-medium'
-                      placeholder='100 sztuk'
-                      type='text'
-                    />
                     <p className='text-black text-opacity-50 text-base pl-4'>
-                      / 3 worki (40sztuk / worek )
+                      {state?.slabs_count}
                     </p>
                   </div>
                 </li>
-
-                <li className='flex items-center justify-between border-b border-black border-opacity-50 p-6'>
-                  <p className='text-xl text-black text-opacity-50 font-normal'>
-                    Wspornik PV14/17:
-                  </p>
-                  <div className='flex items-center'>
-                    <input
-                      className='text-base pl-10 pr-10 pt-5 pb-5 text-center font-medium'
-                      placeholder='100 sztuk'
-                      type='text'
-                    />
-                    <p className='text-black text-opacity-50 text-base pl-4'>
-                      / 3 worki (40sztuk / worek )
-                    </p>
-                  </div>
-                </li>
-              </ul> */}
+              </ul>
             </div>
 
             {/* mobile btn */}

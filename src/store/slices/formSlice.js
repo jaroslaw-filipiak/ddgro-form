@@ -126,8 +126,6 @@ export const formSlice = createSlice({
       );
 
       product.extra = action.payload.count;
-      // console.log(product);
-      console.log(action.payload);
     },
     calculateLA: (state) => {
       /*
@@ -142,9 +140,6 @@ export const formSlice = createSlice({
 
       const r = (L * 12 + L) / (state.slab_width * 12 + state.slab_width);
       const r2 = (L * 12 + L) / (state.slab_height * 12 + state.slab_height);
-      console.log(r2);
-      console.log(L);
-      console.log(state.slab_height);
 
       state.LA = r;
       state.LA_INT = Math.floor(r);
@@ -175,45 +170,59 @@ export const formSlice = createSlice({
     },
     calculateHowManyTitlesCanFillTheSquare: (state, action) => {
       const tilesPerRow = Math.floor((state.sqrt * 1000) / state.slab_width);
-      const tilesPerRow2 = Math.floor((state.sqrt * 1000) / state.slab_width);
-      const tilesPerRow3 = Math.floor((state.sqrt * 1000) / state.slab_width);
-      const sumOfTiles = tilesPerRow * tilesPerRow;
-
-      // state.slabs_count = sumOfTiles;
       state.tiles_per_row = tilesPerRow;
-      console.log(tilesPerRow);
-      console.log(tilesPerRow2);
-      console.log(tilesPerRow3);
     },
     calculateSupportsCount: (state, action) => {
       if (state.support_type === 'type1') {
-        console.log(state.support_type);
-        console.log(state.tiles_per_row);
+        // x51 * b5
+        // x51 = (1+x47)* (1+x48)
+
         const totalSupports =
-          (state.NO_PAYERS_PER_ROW + 1) * (state.NO_PAYERS_PER_ROW + 1);
+          (state.NO_PAYERS_PER_ROW + 1) * (state.NO_PAYERS_PER_COLUMN + 1);
         state.supports_count = totalSupports * state.count;
       } else if (state.support_type === 'type2') {
-        console.log(state.support_type);
+        // X51*B5+B23
+        // x51 = (1+x47)* (1+x48)
+
+        const totalSupports =
+          (state.NO_PAYERS_PER_ROW + 1) *
+            (state.NO_PAYERS_PER_COLUMN + 1) *
+            state.count +
+          state.slabs_count;
+
+        state.supports_count = totalSupports;
       } else if (state.support_type === 'type3') {
+        console.log(state.support_type);
         /*
          *
          * Podparcie na rogach / przesunięcie
+         *  WB === y41
+         *  LA_INT_H === y42
          *
          */
 
-        state.NO_INTERMEDIATE_ROWS_OD_PEDESTALS =
-          state.NO_PAYERS_PER_COLUMN - 1;
+        const y56 = state.NO_PAYERS_PER_ROW + 1;
+        const y57 = state.NO_PAYERS_PER_ROW * 2;
+        const y58 = state.NO_PAYERS_PER_COLUMN - 1;
 
-        state.NO_PEDESTALS_AT_TOP_AND_BOTTOM_EDGES =
-          state.NO_PAYERS_PER_ROW + 1;
-        const totalSupports =
-          2 * state.NO_PEDESTALS_AT_TOP_AND_BOTTOM_EDGES +
-          state.NO_INTERMEDIATE_ROWS_OD_PEDESTALS *
-            state.NO_PEDESTALS_BETWEEN_ROWS;
+        // prettier-ignore
+        state.TOTAL_NO_PEDESTALS = (2 * y56) + (y58 * y57);
+        state.supports_count = state.TOTAL_NO_PEDESTALS * state.count;
 
-        state.supports_count = totalSupports * state.count;
+        // state.supports_count = c25 * b25;
       } else if (state.support_type === 'type4') {
-        console.log(state.support_type);
+        // =B25+B23
+
+        // ======== B25 =========
+        const y56 = state.NO_PAYERS_PER_ROW + 1;
+        const y57 = state.NO_PAYERS_PER_ROW * 2;
+        const y58 = state.NO_PAYERS_PER_COLUMN - 1;
+
+        // prettier-ignore
+        state.TOTAL_NO_PEDESTALS = (2 * y56) + (y58 * y57);
+        state.supports_count =
+          state.TOTAL_NO_PEDESTALS * state.count + state.slabs_count;
+        // ======== B25 =========
       }
     },
     calculateSlabsCount: (state) => {
