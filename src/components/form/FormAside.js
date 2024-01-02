@@ -122,13 +122,13 @@ export default function FormAside({ setFormAsideVisibility }) {
             </div>
           </form>
           <p className='text-white'>
-            Będziemy przetwarzać Twoje dane osobowe, aby udzielić odpowiedzi na
+            {`Będziemy przetwarzać Twoje dane osobowe, aby udzielić odpowiedzi na
             Twoje pytanie. Administratorem Twoich danych osobowych jest
             "DECK-DRY" Sp. z o.o. Przysługuje Ci prawo wniesienia sprzeciwu,
             prawo dostępu do danych, prawo żądania ich sprostowania, ich
             usunięcia lub ograniczenia ich przetwarzania, a także ich
             przenoszenia. Szczegółowe informacje znajdziesz w naszej Polityce
-            Prywatności.
+            Prywatności.`}
           </p>
         </div>
       </div>
