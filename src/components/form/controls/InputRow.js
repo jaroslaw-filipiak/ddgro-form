@@ -17,6 +17,8 @@ export default function InputRow({
   onChange,
   value,
   placeholder,
+  modalContent,
+  hasIndicator = false,
 }) {
   const dispatch = useDispatch();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -30,9 +32,13 @@ export default function InputRow({
               {title}
             </p>
 
-            <div onClick={onOpen} className='question-indicator'>
-              ?
-            </div>
+            {hasIndicator ? (
+              <div onClick={onOpen} className='question-indicator'>
+                ?
+              </div>
+            ) : (
+              ''
+            )}
           </div>
 
           <input
@@ -52,16 +58,7 @@ export default function InputRow({
             <>
               <ModalHeader className='flex flex-col gap-1'>{title}</ModalHeader>
               <ModalBody>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Nullam pulvinar risus non risus hendrerit venenatis.
-                  Pellentesque sit amet hendrerit risus, sed porttitor quam.
-                </p>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Nullam pulvinar risus non risus hendrerit venenatis.
-                  Pellentesque sit amet hendrerit risus, sed porttitor quam.
-                </p>
+                <p>{modalContent}</p>
               </ModalBody>
               <ModalFooter>
                 <Button radius='lg' color='primary' onPress={onClose}>

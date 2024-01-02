@@ -127,10 +127,10 @@ export default function Step2({ activeStep, setActiveStep }) {
                   }
                   value={useSelector((state) => state.form.terrace_thickness)}
                   forType='wood'
-                  title='Grubość tarasu'
+                  title='Grubość deski'
                   placeholder='mm'
                 />
-                {/* changeDistanceBetweenJoists */}
+                {/* changeDistanceBetweenJoists === changeSlabLength */}
                 <InputRow
                   onChange={(e) =>
                     dispatch(
@@ -141,10 +141,14 @@ export default function Step2({ activeStep, setActiveStep }) {
                     (state) => state.form.distance_between_joists
                   )}
                   forType='wood'
-                  title='Odległość pomiędzy legarami'
+                  title='Odległość pomiędzy legarami '
                   placeholder='mm'
+                  hasIndicator={true}
+                  modalContent='Jaki jest rozstaw pomiędzy legarami pod deską tarasową?'
                 />
-                {/* changeDistanceBetweenSupportsUnderTheJoist */}
+                {/* changeSlabWidth */}
+
+                {/* changeDistanceBetweenSupportsUnderTheJoist === changeSlabWidth  */}
                 <InputRow
                   onChange={(e) =>
                     dispatch(
@@ -158,8 +162,10 @@ export default function Step2({ activeStep, setActiveStep }) {
                       state.form.distance_between_supports_under_the_joist
                   )}
                   forType='wood'
-                  title='Odległość pomiedzy wspornikami pod legarem'
+                  title='Odległość pomiędzy wspornikami pod legarem'
                   placeholder='mm'
+                  hasIndicator={true}
+                  modalContent='Jaka ma być odległość pomiędzy wspornikami podpierającymi legar?'
                 />
 
                 {/* changeJoistHeight */}
@@ -183,7 +189,7 @@ export default function Step2({ activeStep, setActiveStep }) {
                   title='Szerokość płyty'
                   placeholder='mm'
                 />
-                {/* changeSlabLength */}
+                {/* changeSlabLength === changeDistanceBetweenJoists */}
                 <InputRow
                   onChange={(e) =>
                     dispatch(changeSlabLength(Number(e.target.value)))

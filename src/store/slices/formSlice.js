@@ -61,6 +61,9 @@ export const formSlice = createSlice({
     changeEmail: (state, action) => {
       state.email = action.payload;
     },
+    changeProffesion: (state, action) => {
+      state.proffesion = action.payload;
+    },
     changeTotalArea: (state, action) => {
       state.total_area = action.payload;
       state.medium_size = Math.floor(action.payload / state.count);
@@ -80,21 +83,33 @@ export const formSlice = createSlice({
     changeHighest: (state, action) => {
       state.highest = action.payload;
     },
+
+    // ============================
+
     changeDistanceBetweenJoists: (state, action) => {
       state.distance_between_joists = action.payload;
-    },
-    changeDistanceBetweenSupportsUnderTheJoist: (state, action) => {
-      state.distance_between_supports_under_the_joist = action.payload;
-    },
-    changeJoistHeight: (state, action) => {
-      state.joist_height = action.payload;
-    },
-    changeSlabWidth: (state, action) => {
-      state.slab_width = action.payload;
+      state.slab_height = action.payload;
     },
     changeSlabLength: (state, action) => {
       state.slab_height = action.payload;
+      state.distance_between_joists = action.payload;
     },
+
+    // ============================
+    changeDistanceBetweenSupportsUnderTheJoist: (state, action) => {
+      state.distance_between_supports_under_the_joist = action.payload;
+      state.slab_width = action.payload;
+    },
+    changeSlabWidth: (state, action) => {
+      state.slab_width = action.payload;
+      state.distance_between_supports_under_the_joist = action.payload;
+    },
+
+    // ============================
+    changeJoistHeight: (state, action) => {
+      state.joist_height = action.payload;
+    },
+
     changeSlabThickness: (state, action) => {
       state.slab_thickness = action.payload;
     },
@@ -237,6 +252,7 @@ export const {
   decrement,
   incrementByAmount,
   changeEmail,
+  changeProffesion,
   changeNameSurname,
   changeType,
   changeSupportType,
