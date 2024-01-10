@@ -1,26 +1,26 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  type: null, // slab or wood
-  total_area: null,
-  count: null,
-  gap_between_slabs: null,
-  lowest: null,
-  highest: null,
-  terrace_thickness: null,
-  distance_between_joists: null,
-  distance_between_supports_under_the_joist: null,
-  joist_height: null,
-  slab_width: null,
-  slab_height: null,
-  slab_thickness: null,
-  medium_size: null,
-  sqrt: null,
-  tiles_per_row: null,
-  sum_of_tiles: null,
-  value: null,
-  support_type: null, // 1 , 2 , 3 , 4
-  main_system: null, // spiral, standard, max, alu, additional_accesoriesraptor
+  type: '', // slab or wood
+  total_area: '',
+  count: '',
+  gap_between_slabs: '',
+  lowest: '',
+  highest: '',
+  terrace_thickness: '',
+  distance_between_joists: '',
+  distance_between_supports_under_the_joist: '',
+  joist_height: '',
+  slab_width: '',
+  slab_height: '',
+  slab_thickness: '',
+  medium_size: '',
+  sqrt: '',
+  tiles_per_row: '',
+  sum_of_tiles: '',
+  value: '',
+  support_type: '', // 1 , 2 , 3 , 4
+  main_system: '', // spiral, standard, max, alu, additional_accesoriesraptor
   additional_accessories: [],
   name_surname: '',
   email: '',
@@ -47,6 +47,13 @@ const initialState = {
   NO_PEDESTALS_AT_TOP_AND_BOTTOM_EDGES: null,
   NO_PEDESTALS_BETWEEN_ROWS: null,
   NO_INTERMEDIATE_ROWS_OD_PEDESTALS: null,
+  // ============================
+  sections: 0,
+  count_in_each_section: 0,
+  // ============================
+  //  Matryce
+  // ============================
+  M_STANDARD: [],
 };
 
 export const formSlice = createSlice({
@@ -243,6 +250,15 @@ export const formSlice = createSlice({
     calculateSlabsCount: (state) => {
       state.slabs_count = state.TOTAL_NO_PAYERS * state.count;
     },
+    setSections: (state, action) => {
+      state.sections = action.payload;
+    },
+    setAverageInEachSection: (state, action) => {
+      state.count_in_each_section = action.payload;
+    },
+    setM_STANDARD: (state, action) => {
+      state.M_STANDARD = action.payload;
+    },
   },
 });
 
@@ -277,6 +293,9 @@ export const {
   calculateSupportsCount,
   calculateLA,
   calculateSlabsCount,
+  setSections,
+  setAverageInEachSection,
+  setM_STANDARD,
 } = formSlice.actions;
 
 export default formSlice.reducer;

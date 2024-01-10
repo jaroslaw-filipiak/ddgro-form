@@ -6,6 +6,7 @@
 import { store } from '@/store/index';
 import { Provider } from 'react-redux';
 import { useState, useEffect } from 'react';
+import Matrix from '@/components/form/debug/Matrix';
 
 import { NextUIProvider } from '@nextui-org/system';
 import FormHeader from './FormHeader';
@@ -55,6 +56,7 @@ export default function Form() {
             />
             {steps[activeStep - 1]}
           </div>
+          {/* <Matrix /> */}
         </Provider>
       </NextUIProvider>
     </>

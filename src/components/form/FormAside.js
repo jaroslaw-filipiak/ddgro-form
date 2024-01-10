@@ -11,6 +11,7 @@ import { Select, SelectItem, Input } from '@nextui-org/react';
 
 export default function FormAside({ setFormAsideVisibility }) {
   const dispatch = useDispatch();
+  const [response, setResponse] = useState();
   const [value, setValue] = useState(null);
   const state = useSelector((state) => state.form);
 
@@ -25,20 +26,82 @@ export default function FormAside({ setFormAsideVisibility }) {
   };
 
   const handleForm = async (e) => {
-    const form = newFormData();
-    form.append('name_surname', state.name_surname);
-    form.append('email', email);
-    form.append('proffesion', proffesion);
+    // const form = new FormData();
+    // form.append('type', state.type);
+    // form.append('total_area', state.total_area);
+    // form.append('count', state.count);
+    // form.append('gap_between_slabs', state.gap_between_slabs);
+    // form.append('lowest', state.lowest);
+    // form.append('highest', state.highest);
+    // form.append(
+    //   'terrace_thickness',
+    //   state.terrace_thickness ? state.terrace_thickness : 0
+    // );
+    // form.append('distance_between_joists', state.distance_between_joists);
+    // form.append(
+    //   'distance_between_supports',
+    //   state.distance_between_supports_under_the_joist
+    // );
+    // form.append('joist_height', state.joist_height ? state.joist_height : 0);
+    // form.append('slab_width', state.slab_width);
+    // form.append('slab_height', state.slab_height);
+    // form.append('slab_thickness', state.slab_thickness);
+    // form.append('tiles_per_row', state.tiles_per_row);
+    // form.append('sum_of_tiles', state.sum_of_tiles ? state.sum_of_tiles : 0);
+    // form.append('support_type', state.support_type);
+    // form.append('main_system', state.main_system);
+    // form.append('name_surname', state.name_surname);
+    // form.append('email', state.email);
+    // form.append('proffesion', state.proffesion);
+    // form.append('terms_accepted', 1);
+    // form.append('slabs_count', state.slabs_count);
+    // form.append('products', state.products);
+    // form.append('accesories', state.accesories);
+    // form.append('supports_count', state.supports_count);
+
+    const form = {
+      type: state.type,
+      total_area: state.total_area,
+      count: state.count,
+      gap_between_slabs: state.gap_between_slabs,
+      lowest: state.lowest,
+      highest: state.highest,
+      terrace_thickness: state.terrace_thickness ? state.terrace_thickness : 0,
+      distance_between_joists: state.distance_between_joists,
+      distance_between_supports:
+        state.distance_between_supports_under_the_joist,
+      joist_height: state.joist_height ? state.joist_height : 0,
+      slab_width: state.slab_width,
+      slab_height: state.slab_height,
+      slab_thickness: state.slab_thickness,
+      tiles_per_row: state.tiles_per_row,
+      sum_of_tiles: state.sum_of_tiles ? state.sum_of_tiles : 0,
+      support_type: state.support_type,
+      main_system: state.main_system,
+      name_surname: state.name_surname,
+      email: state.email,
+      proffesion: state.proffesion,
+      terms_accepted: 1,
+      slabs_count: state.slabs_count,
+      products: state.products,
+      accesories: state.accesories,
+      supports_count: state.supports_count,
+    };
     try {
-      const response = await fetch('/api/form', {
+      const response = await fetch('https://ddgro-api.test/api/application', {
         method: 'POST',
-        body: formData,
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(form),
       });
       const data = await response.json();
+      console.log(data);
+      setResponse(data);
     } catch (e) {
       console.log(e);
     }
-    console.log(e);
   };
 
   return (
@@ -130,6 +193,14 @@ export default function FormAside({ setFormAsideVisibility }) {
             przenoszenia. Szczegółowe informacje znajdziesz w naszej Polityce
             Prywatności.`}
           </p>
+          <div>response message: {response?.message}</div>
+          <div>response message: {typeof response?.errors}</div>
+          {/* <div>
+            response message:{' '}
+            {response?.errors.map((item, index) => (
+              <p key={index}>{item}</p>
+            ))}
+          </div> */}
         </div>
       </div>
     </>
