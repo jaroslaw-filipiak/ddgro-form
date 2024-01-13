@@ -129,7 +129,7 @@ export default function Step4({ activeStep, setActiveStep }) {
           </div>
           {/* content + padding */}
           <div className='step--inner pt-20 pb-20 pl-10 pr-10 lg:w-10/12 mx-auto'>
-            <div className='flex flex-wrap items-start justify-start'>
+            <div className='flex flex-wrap items-start xl:justify-center justify-start gap-6 xl:gap-2'>
               {/* items   slab / wood */}
 
               {selectedSeries.map((item) => {
@@ -137,18 +137,18 @@ export default function Step4({ activeStep, setActiveStep }) {
                   <div
                     onClick={(event) => onChangeValue(event, item)}
                     key={item.id}
-                    className={`item w-4/12 mb-10 relative cursor-pointer hover:opacity-60 transition-all ${
+                    className={`item xl:w-4/12 mb-10 relative cursor-pointer hover:opacity-60 transition-all  flex flex-col items-start ${
                       item.series === selectedMainSystem ? 'selected' : null
                     }`}
                   >
                     <img
-                      className='max-w-[368px] rounded-[16px]'
+                      className='w-full xl:max-w-[368px] rounded-[16px] mx-auto'
                       src={item.img}
                     />
-                    <p className=' text-2xl font-bold text-black text-opacity-70 mt-5'>
+                    <p className='text-2xl pl-4 font-bold text-black text-opacity-70 mt-5'>
                       {item.title}
                     </p>
-                    <div className='m-0 p-0 text-sm text-black font-normal flex items-center gap-2'>
+                    <div className='m-0 pl-4 text-sm text-black font-normal flex items-center gap-2'>
                       <div>{item.distance} mm</div>
                     </div>
                   </div>

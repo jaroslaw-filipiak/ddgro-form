@@ -3,52 +3,51 @@ import { MinusIcon } from './MinusIcon';
 import { PlusIcon } from './PlusIcon';
 import { Button } from '@nextui-org/react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addExtraCountToProduct } from '@/store/slices/formSlice';
+import {
+  addExtraCountToProduct,
+  setAdditionalProducts,
+} from '@/store/slices/formSlice';
 
 export const ItemCounter = (props) => {
   const dispatch = useDispatch();
   const [count, setCount] = React.useState(0);
+  const products = useSelector((state) => state.form.products);
+  const [filteredProducts, setFilteredProducts] = React.useState([]);
 
-  const handleIncrement = () => {
-    setCount((prev) => {
-      const newCount = prev + 1;
-      dispatch(
-        addExtraCountToProduct({
-          id: props.item.id,
-          count: newCount,
-        })
-      );
-      return newCount;
+  useEffect(() => {
+    setFilteredProducts(products);
+  }, [products]);
+
+  const handleChange = (e) => {
+    const newCount = e.target.value;
+    const ID = props.item.id;
+
+    setCount(newCount);
+
+    const updatedProducts = filteredProducts.map((product) => {
+      if (product.id === ID) {
+        return {
+          ...product,
+          extraCount: newCount,
+        };
+      } else {
+        return product;
+      }
     });
-  };
 
-  const handleDecrement = () => {
-    if (count <= 0) {
-      setCount((prev) => (prev = 0));
-    } else {
-      setCount((prev) => {
-        const newCount = prev - 1;
-
-        dispatch(
-          addExtraCountToProduct({
-            id: props.item.id,
-            count: newCount,
-          })
-        );
-        return newCount;
-      });
-    }
+    setFilteredProducts(updatedProducts);
+    dispatch(setAdditionalProducts(updatedProducts));
   };
 
   return (
     <>
-      <Button onClick={handleDecrement} isIconOnly size='sm' radius='full'>
-        <MinusIcon />
-      </Button>
-      <div className='w-12 text-center'>{count ? count : '-'} </div>
-      <Button onClick={handleIncrement} isIconOnly size='sm' radius='full'>
-        <PlusIcon />
-      </Button>
+      <input
+        onChange={handleChange}
+        type='number'
+        className='border p-1'
+        placeholder='podaj dodatkową ilość'
+        value={count ? count : ''}
+      />
     </>
   );
 };

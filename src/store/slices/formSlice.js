@@ -22,6 +22,7 @@ const initialState = {
   support_type: '', // 1 , 2 , 3 , 4
   main_system: '', // spiral, standard, max, alu, additional_accesoriesraptor
   additional_accessories: [],
+  additional_products: [],
   name_surname: '',
   email: '',
   proffestion: '',
@@ -135,6 +136,10 @@ export const formSlice = createSlice({
     setAdditionalAccessories: (state, action) => {
       state.additional_accessories = action.payload;
     },
+    setAdditionalProducts: (state, action) => {
+      console.log('setAdditionalProducts');
+      state.products = action.payload;
+    },
     setAccesories: (state, action) => {
       state.accesories = action.payload;
     },
@@ -149,6 +154,7 @@ export const formSlice = createSlice({
 
       product.extra = action.payload.count;
     },
+
     calculateLA: (state) => {
       /*
        * Uklad płyt regularny
@@ -296,6 +302,7 @@ export const {
   setSections,
   setAverageInEachSection,
   setM_STANDARD,
+  setAdditionalProducts,
 } = formSlice.actions;
 
 export default formSlice.reducer;

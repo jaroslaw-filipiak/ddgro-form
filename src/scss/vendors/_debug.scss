@@ -1,0 +1,5 @@
+html,
+body {
+  @apply relative after:content-['mobile'] after:bg-black after:text-white after:p-4 after:block after:fixed after:left-0 after:bottom-0 sm:after:content-['sm']
+  md:after:content-['md'] lg:after:content-['lg'] xl:after:content-['xl'] 2xl:after:content-['2xl'];
+}
