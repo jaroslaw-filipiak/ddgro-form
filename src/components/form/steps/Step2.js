@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   changeType,
@@ -13,16 +14,90 @@ import {
   changeSlabWidth,
   changeSlabLength,
   changeSlabThickness,
+  setStep2Validation,
 } from '@/store/slices/formSlice';
 import InputRow from '../controls/InputRow';
 
 export default function Step2({ activeStep, setActiveStep }) {
   const dispatch = useDispatch();
-  const type = useSelector((state) => state.form.type);
+  const [validated, setValidated] = useState(0);
+
+  const {
+    type,
+    total_area,
+    count,
+    lowest,
+    highest,
+    gap_between_slabs,
+    terrace_thickness,
+    distance_between_joists,
+    distance_between_supports_under_the_joist,
+    joist_height,
+    slab_width,
+    slab_height,
+    slab_thickness,
+    step2validation,
+  } = useSelector((state) => state.form);
+
+  useEffect(() => {
+    handleValidated();
+  }, [
+    total_area,
+    count,
+    gap_between_slabs,
+    lowest,
+    highest,
+    slab_width,
+    slab_height,
+    slab_thickness,
+    terrace_thickness,
+    distance_between_joists,
+    distance_between_supports_under_the_joist,
+    joist_height,
+  ]);
+
+  const handleValidated = () => {
+    console.log('handleValidated');
+    if (type === 'slab') {
+      if (
+        total_area &&
+        count &&
+        gap_between_slabs &&
+        lowest &&
+        highest &&
+        slab_width &&
+        slab_height &&
+        slab_thickness
+      ) {
+        dispatch(setStep2Validation(1));
+        setValidated(1);
+      } else {
+        dispatch(setStep2Validation(0));
+        setValidated(0);
+      }
+    } else {
+      if (
+        total_area &&
+        count &&
+        lowest &&
+        highest &&
+        terrace_thickness &&
+        distance_between_joists &&
+        distance_between_supports_under_the_joist &&
+        joist_height
+      ) {
+        dispatch(setStep2Validation(1));
+        setValidated(1);
+      } else {
+        dispatch(setStep2Validation(0));
+        setValidated(0);
+      }
+    }
+  };
 
   return (
     <>
-      <section>
+      <section onChange={() => handleValidated()}>
         <div className='step--wrapper step-2 bg-[#f7f5f5]  relative'>
           {/* label absolute */}
           <div className='absolue inline-flex left-0 top-0 bg-main pt-3 pb-3 pl-8 pr-8 text-white font-bold text-base'>
@@ -201,9 +276,10 @@ export default function Step2({ activeStep, setActiveStep }) {
                 />
                 {/* changeSlabThickness */}
                 <InputRow
-                  onChange={(e) =>
-                    dispatch(changeSlabThickness(Number(e.target.value)))
-                  }
+                  onChange={(e) => {
+                    dispatch(changeSlabThickness(Number(e.target.value)));
+                    handleValidated();
+                  }}
                   value={useSelector((state) => state.form.slab_thickness)}
                   forType='slab'
                   title='Grubość płyty'
@@ -215,8 +291,9 @@ export default function Step2({ activeStep, setActiveStep }) {
             {/* mobile btn */}
             <div className='w-full flex items-center justify-center mt-20 mb-16'>
               <button
+                disabled={!step2validation}
                 onClick={() => setActiveStep(activeStep + 1)}
-                className='btn btn--main btn--rounded'
+                className='btn btn--main btn--rounded disabled:opacity-50 disabled:cursor-not-allowed'
               >
                 Następny krok
                 <img className='ml-5' src='/assets/arrow-next.svg' alt='' />

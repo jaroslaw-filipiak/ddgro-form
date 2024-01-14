@@ -55,6 +55,11 @@ const initialState = {
   //  Matryce
   // ============================
   M_STANDARD: [],
+  // ============================
+  // form steps validation
+  // ============================
+  step2validation: 0,
+  step3validation: 0,
 };
 
 export const formSlice = createSlice({
@@ -265,6 +270,12 @@ export const formSlice = createSlice({
     setM_STANDARD: (state, action) => {
       state.M_STANDARD = action.payload;
     },
+    setStep2Validation: (state, action) => {
+      state.step2validation = action.payload;
+    },
+    setStep3Validation: (state, action) => {
+      state.step3validation = action.payload;
+    },
   },
 });
 
@@ -303,6 +314,8 @@ export const {
   setAverageInEachSection,
   setM_STANDARD,
   setAdditionalProducts,
+  setStep2Validation,
+  setStep3Validation,
 } = formSlice.actions;
 
 export default formSlice.reducer;

@@ -53,8 +53,9 @@ export default function Step1({ activeStep, setActiveStep }) {
             {/* mobile btn */}
             <div className='w-full flex items-center justify-center mt-20 mb-16'>
               <button
+                disabled={!type}
                 onClick={() => setActiveStep(activeStep + 1)}
-                className='btn btn--main btn--rounded'
+                className='btn btn--main btn--rounded pointer-none disabled:opacity-50 disabled:cursor-not-allowed'
               >
                 Następny krok
                 <img className='ml-5' src='/assets/arrow-next.svg' alt='' />
