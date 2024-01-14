@@ -109,22 +109,6 @@ export default function Step5({ activeStep, setActiveStep }) {
           <div className='step--inner pt-20 pb-20 pl-10 pr-10 lg:w-10/12 mx-auto'>
             {/* one serie db info */}
             <div className='series--info'>
-              <header className='flex items-center justify-start gap-10'>
-                <div>
-                  <p>Wybrany główny system: </p>
-
-                  <p className='text-4xl font-bold text-black text-opacity-70'>
-                    Seria&nbsp;
-                    {main_system &&
-                      main_system.charAt(0).toUpperCase() +
-                        main_system.slice(1)}
-                  </p>
-                  <p className='m-0 p-0 text-sm text-black font-normal'>
-                    rodzaj nawierzchni tarasu:{' '}
-                    {type === 'slab' ? 'Płyty' : 'Deski'}
-                  </p>
-                </div>
-              </header>
               <p className='text-2xl font-bold textaccesories-black text-opacity-70 pt-16 pb-9'>
                 {loading ? 'Wczytuje dane...' : 'Wybierz akcesoria'}
               </p>
