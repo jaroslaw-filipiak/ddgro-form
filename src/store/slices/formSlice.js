@@ -60,6 +60,7 @@ const initialState = {
   // ============================
   step2validation: 0,
   step3validation: 0,
+  step4validation: 0,
 };
 
 export const formSlice = createSlice({
@@ -276,6 +277,9 @@ export const formSlice = createSlice({
     setStep3Validation: (state, action) => {
       state.step3validation = action.payload;
     },
+    setStep4Validation: (state, action) => {
+      state.step4validation = action.payload;
+    },
   },
 });
 
@@ -316,6 +320,7 @@ export const {
   setAdditionalProducts,
   setStep2Validation,
   setStep3Validation,
+  setStep4Validation,
 } = formSlice.actions;
 
 export default formSlice.reducer;

@@ -1,15 +1,17 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useState } from 'react';
-import { changeMainSystem } from '@/store/slices/formSlice';
+import { changeMainSystem, setStep4Validation } from '@/store/slices/formSlice';
 
 export default function Step4({ activeStep, setActiveStep }) {
   const dispatch = useDispatch();
   const type = useSelector((state) => state.form.type);
+  const step4validation = useSelector((state) => state.form.step4validation);
 
   const selectedMainSystem = useSelector((state) => state.form.main_system);
 
   const onChangeValue = (event, item) => {
     dispatch(changeMainSystem(item.series));
+    dispatch(setStep4Validation(1));
   };
 
   const [series] = useState([
@@ -98,39 +100,50 @@ export default function Step4({ activeStep, setActiveStep }) {
           <div className='absolue inline-flex left-0 top-0  text-white font-bold text-base flex flex-col gap-1 items-start justify-center'>
             <p className='bg-main pt-3 pb-3 pl-8 pr-8'>System</p>
 
-            <div className=' bg-red-500 pt-3 pb-3 pl-8 pr-8 flex items-center gap-3 w-full'>
-              <div>
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  className='icon icon-tabler icon-tabler-alert-circle-filled'
-                  width='24'
-                  height='24'
-                  viewBox='0 0 24 24'
-                  strokeWidth='2'
-                  stroke='currentColor'
-                  fill='none'
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                >
-                  <path stroke='none' d='M0 0h24v24H0z' fill='none' />
-                  <path
-                    d='M12 2c5.523 0 10 4.477 10 10a10 10 0 0 1 -19.995 .324l-.005 -.324l.004 -.28c.148 -5.393 4.566 -9.72 9.996 -9.72zm.01 13l-.127 .007a1 1 0 0 0 0 1.986l.117 .007l.127 -.007a1 1 0 0 0 0 -1.986l-.117 -.007zm-.01 -8a1 1 0 0 0 -.993 .883l-.007 .117v4l.007 .117a1 1 0 0 0 1.986 0l.007 -.117v-4l-.007 -.117a1 1 0 0 0 -.993 -.883z'
-                    strokeWidth='0'
-                    fill='currentColor'
-                  />
-                </svg>
+            {type && (
+              <div className='bg-red-500 pt-3 pb-3 pl-8 pr-8 flex items-center gap-3 w-full'>
+                <div>
+                  <svg
+                    xmlns='http://www.w3.org/2000/svg'
+                    className='icon icon-tabler icon-tabler-alert-circle-filled'
+                    width='24'
+                    height='24'
+                    viewBox='0 0 24 24'
+                    strokeWidth='2'
+                    stroke='currentColor'
+                    fill='none'
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                  >
+                    <path stroke='none' d='M0 0h24v24H0z' fill='none' />
+                    <path
+                      d='M12 2c5.523 0 10 4.477 10 10a10 10 0 0 1 -19.995 .324l-.005 -.324l.004 -.28c.148 -5.393 4.566 -9.72 9.996 -9.72zm.01 13l-.127 .007a1 1 0 0 0 0 1.986l.117 .007l.127 -.007a1 1 0 0 0 0 -1.986l-.117 -.007zm-.01 -8a1 1 0 0 0 -.993 .883l-.007 .117v4l.007 .117a1 1 0 0 0 1.986 0l.007 -.117v-4l-.007 -.117a1 1 0 0 0 -.993 -.883z'
+                      strokeWidth='0'
+                      fill='currentColor'
+                    />
+                  </svg>
+                </div>
+
+                <span>
+                  Uwaga - wybierz główny system wsporników który ma zostać
+                  użyty. Jeśli zakresy wysokości będą wykraczać poza zakresy
+                  danego typu program dobierze brakujące wysokości z innego
+                  typu.
+                </span>
               </div>
-              <span>
-                Uwaga - wybierz główny system wsporników który ma zostać użyty.
-                Jeśli zakresy wysokości będą wykraczać poza zakresy danego typu
-                program dobierze brakujące wysokości z innego typu.
-              </span>
-            </div>
+            )}
           </div>
           {/* content + padding */}
           <div className='step--inner pt-20 pb-20 pl-10 pr-10 lg:w-10/12 mx-auto'>
             <div className='flex flex-wrap items-start xl:justify-center justify-start gap-6 xl:gap-2'>
               {/* items   slab / wood */}
+
+              {!type && (
+                <div className='text-4xl text-center'>
+                  Wybierz rodzaj nawierzchni tarasu (pkt 1), bez tych danych nie
+                  będziemy w stanie wyświelić systemu wsporników
+                </div>
+              )}
 
               {selectedSeries.map((item) => {
                 return (
@@ -158,13 +171,30 @@ export default function Step4({ activeStep, setActiveStep }) {
 
             {/* mobile btn */}
             <div className='w-full flex items-center justify-center mt-20 mb-16'>
-              <button
-                onClick={() => setActiveStep(activeStep + 1)}
-                className='btn btn--main btn--rounded'
-              >
-                Następny krok
-                <img className='ml-5' src='/assets/arrow-next.svg' alt='' />
-              </button>
+              {!type && (
+                <button
+                  onClick={() => setActiveStep((activeStep = 1))}
+                  className='btn btn--main btn--rounded disabled:opacity-50 disabled:cursor-not-allowed pr-14'
+                >
+                  <img
+                    className='mr-5 transform rotate-180'
+                    src='/assets/arrow-next.svg'
+                    alt=''
+                  />
+                  Wróć do kroku nr 1
+                </button>
+              )}
+
+              {type && (
+                <button
+                  disabled={!step4validation}
+                  onClick={() => setActiveStep(activeStep + 1)}
+                  className='btn btn--main btn--rounded disabled:opacity-50 disabled:cursor-not-allowed'
+                >
+                  Następny krok
+                  <img className='ml-5' src='/assets/arrow-next.svg' alt='' />
+                </button>
+              )}
             </div>
           </div>
         </div>
