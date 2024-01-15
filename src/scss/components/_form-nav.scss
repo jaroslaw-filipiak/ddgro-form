@@ -1,9 +1,9 @@
 .form-nav {
   &--wrapper {
     ul {
-      @apply absolute top-0 left-0 w-full flex justify-between items-center px-4 py-2;
+      @apply absolute top-0 left-0 lg:w-full flex justify-between items-center px-4 py-2;
       li {
-        @apply relative text-center pt-2 text-opacity-50 text-black font-normal cursor-pointer hover:text-opacity-100 transition transition-all;
+        @apply relative text-center pt-2 text-opacity-50 text-black font-normal cursor-pointer hover:text-opacity-100 transition-all w-6/12 lg:w-full;
         &:after {
           content: '';
           // @apply block w-4 h-4 bg-main absolute left-[50%] -top-4  rounded-2xl origin-top;

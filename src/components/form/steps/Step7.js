@@ -228,7 +228,7 @@ export default function Step7({ setFormAsideVisibility }) {
                   </p>
                   <div className='flex items-center'>
                     <p className='text-black text-opacity-50 text-base pl-4'>
-                      {state?.slabs_count}
+                      {state?.slabs_count || '-'}
                     </p>
                   </div>
                 </li>

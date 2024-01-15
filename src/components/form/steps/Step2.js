@@ -57,7 +57,6 @@ export default function Step2({ activeStep, setActiveStep }) {
   ]);
 
   const handleValidated = () => {
-    console.log('handleValidated');
     if (type === 'slab') {
       if (
         total_area &&
@@ -104,9 +103,9 @@ export default function Step2({ activeStep, setActiveStep }) {
             Rodzaj podparcia
           </div>
           {/* content + padding */}
-          <div className='step--inner pt-20 pb-20 pl-10 pr-10'>
-            <div className='flex items-start justify-center '>
-              <div className='w-4/12  flex flex-col items-center justify-start'>
+          <div className='step--inner p-6 lg:pt-20 lg:pb-20 lg:pl-10 lg:pr-10'>
+            <div className='flex flex-col xl:flex-row items-center justify-start lg:items-start lg:justify-center '>
+              <div className='hidden xl:w-4/12  xl:flex flex-col items-center justify-start'>
                 {/* TODO: move to another component */}
                 <div className='flex flex-col items-center justify-center gap-10 '>
                   <div
@@ -143,7 +142,7 @@ export default function Step2({ activeStep, setActiveStep }) {
               </div>
               {/* inputs */}
 
-              <div className='w-8/12 pl-20 flex flex-col gap-5'>
+              <div className='w-full xl:w-8/12 lg:pl-20 flex flex-col gap-5 mt-10 xl:mt-0 '>
                 {/* forType: 'wood, slab or all' */}
                 <InputRow
                   onChange={(e) =>
