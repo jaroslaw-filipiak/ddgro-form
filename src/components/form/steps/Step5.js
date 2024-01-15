@@ -141,10 +141,10 @@ export default function Step5({ activeStep, setActiveStep }) {
                             onChange={(event) => onChangeValue(event)}
                           />
                           <div className='flex items-center justify-between'>
-                            <div className='flex items-center justify-start gap-6'>
+                            <div className='flex items-center justify-start gap-3 lg:gap-6'>
                               <img src='/assets/placeholder-96-68.png' />
                               <div>
-                                <p className='text-2xl font-bold text-black text-opacity-70 '>
+                                <p className='text-lg lg:text-2xl font-bold text-black text-opacity-70 '>
                                   {item.name}
                                 </p>
                                 <p className=' text-lg text-black text-opacity-50 font-normal'>

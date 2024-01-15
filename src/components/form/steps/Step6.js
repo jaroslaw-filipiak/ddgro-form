@@ -292,7 +292,7 @@ export default function Step6({ activeStep, setActiveStep }) {
             </div>
           </div>
           {/* content + padding */}
-          <div className='step--inner pt-40 pb-20 pl-10 pr-10 lg:w-10/12 mx-auto'>
+          <div className='step--inner pt-40 pb-20 lg:pl-10 lg:pr-10 lg:w-10/12 mx-auto'>
             {/* one serie db info */}
             <div className='series--info'>
               <header className='flex items-center justify-start gap-10'>

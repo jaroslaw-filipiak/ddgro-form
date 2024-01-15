@@ -41,7 +41,7 @@ export default function Step3({ activeStep, setActiveStep }) {
               className='flex flex-wrap items-start justify-center'
             >
               {/* items */}
-              <div className='w-6/12 flex flex-col items-center justify-center p-5 relative'>
+              <div className='w-full lg:w-6/12 flex flex-col items-center justify-center p-5 relative'>
                 <label
                   className={`${
                     support_type === 'type1' ? 'selected--center' : null
@@ -63,7 +63,7 @@ export default function Step3({ activeStep, setActiveStep }) {
                 </label>
               </div>
 
-              <div className='w-6/12  flex flex-col items-center justify-center p-5 relative'>
+              <div className='w-full lg:w-6/12  flex flex-col items-center justify-center p-5 relative'>
                 <label
                   className={`${
                     support_type === 'type2' ? 'selected--center' : null
@@ -85,7 +85,7 @@ export default function Step3({ activeStep, setActiveStep }) {
                 </label>
               </div>
 
-              <div className='w-6/12  flex flex-col items-center justify-center p-5 relative'>
+              <div className='w-full lg:w-6/12  flex flex-col items-center justify-center p-5 relative'>
                 <label
                   className={`${
                     support_type === 'type3' ? 'selected--center' : null
@@ -107,7 +107,7 @@ export default function Step3({ activeStep, setActiveStep }) {
                 </label>
               </div>
 
-              <div className='w-6/12  flex flex-col items-center justify-center p-5 relative'>
+              <div className='w-full lg:w-6/12  flex flex-col items-center justify-center p-5 relative'>
                 <label
                   className={`${
                     support_type === 'type4' ? 'selected--center' : null

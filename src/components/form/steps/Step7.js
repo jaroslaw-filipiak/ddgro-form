@@ -140,66 +140,82 @@ export default function Step7({ setFormAsideVisibility }) {
                 Wprowadzone parametry
               </p>
               <ul className='flex flex-wrap items-center justify-start gap-6'>
-                <li className='flex items-center justify-start gap-2'>
-                  <p className=' text-lg text-black text-opacity-50 font-normal'>
-                    Rodzaj nawierzchni:
-                  </p>
-                  <p className='text-lg text-black text-opacity-70 font-bold'>
-                    {state.type === 'wood' ? 'Deski' : 'Płyty'}
-                  </p>
-                </li>
-                <li className='flex items-center justify-start gap-2'>
-                  <p className=' text-lg text-black text-opacity-50 font-normal'>
-                    Wybrany główny system:
-                  </p>
-                  <p className='text-lg text-black text-opacity-70 font-bold'>
-                    {capitalizeFirstLetter(state?.main_system)}
-                  </p>
-                </li>
+                {state?.type && (
+                  <li className='flex items-center justify-start gap-2'>
+                    <p className=' text-lg text-black text-opacity-50 font-normal'>
+                      Rodzaj nawierzchni:
+                    </p>
+                    <p className='text-lg text-black text-opacity-70 font-bold'>
+                      {state.type === 'wood' ? 'Deski' : 'Płyty'}
+                    </p>
+                  </li>
+                )}
 
-                <li className='flex items-center justify-start gap-2'>
-                  <p className=' text-lg text-black text-opacity-50 font-normal'>
-                    Łączna powierzchnia:
-                  </p>
-                  <p className='text-lg text-black text-opacity-70 font-bold'>
-                    {state?.total_area} m2
-                  </p>
-                </li>
+                {state?.main_system && (
+                  <li className='flex items-center justify-start gap-2'>
+                    <p className=' text-lg text-black text-opacity-50 font-normal'>
+                      Wybrany główny system:
+                    </p>
+                    <p className='text-lg text-black text-opacity-70 font-bold'>
+                      {capitalizeFirstLetter(state?.main_system)}
+                    </p>
+                  </li>
+                )}
 
-                <li className='flex items-center justify-start gap-2'>
-                  <p className=' text-lg text-black text-opacity-50 font-normal'>
-                    Ilość tarasów:
-                  </p>
-                  <p className='text-lg text-black text-opacity-70 font-bold'>
-                    {state?.count}
-                  </p>
-                </li>
+                {state?.total_area && (
+                  <li className='flex items-center justify-start gap-2'>
+                    <p className=' text-lg text-black text-opacity-50 font-normal'>
+                      Łączna powierzchnia:
+                    </p>
+                    <p className='text-lg text-black text-opacity-70 font-bold'>
+                      {state?.total_area} m2
+                    </p>
+                  </li>
+                )}
 
-                <li className='flex items-center justify-start gap-2'>
-                  <p className=' text-lg text-black text-opacity-50 font-normal'>
-                    Najniższy punkt wysokości tarasu:
-                  </p>
-                  <p className='text-lg text-black text-opacity-70 font-bold'>
-                    {state?.lowest} mm
-                  </p>
-                </li>
+                {state.count && (
+                  <li className='flex items-center justify-start gap-2'>
+                    <p className=' text-lg text-black text-opacity-50 font-normal'>
+                      Ilość tarasów:
+                    </p>
+                    <p className='text-lg text-black text-opacity-70 font-bold'>
+                      {state?.count}
+                    </p>
+                  </li>
+                )}
 
-                <li className='flex items-center justify-start gap-2'>
-                  <p className=' text-lg text-black text-opacity-50 font-normal'>
-                    Najwyższy punkt wysokości tarasu:
-                  </p>
-                  <p className='text-lg text-black text-opacity-70 font-bold'>
-                    {state?.highest} mm
-                  </p>
-                </li>
-                <li className='flex items-center justify-start gap-2'>
-                  <p className=' text-lg text-black text-opacity-50 font-normal'>
-                    Czy wybrano dodatkowe akcesoria:
-                  </p>
-                  <p className='text-lg text-black text-opacity-70 font-bold'>
-                    {state?.additional_accessories ? 'Tak' : 'Nie'}
-                  </p>
-                </li>
+                {state?.lowest && (
+                  <li className='flex items-center justify-start gap-2'>
+                    <p className=' text-lg text-black text-opacity-50 font-normal'>
+                      Najniższy punkt wysokości tarasu:
+                    </p>
+                    <p className='text-lg text-black text-opacity-70 font-bold'>
+                      {state?.lowest} mm
+                    </p>
+                  </li>
+                )}
+
+                {state?.highest && (
+                  <li className='flex items-center justify-start gap-2'>
+                    <p className=' text-lg text-black text-opacity-50 font-normal'>
+                      Najwyższy punkt wysokości tarasu:
+                    </p>
+                    <p className='text-lg text-black text-opacity-70 font-bold'>
+                      {state?.highest} mm
+                    </p>
+                  </li>
+                )}
+
+                {state?.additional_accessories && (
+                  <li className='flex items-center justify-start gap-2'>
+                    <p className=' text-lg text-black text-opacity-50 font-normal'>
+                      Czy wybrano dodatkowe akcesoria:
+                    </p>
+                    <p className='text-lg text-black text-opacity-70 font-bold'>
+                      {state?.additional_accessories ? 'Tak' : 'Nie'}
+                    </p>
+                  </li>
+                )}
               </ul>
             </div>
 
@@ -217,7 +233,7 @@ export default function Step7({ setFormAsideVisibility }) {
                   </p>
                   <div className='flex items-center'>
                     <p className='text-black text-opacity-50 text-base pl-4'>
-                      {state?.supports_count}
+                      {state?.supports_count ? state?.supports_count : '-'}
                     </p>
                   </div>
                 </li>
@@ -228,7 +244,7 @@ export default function Step7({ setFormAsideVisibility }) {
                   </p>
                   <div className='flex items-center'>
                     <p className='text-black text-opacity-50 text-base pl-4'>
-                      {state?.slabs_count || '-'}
+                      {state?.slabs_count ? state?.slabs_count : '-'}
                     </p>
                   </div>
                 </li>
