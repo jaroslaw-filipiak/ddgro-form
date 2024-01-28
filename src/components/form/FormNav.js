@@ -8,7 +8,7 @@ export default function FormNav({ activeStep, setActiveStep }) {
               className={activeStep === 1 ? 'active' : ''}
               onClick={() => setActiveStep(1)}
             >
-              Wybór nawierzchni tarasu:
+              Wybór nawierzchni tarasu
             </li>
             <li
               className={activeStep === 2 ? 'active' : ''}

@@ -152,6 +152,7 @@ export default function Step2({ activeStep, setActiveStep }) {
                   forType='all'
                   title='Łączna powierzchnia'
                   placeholder='ilośc m2'
+                  inputType='number'
                 />
                 {/* count */}
                 <InputRow

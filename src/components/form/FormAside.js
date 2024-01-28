@@ -68,8 +68,7 @@ export default function FormAside({ setFormAsideVisibility }) {
       highest: state.highest,
       terrace_thickness: state.terrace_thickness ? state.terrace_thickness : 0,
       distance_between_joists: state.distance_between_joists,
-      distance_between_supports:
-        state.distance_between_supports_under_the_joist,
+      distance_between_supports: state.distance_between_supports,
       joist_height: state.joist_height ? state.joist_height : 0,
       slab_width: state.slab_width,
       slab_height: state.slab_height,
@@ -83,19 +82,37 @@ export default function FormAside({ setFormAsideVisibility }) {
       proffesion: state.proffesion,
       terms_accepted: 1,
       slabs_count: state.slabs_count,
-      products: state.products,
-      accesories: state.accesories,
+      products: JSON.stringify(state.products),
+      accesories: JSON.stringify(state.accesories),
+      additional_accessories: JSON.stringify(state.additional_accessories),
       supports_count: state.supports_count,
+      m_standard: JSON.stringify(state.M_STANDARD),
+      count_in_each_section: state.count_in_each_section,
+      sections: state.sections,
+
+      // =============================
+      /*
+       * Trzeba wysłać całą matryce w zależności do wyboru głównego systemu
+       * np: M_STANDARD jako cały obiekt + wyliczone wartości
+       * count_in_each_section + sections
+       * dodatkowe akcesoria = additional_accesories = tablica z ID
+       * accesories = tablica z accesories = idk why i send this
+       */
+      // =============================
     };
     try {
-      const response = await fetch('https://ddgro-api.test/api/application', {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(form),
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/application`,
+        {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(form),
+        }
+      );
+      console.log(form);
       const data = await response.json();
       console.log(data);
       setResponse(data);

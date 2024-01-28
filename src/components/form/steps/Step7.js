@@ -5,6 +5,9 @@ import {
   calculateSupportsCount,
   calculateLA,
   calculateSlabsCount,
+  setAverageInEachSection,
+  setSections,
+  setM_STANDARD,
 } from '@/store/slices/formSlice';
 
 function capitalizeFirstLetter(string) {
@@ -18,6 +21,7 @@ export default function Step7({ setFormAsideVisibility }) {
   const state = useSelector((state) => state.form);
   const dispatch = useDispatch();
   const [rows, setRows] = useState([]);
+  const [conditionCount, setConditionCount] = useState(0);
   const [standardMatrix, setStandardMatrix] = useState([]);
 
   // columns for M_STANDARD MATRIX OBJ
@@ -102,6 +106,58 @@ export default function Step7({ setFormAsideVisibility }) {
     } catch (error) {
       console.log('problem with creating matrix..');
       console.log(error);
+    }
+  };
+
+  const handleCalculate = () => {
+    try {
+      const min = state.lowest;
+      const max = state.highest;
+
+      const result = standardMatrix.map((item) => {
+        if (item.wys_mm > min && item.wys_mm < max) {
+          return {
+            ...item,
+            condition: 1,
+          };
+        } else {
+          return {
+            ...item,
+            condition: 0,
+          };
+        }
+      });
+
+      // ilość przedziałów
+      const conditionLength = result.filter(
+        (item) => item.condition === 1
+      ).length;
+
+      // średnia ilośc w przedziale
+      const averageInSection = state.supports_count / conditionLength;
+      dispatch(setAverageInEachSection(averageInSection));
+
+      const final = result.map((item) => {
+        if (item.condition === 0) {
+          return {
+            ...item,
+            count_in_range: 0,
+          };
+        } else {
+          return {
+            ...item,
+            count_in_range: averageInSection,
+          };
+        }
+      });
+
+      setRows(final);
+      setConditionCount(conditionLength);
+
+      dispatch(setSections(conditionLength));
+      dispatch(setM_STANDARD(final));
+    } catch (error) {
+      console.log(errir);
     }
   };
 
@@ -250,11 +306,21 @@ export default function Step7({ setFormAsideVisibility }) {
                 </li>
               </ul>
             </div>
+            {/* 
+            <button
+              className='btn btn--main btn--rounded'
+              onClick={handleCalculate}
+            >
+              Calculate
+            </button> */}
 
             {/* mobile btn */}
             <div className='w-full flex items-center justify-center mt-20 mb-16'>
               <button
-                onClick={() => setFormAsideVisibility(true)}
+                onClick={() => {
+                  handleCalculate();
+                  setFormAsideVisibility(true);
+                }}
                 className='btn btn--main btn--rounded'
               >
                 Odbierz PDF

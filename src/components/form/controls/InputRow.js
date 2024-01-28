@@ -18,6 +18,7 @@ export default function InputRow({
   value,
   placeholder,
   modalContent,
+  inputType,
   hasIndicator = false,
 }) {
   const dispatch = useDispatch();

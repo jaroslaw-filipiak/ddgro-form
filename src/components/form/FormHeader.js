@@ -12,7 +12,7 @@ export default function FormHeader({
   const dispatch = useDispatch();
 
   useEffect(() => {
-    fetch('https://ddgro-api.test/api/accesories')
+    fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/accesories`)
       .then((response) => response.json())
       .then((data) => {
         dispatch(setAccesories(data?.data || []));
@@ -20,7 +20,7 @@ export default function FormHeader({
   }, []);
 
   useEffect(() => {
-    fetch('https://ddgro-api.test/api/products')
+    fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/products`)
       .then((response) => response.json())
       .then((data) => {
         dispatch(setProducts(data?.data || []));
