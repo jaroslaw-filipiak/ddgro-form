@@ -10,6 +10,10 @@
     }
   }
 
+  &--circle {
+    @apply rounded-full w-20 h-20 bg-main text-white text-4xl;
+  }
+
   &--rounded {
     @apply rounded-full;
   }

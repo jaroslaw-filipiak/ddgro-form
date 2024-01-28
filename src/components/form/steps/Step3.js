@@ -140,6 +140,17 @@ export default function Step3({ activeStep, setActiveStep }) {
                 Następny krok
                 <img className='ml-5' src='/assets/arrow-next.svg' alt='' />
               </button>
+              <button
+                disabled={!step3validation}
+                onClick={() => setActiveStep(activeStep + 1)}
+                className='btn btn--circle pointer-none disabled:opacity-50 disabled:cursor-not-allowed fixed hidden right-10 xl:flex items-center justify-center top-[50%] translate-y-[-50%]'
+              >
+                <img
+                  className='min-w-[42px]'
+                  src='/assets/arrow-next.svg'
+                  alt=''
+                />
+              </button>
             </div>
           </div>
         </div>

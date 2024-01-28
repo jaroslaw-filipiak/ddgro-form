@@ -1,6 +1,6 @@
 .step--wrapper {
   min-height: calc(100vh - 128px - 20px);
-  @apply p-6 mt-20;
+  @apply p-6 mt-20 relative;
 
   /* 
 
