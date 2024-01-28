@@ -8,6 +8,7 @@ import {
   changeProffesion,
 } from '@/store/slices/formSlice';
 import { Select, SelectItem, Input } from '@nextui-org/react';
+import {} from '@nextui-org/react';
 
 export default function FormAside({ setFormAsideVisibility }) {
   const dispatch = useDispatch();
@@ -26,39 +27,6 @@ export default function FormAside({ setFormAsideVisibility }) {
   };
 
   const handleForm = async (e) => {
-    // const form = new FormData();
-    // form.append('type', state.type);
-    // form.append('total_area', state.total_area);
-    // form.append('count', state.count);
-    // form.append('gap_between_slabs', state.gap_between_slabs);
-    // form.append('lowest', state.lowest);
-    // form.append('highest', state.highest);
-    // form.append(
-    //   'terrace_thickness',
-    //   state.terrace_thickness ? state.terrace_thickness : 0
-    // );
-    // form.append('distance_between_joists', state.distance_between_joists);
-    // form.append(
-    //   'distance_between_supports',
-    //   state.distance_between_supports_under_the_joist
-    // );
-    // form.append('joist_height', state.joist_height ? state.joist_height : 0);
-    // form.append('slab_width', state.slab_width);
-    // form.append('slab_height', state.slab_height);
-    // form.append('slab_thickness', state.slab_thickness);
-    // form.append('tiles_per_row', state.tiles_per_row);
-    // form.append('sum_of_tiles', state.sum_of_tiles ? state.sum_of_tiles : 0);
-    // form.append('support_type', state.support_type);
-    // form.append('main_system', state.main_system);
-    // form.append('name_surname', state.name_surname);
-    // form.append('email', state.email);
-    // form.append('proffesion', state.proffesion);
-    // form.append('terms_accepted', 1);
-    // form.append('slabs_count', state.slabs_count);
-    // form.append('products', state.products);
-    // form.append('accesories', state.accesories);
-    // form.append('supports_count', state.supports_count);
-
     const form = {
       type: state.type,
       total_area: state.total_area,
@@ -124,100 +92,136 @@ export default function FormAside({ setFormAsideVisibility }) {
   return (
     <>
       <div className='relative'>
-        <div className='fixed left-0 top-0 z-20 bg-main w-[670px] h-screen p-10 sm:p-16  md:pt-24 md:pl-16 lg:pr-16'>
+        <div className='fixed left-0 top-0 z-20 bg-main w-full h-screen'>
           <button className='absolute z-50 right-12 top-10 hover:opacity-80 transition-all'>
             <img
               onClick={() => setFormAsideVisibility(false)}
               src='/assets/close.png'
             />
           </button>
-          <p className='font-bold text-4xl text-white mb-12'>
-            Odbierz PDF z <br />
-            indywidualną ofertą
-          </p>
+          <div class='flex flex-col lg:flex-row lg:min-h-screen '>
+            <div class='w-full p-10 flex items-start flex-col justify-center lg:w-7/12 2xl:w-6/12'>
+              <p className='font-bold text-2xl xl:text-3xl 2xl:text-4xl text-white mb-4 2xl:mb-12'>
+                Odbierz PDF <br className='hidden xl:block' />z indywidualną
+                ofertą
+              </p>
 
-          <form action={handleForm}>
-            {/* imię nazwisko */}
-            <div className='flex flex-col'>
-              <label
-                className='text-lg text-white font-medium mb-2'
-                htmlFor='name'
-              >
-                Imię i nazwisko
-              </label>
+              <form action={handleForm}>
+                <div class='flex items-start gap-3'>
+                  {/* imię nazwisko */}
+                  <div className='flex w-full lg:w-6/12 flex-col'>
+                    <label
+                      className='text-lg text-white font-medium mb-2 '
+                      htmlFor='name'
+                    >
+                      Imię i nazwisko
+                    </label>
 
-              <Input
-                onChange={(e) => dispatch(changeNameSurname(e.target.value))}
-                className='text-base  text-center font-medium rounded-md w-full'
-                type='text'
-                placeholder='Imię, nazwisko'
-              />
-            </div>
+                    <Input
+                      onChange={(e) =>
+                        dispatch(changeNameSurname(e.target.value))
+                      }
+                      className='text-base  text-center font-medium rounded-md w-full'
+                      type='text'
+                      placeholder='Imię, nazwisko'
+                    />
+                  </div>
 
-            {/* email */}
-            <div className='flex flex-col mt-6'>
-              <label
-                className='text-lg text-white font-medium mb-2'
-                htmlFor='name'
-              >
-                Adres email
-              </label>
-              <Input
-                onChange={(e) => dispatch(changeEmail(e.target.value))}
-                className='text-base  text-center font-medium rounded-md w-full'
-                type='email'
-                placeholder='Wpisz adres email'
-              />
-            </div>
+                  {/* email */}
+                  <div className='flex w-full lg:w-6/12 flex-col'>
+                    <label
+                      className='text-lg text-white font-medium mb-2 '
+                      htmlFor='name'
+                    >
+                      Adres email
+                    </label>
+                    <Input
+                      onChange={(e) => dispatch(changeEmail(e.target.value))}
+                      className='text-base  text-center font-medium rounded-md w-full'
+                      type='email'
+                      placeholder='Wpisz adres email'
+                    />
+                  </div>
+                </div>
 
-            {/* select input */}
-            <div className='flex flex-col mt-6'>
-              <label
-                className='text-lg text-white font-medium mb-2'
-                htmlFor='selectInput'
-              >
-                Jestem {value}
-              </label>
-              <Select
-                onSelectionChange={handleSelectionChange}
-                label='Wybierz'
-                className='w-full'
-                items={items}
-              >
-                {(item) => (
-                  <SelectItem key={item.value}>{item.label}</SelectItem>
-                )}
-              </Select>
-            </div>
+                {/* select input */}
+                <div className='flex flex-col mt-3 2xl:mt-6'>
+                  <label
+                    className='text-lg text-white font-medium mb-2 '
+                    htmlFor='selectInput'
+                  >
+                    Jestem {value}
+                  </label>
+                  <Select
+                    onSelectionChange={handleSelectionChange}
+                    label='Wybierz'
+                    className='w-full'
+                    items={items}
+                  >
+                    {(item) => (
+                      <SelectItem key={item.value}>{item.label}</SelectItem>
+                    )}
+                  </Select>
+                </div>
 
-            <div className='w-full flex items-center justify-center mt-20 mb-16'>
-              <button
-                type='submit'
-                onClick={() => setFormAsideVisibility(true)}
-                className='btn btn--main  border-[2px] border-white btn--rounded w-full '
-              >
-                Wyślij
-                <img className='ml-5' src='/assets/arrow-next.svg' />
-              </button>
-            </div>
-          </form>
-          <p className='text-white'>
-            {`Będziemy przetwarzać Twoje dane osobowe, aby udzielić odpowiedzi na
+                <p className='text-white text-sm mt-6'>
+                  {`Będziemy przetwarzać Twoje dane osobowe, aby udzielić odpowiedzi na
             Twoje pytanie. Administratorem Twoich danych osobowych jest
             "DECK-DRY" Sp. z o.o. Przysługuje Ci prawo wniesienia sprzeciwu,
             prawo dostępu do danych, prawo żądania ich sprostowania, ich
             usunięcia lub ograniczenia ich przetwarzania, a także ich
             przenoszenia. Szczegółowe informacje znajdziesz w naszej Polityce
             Prywatności.`}
-          </p>
-          <div>response message: {response?.message}</div>
-          <div>response message: {typeof response?.errors}</div>
-          {/* <div>
-            response message:{' '}
-            {response?.errors.map((item, index) => (
-              <p key={index}>{item}</p>
-            ))}
-          </div> */}
+                </p>
+
+                <div className='w-full flex items-center justify-end mt-6 2xl:mt-20 mb-6 2xl:mb-16'>
+                  <button
+                    type='submit'
+                    onClick={() => setFormAsideVisibility(true)}
+                    className='btn btn--main btn--main__small max-w-[230px]  border-[2px] border-white btn--rounded'
+                  >
+                    Wyślij
+                    <img className='ml-5' src='/assets/arrow-next.svg' />
+                  </button>
+                </div>
+              </form>
+            </div>
+            <div
+              class='w-full lg:w-5/12 2xl:w-6/12 bg-main flex flex-col items-center justify-center p-10 bg-cover bg-center'
+              style={{ backgroundImage: 'url(/assets/ddgro-aside-bg.png)' }}
+            >
+              {response?.errors && (
+                <div className='mt-4 text-white bg-red-600 pt-3 pb-3 pl-6 pr-6 w-full rounded-lg flex items-start gap-3'>
+                  <div>
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      className='icon icon-tabler icon-tabler-alert-circle-filled'
+                      width='24'
+                      height='24'
+                      viewBox='0 0 24 24'
+                      strokeWidth='2'
+                      stroke='currentColor'
+                      fill='none'
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                    >
+                      <path stroke='none' d='M0 0h24v24H0z' fill='none' />
+                      <path
+                        d='M12 2c5.523 0 10 4.477 10 10a10 10 0 0 1 -19.995 .324l-.005 -.324l.004 -.28c.148 -5.393 4.566 -9.72 9.996 -9.72zm.01 13l-.127 .007a1 1 0 0 0 0 1.986l.117 .007l.127 -.007a1 1 0 0 0 0 -1.986l-.117 -.007zm-.01 -8a1 1 0 0 0 -.993 .883l-.007 .117v4l.007 .117a1 1 0 0 0 1.986 0l.007 -.117v-4l-.007 -.117a1 1 0 0 0 -.993 -.883z'
+                        strokeWidth='0'
+                        fill='currentColor'
+                      />
+                    </svg>
+                  </div>
+                  <div>
+                    {response?.errors?.map((item, index) => (
+                      <p key={index}>{item}</p>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </>
