@@ -7,13 +7,14 @@ import {
   changeNameSurname,
   changeProffesion,
 } from '@/store/slices/formSlice';
-import { Select, SelectItem, Input } from '@nextui-org/react';
+import { Select, SelectItem, Input, CircularProgress } from '@nextui-org/react';
 import {} from '@nextui-org/react';
 
 export default function FormAside({ setFormAsideVisibility }) {
   const dispatch = useDispatch();
   const [response, setResponse] = useState();
   const [value, setValue] = useState(null);
+  const [loading, setLoading] = useState(false);
   const state = useSelector((state) => state.form);
 
   const items = [
@@ -27,6 +28,8 @@ export default function FormAside({ setFormAsideVisibility }) {
   };
 
   const handleForm = async (e) => {
+    setLoading(true);
+
     const form = {
       type: state.type,
       total_area: state.total_area,
@@ -84,8 +87,11 @@ export default function FormAside({ setFormAsideVisibility }) {
       const data = await response.json();
       console.log(data);
       setResponse(data);
+
+      setLoading(false);
     } catch (e) {
       console.log(e);
+      setLoading(false);
     }
   };
 
@@ -174,15 +180,32 @@ export default function FormAside({ setFormAsideVisibility }) {
             Prywatności.`}
                 </p>
 
-                <div className='w-full flex items-center justify-end mt-6 2xl:mt-20 mb-6 2xl:mb-16'>
+                <div className='w-full flex flex-col items-end justify-start mt-6 2xl:mt-20 mb-6 2xl:mb-16 gap-6'>
                   <button
                     type='submit'
                     onClick={() => setFormAsideVisibility(true)}
-                    className='btn btn--main btn--main__small max-w-[230px]  border-[2px] border-white btn--rounded'
+                    className='xl:min-w-[350px] btn btn--main btn--main__small max-w-[230px]  border-[2px] border-white btn--rounded pl-10 pr-10'
                   >
-                    Wyślij
-                    <img className='ml-5' src='/assets/arrow-next.svg' />
+                    {loading ? 'Wysyłanie...' : 'Wyślij'}
+                    {loading && (
+                      <CircularProgress
+                        classNames={{
+                          svg: 'w-10 h-10 drop-shadow-md',
+                          indicator: 'stroke-white',
+                          track: 'stroke-white/10',
+                          value: 'text-3xl font-semibold text-white',
+                        }}
+                        aria-label='Loading...'
+                      />
+                    )}
+
+                    {loading ? null : (
+                      <img styl className='ml-5' src='/assets/arrow-next.svg' />
+                    )}
                   </button>
+                  <p className='text-2xl text-white xl:min-w-[350px] text-center font-semibold '>
+                    {response?.message}
+                  </p>
                 </div>
               </form>
             </div>
@@ -220,6 +243,15 @@ export default function FormAside({ setFormAsideVisibility }) {
                   </div>
                 </div>
               )}
+              {/* {response?.message && (
+                <div className='mt-4 text-white bg-main pt-12 pb-12 pl-6 pr-6 w-full rounded-lg flex items-center justify-center gap-3'>
+                  <div>
+                    <p className='text-3xl text-center font-medium'>
+                      {response?.message}
+                    </p>
+                  </div>
+                </div>
+              )} */}
             </div>
           </div>
         </div>
