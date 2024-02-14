@@ -40,6 +40,10 @@ export default function FormAside({ setFormAsideVisibility }) {
       terrace_thickness: state.terrace_thickness ? state.terrace_thickness : 0,
       distance_between_joists: state.distance_between_joists,
       distance_between_supports: state.distance_between_supports,
+      distance_between_supports_under_the_joist:
+        state.distance_between_supports_under_the_joist
+          ? state.distance_between_supports_under_the_joist
+          : 0,
       joist_height: state.joist_height ? state.joist_height : 0,
       slab_width: state.slab_width,
       slab_height: state.slab_height,
@@ -89,6 +93,10 @@ export default function FormAside({ setFormAsideVisibility }) {
       setResponse(data);
 
       setLoading(false);
+
+      window.setTimeout(() => {
+        location.reload();
+      }, 6000);
     } catch (e) {
       console.log(e);
       setLoading(false);
