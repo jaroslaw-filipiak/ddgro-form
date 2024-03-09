@@ -62,6 +62,7 @@ export default function FormAside({ setFormAsideVisibility }) {
       additional_accessories: JSON.stringify(state.additional_accessories),
       supports_count: state.supports_count,
       m_standard: JSON.stringify(state.M_STANDARD),
+      m_standard_order: JSON.stringify(state.M_STANDARD_ORDER),
       count_in_each_section: state.count_in_each_section,
       sections: state.sections,
 
@@ -95,7 +96,7 @@ export default function FormAside({ setFormAsideVisibility }) {
       setLoading(false);
 
       window.setTimeout(() => {
-        location.reload();
+        // location.reload();
       }, 6000);
     } catch (e) {
       console.log(e);

@@ -8,6 +8,7 @@ import {
   setAverageInEachSection,
   setSections,
   setM_STANDARD,
+  setM_STANDARD_ORDER,
 } from '@/store/slices/formSlice';
 
 function capitalizeFirstLetter(string) {
@@ -23,6 +24,12 @@ export default function Step7({ setFormAsideVisibility }) {
   const [rows, setRows] = useState([]);
   const [conditionCount, setConditionCount] = useState(0);
   const [standardMatrix, setStandardMatrix] = useState([]);
+  const [mStandardOrder, setMStandardOrder] = useState({
+    test: 0,
+    test2: 0,
+  });
+
+  const [test, setTest] = useState(0);
 
   // columns for M_STANDARD MATRIX OBJ
   const columns = [
@@ -94,8 +101,9 @@ export default function Step7({ setFormAsideVisibility }) {
     setRows(rangeObj);
     setStandardMatrix(rangeObj);
 
-    console.log('matrix created..');
+    console.log('M_STANDARD matrix created..');
     console.log(rangeObj);
+
     return rangeObj;
   };
 
@@ -156,8 +164,25 @@ export default function Step7({ setFormAsideVisibility }) {
 
       dispatch(setSections(conditionLength));
       dispatch(setM_STANDARD(final));
+
+      console.log(final);
+
+      const firstRange = final.filter((item) => item.range === '10-17');
+      const firstRangeWithCondition = firstRange.filter(
+        (item) => item.condition === 1
+      );
+      const supportsInFirstRange = firstRangeWithCondition.reduce(
+        (acc, item) => acc + item.count_in_range,
+        0
+      );
+
+      const roundedSupportsInFirstRange = Math.round(supportsInFirstRange);
+      console.log('supportsInFirstRange', roundedSupportsInFirstRange);
+      setTest(roundedSupportsInFirstRange);
+      console.log(test);
+      dispatch(setM_STANDARD_ORDER(roundedSupportsInFirstRange));
     } catch (error) {
-      console.log(errir);
+      console.log(error);
     }
   };
 
