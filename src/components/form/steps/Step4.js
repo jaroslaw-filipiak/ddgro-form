@@ -39,14 +39,14 @@ export default function Step4({ activeStep, setActiveStep }) {
       type: 'slab',
       distance: '45-950',
     },
-    {
-      id: 4,
-      title: 'Seria Alu',
-      series: 'alu',
-      img: '/assets/series-alu-slab.png',
-      type: 'slab',
-      distance: '40-200',
-    },
+    // {
+    //   id: 4,
+    //   title: 'Seria Alu',
+    //   series: 'alu',
+    //   img: '/assets/series-alu-slab.png',
+    //   type: 'slab',
+    //   distance: '40-200',
+    // },
 
     {
       id: 5,
@@ -150,7 +150,7 @@ export default function Step4({ activeStep, setActiveStep }) {
                   <div
                     onClick={(event) => onChangeValue(event, item)}
                     key={item.id}
-                    className={`item xl:w-4/12 mb-10 relative cursor-pointer hover:opacity-60 transition-all  flex flex-col items-start ${
+                    className={`item xl:w-4/12 mb-10 relative cursor-pointer hover:opacity-60 transition-all  flex flex-col items-start selection:bg-none ${
                       item.series === selectedMainSystem ? 'selected' : null
                     }`}
                   >

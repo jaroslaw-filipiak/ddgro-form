@@ -16,6 +16,7 @@ export default function InputRow({
   title,
   onChange,
   value,
+  minValue,
   placeholder,
   modalContent,
   inputType,
@@ -48,6 +49,7 @@ export default function InputRow({
             type='text'
             value={value}
             onChange={onChange}
+            // min={minValue}
           />
         </div>
       ) : null}

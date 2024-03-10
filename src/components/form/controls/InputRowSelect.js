@@ -42,13 +42,22 @@ export default function InputRow({
             )}
           </div>
 
-          <input
+          {/* <input
             className='text-base p-4 lg:pl-10 lg:pr-10 lg:pt-5 lg:pb-5 text-center font-medium'
             placeholder={placeholder}
             type='text'
             value={value}
             onChange={onChange}
-          />
+          /> */}
+
+          <select
+            className='text-base p-4  lg:pt-5 lg:pb-5 text-center font-medium min-w-[256px]'
+            value={value}
+            onChange={onChange}
+          >
+            <option value='3'>3mm</option>
+            <option value='5'>5mm</option>
+          </select>
         </div>
       ) : null}
 

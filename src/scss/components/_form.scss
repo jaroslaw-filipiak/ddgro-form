@@ -62,3 +62,15 @@
     background-color: red;
   }
 }
+
+.step-2 {
+  select {
+    // border: 2px solid red;
+  }
+
+  option {
+    @media (min-width: 1024px) {
+      padding-left: 0px !important;
+    }
+  }
+}

@@ -17,6 +17,7 @@ import {
   setStep2Validation,
 } from '@/store/slices/formSlice';
 import InputRow from '../controls/InputRow';
+import InputRowSelect from '../controls/InputRowSelect';
 
 export default function Step2({ activeStep, setActiveStep }) {
   const dispatch = useDispatch();
@@ -65,8 +66,8 @@ export default function Step2({ activeStep, setActiveStep }) {
         lowest &&
         highest &&
         slab_width &&
-        slab_height &&
-        slab_thickness
+        slab_height
+        // slab_thickness
       ) {
         dispatch(setStep2Validation(1));
         setValidated(1);
@@ -153,6 +154,7 @@ export default function Step2({ activeStep, setActiveStep }) {
                   title='Łączna powierzchnia'
                   placeholder='ilośc m2'
                   inputType='number'
+                  // hasIndicator={true}
                 />
                 {/* count */}
                 <InputRow
@@ -165,7 +167,7 @@ export default function Step2({ activeStep, setActiveStep }) {
                   placeholder='szt.'
                 />
                 {/* gap between slabs */}
-                <InputRow
+                <InputRowSelect
                   onChange={(e) =>
                     dispatch(changeGapBetweenSlabs(Number(e.target.value)))
                   }
@@ -184,6 +186,7 @@ export default function Step2({ activeStep, setActiveStep }) {
                   forType='all'
                   title='Najniższy punkt wysokości tarasu'
                   placeholder='mm'
+                  // minValue='10'
                 />
                 {/* highest */}
                 <InputRow
@@ -275,7 +278,7 @@ export default function Step2({ activeStep, setActiveStep }) {
                   placeholder='mm'
                 />
                 {/* changeSlabThickness */}
-                <InputRow
+                {/* <InputRow
                   onChange={(e) => {
                     dispatch(changeSlabThickness(Number(e.target.value)));
                     handleValidated();
@@ -284,7 +287,7 @@ export default function Step2({ activeStep, setActiveStep }) {
                   forType='slab'
                   title='Grubość płyty'
                   placeholder='mm'
-                />
+                /> */}
               </div>
             </div>
 
@@ -292,7 +295,11 @@ export default function Step2({ activeStep, setActiveStep }) {
             <div className='w-full flex items-center justify-center mt-20 mb-16'>
               <button
                 disabled={!step2validation}
-                onClick={() => setActiveStep(activeStep + 1)}
+                onClick={() =>
+                  type === 'wood'
+                    ? setActiveStep(4)
+                    : setActiveStep(activeStep + 1)
+                }
                 className='btn btn--main btn--rounded disabled:opacity-50 disabled:cursor-not-allowed'
               >
                 Następny krok
@@ -301,7 +308,11 @@ export default function Step2({ activeStep, setActiveStep }) {
 
               <button
                 disabled={!step2validation}
-                onClick={() => setActiveStep(activeStep + 1)}
+                onClick={() =>
+                  type === 'wood'
+                    ? setActiveStep(4)
+                    : setActiveStep(activeStep + 1)
+                }
                 className='btn btn--circle pointer-none disabled:opacity-50 disabled:cursor-not-allowed fixed hidden right-10 xl:flex items-center justify-center top-[50%] translate-y-[-50%]'
               >
                 <img

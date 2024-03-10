@@ -47,7 +47,7 @@ export default function FormAside({ setFormAsideVisibility }) {
       joist_height: state.joist_height ? state.joist_height : 0,
       slab_width: state.slab_width,
       slab_height: state.slab_height,
-      slab_thickness: state.slab_thickness,
+      slab_thickness: 0,
       tiles_per_row: state.tiles_per_row,
       sum_of_tiles: state.sum_of_tiles ? state.sum_of_tiles : 0,
       support_type: state.support_type,
@@ -61,10 +61,33 @@ export default function FormAside({ setFormAsideVisibility }) {
       accesories: JSON.stringify(state.accesories),
       additional_accessories: JSON.stringify(state.additional_accessories),
       supports_count: state.supports_count,
+
+      // =============================
+      // M_STANDARD
+      // =============================
+
+      sections: state.sections,
+      count_in_each_section: state.count_in_each_section,
       m_standard: JSON.stringify(state.M_STANDARD),
       m_standard_order: JSON.stringify(state.M_STANDARD_ORDER),
-      count_in_each_section: state.count_in_each_section,
-      sections: state.sections,
+
+      // =============================
+      // M_SPIRAL
+      // =============================
+
+      sections_spiral: state.sectionsSpiral,
+      count_in_each_section_spiral: state.count_in_each_section_spiral,
+      m_spiral: JSON.stringify(state.M_SPIRAL),
+      m_spiral_order: JSON.stringify(state.M_SPIRAL_ORDER),
+
+      // =============================
+      // M_MAX
+      // =============================
+
+      sections_max: state.sectionsMax,
+      count_in_each_section_max: state.count_in_each_section_max,
+      m_max: JSON.stringify(state.M_MAX),
+      m_max_order: JSON.stringify(state.M_MAX_ORDER),
 
       // =============================
       /*
@@ -114,15 +137,15 @@ export default function FormAside({ setFormAsideVisibility }) {
               src='/assets/close.png'
             />
           </button>
-          <div class='flex flex-col lg:flex-row lg:min-h-screen '>
-            <div class='w-full p-10 flex items-start flex-col justify-center lg:w-7/12 2xl:w-6/12'>
+          <div className='flex flex-col lg:flex-row lg:min-h-screen '>
+            <div className='w-full p-10 flex items-start flex-col justify-center lg:w-7/12 2xl:w-6/12'>
               <p className='font-bold text-2xl xl:text-3xl 2xl:text-4xl text-white mb-4 2xl:mb-12'>
                 Odbierz PDF <br className='hidden xl:block' />z indywidualną
                 ofertą
               </p>
 
               <form action={handleForm}>
-                <div class='flex items-start gap-3'>
+                <div className='flex items-start gap-3'>
                   {/* imię nazwisko */}
                   <div className='flex w-full lg:w-6/12 flex-col'>
                     <label
@@ -209,7 +232,7 @@ export default function FormAside({ setFormAsideVisibility }) {
                     )}
 
                     {loading ? null : (
-                      <img styl className='ml-5' src='/assets/arrow-next.svg' />
+                      <img className='ml-5' src='/assets/arrow-next.svg' />
                     )}
                   </button>
                   <p className='text-2xl text-white xl:min-w-[350px] text-center font-semibold '>
@@ -219,7 +242,7 @@ export default function FormAside({ setFormAsideVisibility }) {
               </form>
             </div>
             <div
-              class='w-full lg:w-5/12 2xl:w-6/12 bg-main flex flex-col items-center justify-center p-10 bg-cover bg-center'
+              className='w-full lg:w-5/12 2xl:w-6/12 bg-main flex flex-col items-center justify-center p-10 bg-cover bg-center'
               style={{ backgroundImage: 'url(/assets/ddgro-aside-bg.png)' }}
             >
               {response?.errors && (

@@ -14,14 +14,27 @@ import {
   setSections,
   setAverageInEachSection,
   setM_STANDARD,
+  setSectionsSpiral,
+  setAverageInEachSectionSpiral,
+  setM_SPIRAL,
+  setM_SPIRAL_ORDER,
 } from '@/store/slices/formSlice';
 
 export default function Matrix() {
   const dispatch = useDispatch();
   const state = useSelector((state) => state.form);
+
+  //  M_STANDARD SET
   const [rows, setRows] = useState([]);
   const [standardMatrix, setStandardMatrix] = useState([]);
   const [conditionCount, setConditionCount] = useState(0);
+  // ==================================================
+
+  //  M_SPIRAL SET
+  const [rowsSpiral, setRowsSpiral] = useState([]);
+  const [spiralMatrix, setSpieralMatrix] = useState([]);
+  const [conditionSpiralCount, setConditionSpiralCount] = useState(0);
+  // ==================================================
 
   const columns = [
     {
@@ -42,7 +55,16 @@ export default function Matrix() {
     },
   ];
 
-  // create matrix of M_STANDARD
+  /*
+  |--------------------------------------------------------------------------
+  | M_STANDARD MATRYCA 
+  |--------------------------------------------------------------------------
+  |
+  | Tablica dla matrix M_STANDARD
+  | 
+  |
+  */
+
   const M_STANDARD = () => {
     const obj = [];
     for (let i = 0; i <= 940; i++) {
@@ -95,14 +117,88 @@ export default function Matrix() {
     return rangeObj;
   };
 
+  /*
+  |--------------------------------------------------------------------------
+  | M_SPIRAL MATRYCA
+  |--------------------------------------------------------------------------
+  |
+  | Tablica dla matrix M_SPIAL
+  | 
+  |
+  */
+
+  const M_SPIRAL = () => {
+    const obj = [];
+    for (let i = 0; i <= 940; i++) {
+      let start = 10;
+      obj[i] = {
+        id: i,
+        wys_mm: start + i,
+        condition: 0,
+      };
+    }
+
+    const calculateRange = (item) => {
+      switch (true) {
+        case item.wys_mm >= 10 && item.wys_mm <= 16:
+          return '10-17';
+        case item.wys_mm >= 17 && item.wys_mm <= 29:
+          return '17-30';
+        case item.wys_mm >= 30 && item.wys_mm <= 45:
+          return '30-45';
+        case item.wys_mm >= 46 && item.wys_mm <= 69:
+          return '45-70';
+        case item.wys_mm >= 70 && item.wys_mm <= 119:
+          return '70-120';
+        case item.wys_mm >= 120 && item.wys_mm <= 219:
+          return '120-220';
+        case item.wys_mm >= 220 && item.wys_mm <= 319:
+          return '220-320';
+        case item.wys_mm >= 320 && item.wys_mm <= 420:
+          return '320-420';
+        case item.wys_mm >= 421 && item.wys_mm <= 549:
+          return '350-550';
+        case item.wys_mm >= 550 && item.wys_mm <= 749:
+          return '550-750';
+        case item.wys_mm >= 750 && item.wys_mm <= 950:
+          return '750-950';
+
+        default:
+          return '';
+      }
+    };
+
+    const rangeObj = obj.map((item) => ({
+      ...item,
+      range: calculateRange(item),
+    }));
+
+    setRowsSpiral(rangeObj);
+    setSpiralMatrix(rangeObj);
+
+    return rangeObj;
+  };
+
   useEffect(() => {
     M_STANDARD();
+    M_SPIRAL();
   }, []);
 
-  const handleCalculate = () => {
+  const handleM_STANDARD = () => {
     const min = state.lowest;
     const max = state.highest;
 
+    /*
+    |--------------------------------------------------------------------------
+    | 1. M_STANDARD
+    |--------------------------------------------------------------------------
+    |
+    | Tablica dla matrix M_STANDARD
+    | + ilość przedziałów + ilość w przedziale + count_in_range
+    |
+    */
+
+    // M_STANDARD
     const result = standardMatrix.map((item) => {
       if (item.wys_mm > min && item.wys_mm < max) {
         return {
@@ -117,15 +213,16 @@ export default function Matrix() {
       }
     });
 
-    // ilość przedziałów
+    // M_STANDARD ilość przedziałów
     const conditionLength = result.filter(
       (item) => item.condition === 1
     ).length;
 
-    // średnia ilośc w przedziale
+    // M_STANDARD średnia ilośc w przedziale
     const averageInSection = state.supports_count / conditionLength;
     dispatch(setAverageInEachSection(averageInSection));
 
+    // M_STANDARD full matix with condition
     const final = result.map((item) => {
       if (item.condition === 0) {
         return {
@@ -140,11 +237,81 @@ export default function Matrix() {
       }
     });
 
+    // M_STANDARD dispatch stuff
     setRows(final);
     setConditionCount(conditionLength);
 
     dispatch(setSections(conditionLength));
     dispatch(setM_STANDARD(final));
+  };
+
+  const handleM_SPIRAL = () => {
+    const min = state.lowest;
+    const max = state.highest;
+
+    /*
+    |--------------------------------------------------------------------------
+    | 2. M_SPIRAL
+    |--------------------------------------------------------------------------
+    |
+    | Tablica dla matrix M_SPIRAL
+    | + ilość przedziałów + ilość w przedziale + count_in_range
+    |
+    */
+
+    // M_SPIRAL
+    // !important ...Matrix.map - change for every handle function
+    const result = spiralMatrix.map((item) => {
+      if (item.wys_mm > min && item.wys_mm < max) {
+        return {
+          ...item,
+          condition: 1,
+        };
+      } else {
+        return {
+          ...item,
+          condition: 0,
+        };
+      }
+    });
+
+    // M_SPIRAL ilość przedziałów
+    const conditionLength = result.filter(
+      (item) => item.condition === 1
+    ).length;
+
+    // M_SPIRAL średnia ilośc w przedziale
+    const averageInSection = state.supports_count / conditionLength;
+    dispatch(setAverageInEachSectionSpiral(averageInSection));
+
+    // M_SPIRAL full matix with condition
+    const final = result.map((item) => {
+      if (item.condition === 0) {
+        return {
+          ...item,
+          count_in_range: 0,
+        };
+      } else {
+        return {
+          ...item,
+          count_in_range: averageInSection,
+        };
+      }
+    });
+
+    // M_SPIRAL dispatch stuff
+    setRowsSpiral(final);
+    setConditionSpiralCount(conditionLength);
+
+    dispatch(setSectionsSpiral(conditionLength));
+    dispatch(setM_SPIRAL(final));
+  };
+
+  const handleCalculate = () => {
+    // dispatch and calculate all matrixes
+    // TODO: calculate matrix per system
+
+    handleM_STANDARD();
   };
 
   return (

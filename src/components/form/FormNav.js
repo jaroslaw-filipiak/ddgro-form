@@ -1,4 +1,8 @@
+import { useSelector, useDispatch } from 'react-redux';
+
 export default function FormNav({ activeStep, setActiveStep }) {
+  const dispatch = useDispatch();
+  const type = useSelector((state) => state.form.type);
   return (
     <>
       <div className='form-nav--wrapper'>
@@ -17,7 +21,11 @@ export default function FormNav({ activeStep, setActiveStep }) {
               Parametry tarasu
             </li>
             <li
-              className={activeStep === 3 ? 'active' : ''}
+              className={`${activeStep === 3 ? 'active' : ''} ${
+                type === 'wood'
+                  ? 'disabled cursor-not-allowed pointer-events-none opacity-30 line-through'
+                  : null
+              }`}
               onClick={() => setActiveStep(3)}
             >
               Rodzaj podparcia

@@ -49,13 +49,37 @@ const initialState = {
   NO_PEDESTALS_BETWEEN_ROWS: null,
   NO_INTERMEDIATE_ROWS_OD_PEDESTALS: null,
   // ============================
+  // M_STANDARD
+  // ============================
   sections: 0,
   count_in_each_section: 0,
-  // ============================
-  //  Matryce
-  // ============================
   M_STANDARD: [],
   M_STANDARD_ORDER: [],
+
+  // ============================
+  // M_SPIRAL
+  // ============================
+  sectionsSpiral: 0,
+  count_in_each_section_spiral: 0,
+  M_SPIRAL: [],
+  M_SPIRAL_ORDER: [],
+
+  // ============================
+  // M_MAX
+  // ============================
+  sectionsMax: 0,
+  count_in_each_section_max: 0,
+  M_MAX: [],
+  M_MAX_ORDER: [],
+
+  // ============================
+  // M_RAPTOR AKA ALU
+  // ============================
+  sectionsRaptor: 0,
+  count_in_each_section_raptor: 0,
+  M_RAPTOR: [],
+  M_RAPTOR_ORDER: [],
+
   // ============================
   // form steps validation
   // ============================
@@ -71,6 +95,12 @@ export const formSlice = createSlice({
     changeType: (state, action) => {
       state.type = action.payload;
       // reset main system when type is changed
+      // if type === wood then support_type = type1
+
+      if (action.payload === 'wood') {
+        state.support_type = 'type1';
+      }
+
       state.main_system = null;
     },
     changeEmail: (state, action) => {
@@ -263,6 +293,9 @@ export const formSlice = createSlice({
     calculateSlabsCount: (state) => {
       state.slabs_count = state.TOTAL_NO_PAYERS * state.count;
     },
+
+    // M_STANDARD SET
+    //================================================================
     setSections: (state, action) => {
       state.sections = action.payload;
     },
@@ -275,6 +308,59 @@ export const formSlice = createSlice({
     setM_STANDARD_ORDER: (state, action) => {
       state.M_STANDARD_ORDER = action.payload;
     },
+    //================================================================
+
+    // M_SPIRAL SET
+    //================================================================
+    setSectionsSpiral: (state, action) => {
+      state.sectionsSpiral = action.payload;
+    },
+    setAverageInEachSectionSpiral: (state, action) => {
+      state.count_in_each_section_spiral = action.payload;
+    },
+    setM_SPIRAL: (state, action) => {
+      state.M_SPIRAL = action.payload;
+    },
+    setM_SPIRAL_ORDER: (state, action) => {
+      state.M_SPIRAL_ORDER = action.payload;
+    },
+
+    //================================================================
+
+    // M_MAX SET
+    //================================================================
+    setSectionsMax: (state, action) => {
+      state.sectionsMax = action.payload;
+    },
+    setAverageInEachSectionMax: (state, action) => {
+      state.count_in_each_section_max = action.payload;
+    },
+    setM_MAX: (state, action) => {
+      state.M_MAX = action.payload;
+    },
+    setM_MAX_ORDER: (state, action) => {
+      state.M_MAX_ORDER = action.payload;
+    },
+
+    //================================================================
+
+    // M_RAPTOR SET
+    //================================================================
+    setSectionsRaptor: (state, action) => {
+      state.sectionsRaptor = action.payload;
+    },
+    setAverageInEachSectionRaptor: (state, action) => {
+      state.count_in_each_section_raptor = action.payload;
+    },
+    setM_RAPTOR: (state, action) => {
+      state.M_RAPTOR = action.payload;
+    },
+    setM_RAPTOR_ORDER: (state, action) => {
+      state.M_RAPTOR_ORDER = action.payload;
+    },
+
+    //================================================================
+
     setStep2Validation: (state, action) => {
       state.step2validation = action.payload;
     },
@@ -326,6 +412,18 @@ export const {
   setStep2Validation,
   setStep3Validation,
   setStep4Validation,
+  setSectionsSpiral,
+  setAverageInEachSectionSpiral,
+  setM_SPIRAL,
+  setM_SPIRAL_ORDER,
+  setSectionsMax,
+  setAverageInEachSectionMax,
+  setM_MAX,
+  setM_MAX_ORDER,
+  setSectionsRaptor,
+  setAverageInEachSectionRaptor,
+  setM_RAPTOR,
+  setM_RAPTOR_ORDER,
 } = formSlice.actions;
 
 export default formSlice.reducer;
