@@ -232,6 +232,7 @@ export default function Step7({ setFormAsideVisibility }) {
       };
     }
 
+    // TODO: 30-50 oraz 45-75 , od 45-50 jest jeden przedzial..
     const calculateRange = (item) => {
       switch (true) {
         case item.wys_mm >= 10 && item.wys_mm <= 16:
