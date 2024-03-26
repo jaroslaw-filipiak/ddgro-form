@@ -55,6 +55,9 @@ export default function InputRow({
             value={value}
             onChange={onChange}
           >
+            <option disabled value=''>
+              Wybierz
+            </option>
             <option value='3'>3mm</option>
             <option value='5'>5mm</option>
           </select>
