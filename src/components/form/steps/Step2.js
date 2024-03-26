@@ -184,7 +184,7 @@ export default function Step2({ activeStep, setActiveStep }) {
                   }
                   value={useSelector((state) => state.form.lowest)}
                   forType='all'
-                  title='Najniższy punkt wysokości tarasu'
+                  title='Najniższy wspornik'
                   placeholder='mm'
                   // minValue='10'
                 />
@@ -195,7 +195,7 @@ export default function Step2({ activeStep, setActiveStep }) {
                   }
                   value={useSelector((state) => state.form.highest)}
                   forType='all'
-                  title='Najwyższy punkt wysokości tarasu'
+                  title='Najwyższy wspornik'
                   placeholder='mm'
                 />
                 {/* changeTerraceThickness */}
