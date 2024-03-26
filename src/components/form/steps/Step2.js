@@ -199,7 +199,7 @@ export default function Step2({ activeStep, setActiveStep }) {
                   placeholder='mm'
                 />
                 {/* changeTerraceThickness */}
-                <InputRow
+                {/* <InputRow
                   onChange={(e) =>
                     dispatch(changeTerraceThickness(Number(e.target.value)))
                   }
@@ -207,7 +207,7 @@ export default function Step2({ activeStep, setActiveStep }) {
                   forType='wood'
                   title='Grubość deski'
                   placeholder='mm'
-                />
+                /> */}
                 {/* changeDistanceBetweenJoists === changeSlabLength */}
                 <InputRow
                   onChange={(e) =>

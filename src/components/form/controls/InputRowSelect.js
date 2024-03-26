@@ -55,8 +55,8 @@ export default function InputRow({
             value={value}
             onChange={onChange}
           >
-            <option disabled value=''>
-              Wybierz
+            <option value='' disabled selected>
+              Wybierz grubość fugi,
             </option>
             <option value='3'>3mm</option>
             <option value='5'>5mm</option>

@@ -50,26 +50,21 @@
   @apply flex w-7 h-7 rounded-full items-center justify-center text-black text-base font-bold bg-[#D9D9D9] cursor-pointer transition-all hover:bg-main hover:text-white;
 }
 
-.step-5 {
-  .input-accesories:checked {
-    border: 33px solid red !important;
-    opacity: 20%;
-  }
-
-  .input-accesories:checked > .input-accesories--wrapper {
-    border: 33px solid red !important;
-    opacity: 20%;
-    background-color: red;
-  }
-}
-
 .step-2 {
-  select {
-  }
+  // select {
+  //   color: red;
 
-  option {
-    @media (min-width: 1024px) {
-      padding-left: 0px !important;
-    }
-  }
+  //   option {
+  //     color: orange;
+  //   }
+  //   &::selected {
+  //     color: blue;
+  //   }
+  // }
+
+  // option {
+  //   @media (min-width: 1024px) {
+  //     padding-left: 0px !important;
+  //   }
+  // }
 }
