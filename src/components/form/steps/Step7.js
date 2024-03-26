@@ -745,11 +745,23 @@ export default function Step7({ setFormAsideVisibility }) {
                   </div>
                 </li>
 
-                <li className='flex items-center justify-between border-b border-black border-opacity-50 p-6'>
-                  <p className='text-xl text-black text-opacity-50 font-normal'>
+                <li
+                  className={`flex items-center justify-between border-b border-black border-opacity-50 p-6 ${
+                    state.type === 'wood' ? 'hidden' : ''
+                  }`}
+                >
+                  <p
+                    className={`text-xl text-black text-opacity-50 font-normal ${
+                      state.type === 'wood' ? 'hidden' : ''
+                    }`}
+                  >
                     Liczba płyt:
                   </p>
-                  <div className='flex items-center'>
+                  <div
+                    className={`flex items-center ${
+                      state.type === 'wood' ? 'hidden' : ''
+                    }`}
+                  >
                     <p className='text-black text-opacity-50 text-base pl-4'>
                       {state?.slabs_count ? state?.slabs_count : '-'}
                     </p>
