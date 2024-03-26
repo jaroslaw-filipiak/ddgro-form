@@ -247,7 +247,7 @@ export default function Step2({ activeStep, setActiveStep }) {
                 />
 
                 {/* changeJoistHeight */}
-                <InputRow
+                {/* <InputRow
                   onChange={(e) =>
                     dispatch(changeJoistHeight(Number(e.target.value)))
                   }
@@ -255,7 +255,7 @@ export default function Step2({ activeStep, setActiveStep }) {
                   forType='wood'
                   title='Wysokość legara'
                   placeholder='mm'
-                />
+                /> */}
 
                 {/* changeSlabWidth */}
                 <InputRow
