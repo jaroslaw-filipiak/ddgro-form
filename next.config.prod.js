@@ -9,11 +9,11 @@ const nextConfig = {
   sassOptions: {
     includePaths: [path.join(__dirname, 'styles')],
   },
-  // images: { unoptimized: true },
-  images: {
-    loader: 'imgix',
-    path: '',
-  },
+  images: { unoptimized: true },
+  // images: {
+  //   loader: 'imgix',
+  //   path: '',
+  // },
 };
 
 module.exports = nextConfig;
