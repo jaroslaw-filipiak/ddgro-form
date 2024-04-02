@@ -13,13 +13,14 @@ export default function Step4({ activeStep, setActiveStep }) {
     dispatch(changeMainSystem(item.series));
     dispatch(setStep4Validation(1));
   };
+  const imageBaseUrl = process.env.IMAGE_BASE_URL;
 
   const [series] = useState([
     {
       id: 1,
       title: 'Seria Spiral',
       series: 'spiral',
-      img: `${process.env.IMAGE_BASE_URL}/assets/series-spiral-slab.png`,
+      img: `${imageBaseUrl}/assets/series-spiral-slab.png`,
       type: 'slab',
       distance: '10-210',
     },
