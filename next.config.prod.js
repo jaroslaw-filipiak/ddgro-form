@@ -11,7 +11,7 @@ const nextConfig = {
   },
   // images: { unoptimized: true },
   images: {
-    loader: 'ddgro',
+    loader: 'custom',
     loaderFile: './loader.js',
   },
 };
