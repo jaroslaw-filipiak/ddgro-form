@@ -122,7 +122,13 @@ export default function FormAside({ setFormAsideVisibility }) {
         // location.reload();
       }, 6000);
     } catch (e) {
+      console.log('error===========');
       console.log(e);
+      console.log('error===========');
+
+      console.log('form===========');
+      console.log(form);
+      console.log('form===========');
       setLoading(false);
     }
   };
