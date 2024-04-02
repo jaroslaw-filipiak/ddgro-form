@@ -13,7 +13,7 @@ export default function Step4({ activeStep, setActiveStep }) {
     dispatch(changeMainSystem(item.series));
     dispatch(setStep4Validation(1));
   };
-  const imageBaseUrl = process.env.IMAGE_BASE_URL;
+  const imageBaseUrl = process.env.NEXT_PUBLIC_IMAGE_BASE_URL;
 
   const [series] = useState([
     {
