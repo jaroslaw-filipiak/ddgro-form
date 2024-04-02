@@ -116,10 +116,12 @@ export default function Step2({ activeStep, setActiveStep }) {
                       type === 'slab' ? 'selected' : ''
                     } relative flex items-center justify-center cursor-pointer gap-7 hover:opacity-90 transition-all`}
                   >
-                    <img
+                    <Image
                       className='max-w-[177px]'
                       src='/assets/plyty-img.png'
                       role='presentation'
+                      width={177}
+                      height={130}
                     />
                     <p className=' text-black text-opacity-75 text-2xl font-bold mt-3'>
                       Płyty
@@ -131,10 +133,12 @@ export default function Step2({ activeStep, setActiveStep }) {
                       type === 'wood' ? 'selected' : ''
                     } relative flex items-center justify-center cursor-pointer gap-7 hover:opacity-90 transition-all`}
                   >
-                    <img
+                    <Image
                       className='max-w-[177px]'
                       src='/assets/deski-img.png'
                       role='presentation'
+                      width={177}
+                      height={130}
                     />
                     <p className=' text-black text-opacity-75 text-2xl font-bold mt-3'>
                       Deski
