@@ -12,6 +12,7 @@ export default function FormHeader({
   const dispatch = useDispatch();
 
   useEffect(() => {
+    console.log('test ci cd from buddy');
     fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/accesories`)
       .then((response) => response.json())
       .then((data) => {
