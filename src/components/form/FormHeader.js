@@ -27,6 +27,8 @@ export default function FormHeader({
     fetcher
   );
 
+  dispatch(setProducts(products || []));
+
   console.log(accesories);
   console.log(products);
   // useEffect(() => {
