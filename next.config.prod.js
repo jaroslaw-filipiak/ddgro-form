@@ -10,8 +10,10 @@ const nextConfig = {
     includePaths: [path.join(__dirname, 'styles')],
   },
   // images: { unoptimized: true },
-  loader: 'ddgro',
-  loaderFile: './loader.js',
+  images: {
+    loader: 'ddgro',
+    loaderFile: './loader.js',
+  },
 };
 
 module.exports = nextConfig;
