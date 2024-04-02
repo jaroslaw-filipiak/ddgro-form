@@ -17,6 +17,7 @@ export default function FormAside({ setFormAsideVisibility }) {
   const [value, setValue] = useState(null);
   const [loading, setLoading] = useState(false);
   const state = useSelector((state) => state.form);
+  const imageBaseUrl = process.env.NEXT_PUBLIC_IMAGE_BASE_URL;
 
   const items = [
     { value: 'Architekt', label: 'Architektem' },
@@ -250,7 +251,9 @@ export default function FormAside({ setFormAsideVisibility }) {
             </div>
             <div
               className='w-full lg:w-5/12 2xl:w-6/12 bg-main flex flex-col items-center justify-center p-10 bg-cover bg-center'
-              style={{ backgroundImage: 'url(/assets/ddgro-aside-bg.png)' }}
+              style={{
+                backgroundImage: `url(${imageBaseUrl}/assets/ddgro-aside-bg.png)`,
+              }}
             >
               {response?.errors && (
                 <div className='mt-4 text-white bg-red-600 pt-3 pb-3 pl-6 pr-6 w-full rounded-lg flex items-start gap-3'>
