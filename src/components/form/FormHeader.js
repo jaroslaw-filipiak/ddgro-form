@@ -13,6 +13,10 @@ export default function FormHeader({
 }) {
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    console.log('updade scss file');
+  }, []);
+
   // useEffect(() => {
   //   console.log('assetPrefix to slash');
   //   fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/accesories`)
