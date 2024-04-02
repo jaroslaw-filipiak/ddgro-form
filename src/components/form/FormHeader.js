@@ -12,7 +12,7 @@ export default function FormHeader({
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log('images: { unoptimized: true }');
+    console.log('loader: imgix');
   }, []);
 
   // useEffect(() => {
