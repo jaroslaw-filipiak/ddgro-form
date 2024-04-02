@@ -4,6 +4,7 @@ import { use, useEffect } from 'react';
 import { setAccesories, setProducts } from '@/store/slices/formSlice';
 
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function FormHeader({
   activeStep,
@@ -39,14 +40,19 @@ export default function FormHeader({
       <section className='pb-32 h-12'>
         <div className='w-full columns1 md:columns-2 flex flex-col md:flex-row items-center justify-center gap-14'>
           <div className='w-3/12'>
-            <Image
-              className='max-w-full'
-              src='/assets/logo.svg'
-              role='presentation'
-              alt='deski-img'
-              width={214}
-              height={45}
-            />
+            <div
+              className='cursor-pointer hover:opacity-80'
+              onClick={() => setActiveStep(1)}
+            >
+              <Image
+                className='max-w-full'
+                src='/assets/logo.svg'
+                role='presentation'
+                alt='deski-img'
+                width={214}
+                height={45}
+              />
+            </div>
           </div>
           <div className='w-full'>
             <FormNav
