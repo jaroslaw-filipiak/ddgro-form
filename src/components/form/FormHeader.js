@@ -4,7 +4,7 @@ import { use, useEffect } from 'react';
 import { setAccesories, setProducts } from '@/store/slices/formSlice';
 
 import Image from 'next/image';
-import Link from 'next/link';
+import useSWR from 'swr';
 
 export default function FormHeader({
   activeStep,
@@ -13,11 +13,22 @@ export default function FormHeader({
   setFormAsideVisibility,
 }) {
   const dispatch = useDispatch();
+  const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
-  useEffect(() => {
-    console.log('updade scss file');
-  }, []);
+  useEffect(() => {}, []);
 
+  const { data: accesories } = useSWR(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/accesories`,
+    fetcher
+  );
+
+  const { data: products } = useSWR(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/products`,
+    fetcher
+  );
+
+  console.log(accesories);
+  console.log(products);
   // useEffect(() => {
   //   console.log('assetPrefix to slash');
   //   fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/accesories`)

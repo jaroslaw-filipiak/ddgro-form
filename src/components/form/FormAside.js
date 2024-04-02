@@ -119,8 +119,6 @@ export default function FormAside({ setFormAsideVisibility }) {
       console.log(data);
       setResponse(data);
 
-      setLoading(false);
-
       window.setTimeout(() => {
         // location.reload();
       }, 6000);
@@ -138,8 +136,8 @@ export default function FormAside({ setFormAsideVisibility }) {
             <Image
               onClick={() => setFormAsideVisibility(false)}
               src='/assets/close.png'
-              width={16}
-              height={16}
+              width={36}
+              height={36}
             />
           </button>
           <div className='flex flex-col lg:flex-row lg:min-h-screen '>
