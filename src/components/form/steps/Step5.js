@@ -15,6 +15,8 @@ import {
   useDisclosure,
 } from '@nextui-org/react';
 
+import Image from 'next/image';
+
 export default function Step5({ activeStep, setActiveStep }) {
   const dispatch = useDispatch();
   const main_system = useSelector((state) => state.form.main_system);
@@ -142,7 +144,11 @@ export default function Step5({ activeStep, setActiveStep }) {
                           />
                           <div className='flex items-center justify-between'>
                             <div className='flex items-center justify-start gap-3 lg:gap-6'>
-                              <img src='/assets/placeholder-96-68.png' />
+                              <Image
+                                width={96}
+                                height={68}
+                                src='/assets/placeholder-96-68.png'
+                              />
                               <div>
                                 <p className='text-lg lg:text-2xl font-bold text-black text-opacity-70 '>
                                   {item.name}
@@ -168,16 +174,24 @@ export default function Step5({ activeStep, setActiveStep }) {
             <div className='w-full flex items-center justify-center mt-20 mb-16'>
               <button onClick={onOpen} className='btn btn--main btn--rounded'>
                 Następny krok
-                <img className='ml-5' src='/assets/arrow-next.svg' alt='' />
+                <Image
+                  width={42}
+                  height={42}
+                  className='ml-5'
+                  src='/assets/arrow-next.svg'
+                  alt=''
+                />
               </button>
               <button
                 onClick={() => setActiveStep(activeStep + 1)}
                 className='btn btn--circle pointer-none disabled:opacity-50 disabled:cursor-not-allowed fixed hidden right-10 xl:flex items-center justify-center top-[50%] translate-y-[-50%]'
               >
-                <img
+                <Image
                   className='min-w-[42px]'
                   src='/assets/arrow-next.svg'
                   alt=''
+                  width={42}
+                  height={42}
                 />
               </button>
             </div>

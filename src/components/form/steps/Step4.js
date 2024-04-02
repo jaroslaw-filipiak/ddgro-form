@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { changeMainSystem, setStep4Validation } from '@/store/slices/formSlice';
+import Image from 'next/image';
 
 export default function Step4({ activeStep, setActiveStep }) {
   const dispatch = useDispatch();
@@ -177,10 +178,12 @@ export default function Step4({ activeStep, setActiveStep }) {
                   onClick={() => setActiveStep((activeStep = 1))}
                   className='btn btn--main btn--rounded disabled:opacity-50 disabled:cursor-not-allowed pr-14'
                 >
-                  <img
+                  <Image
                     className='mr-5 transform rotate-180'
                     src='/assets/arrow-next.svg'
                     alt=''
+                    width={42}
+                    height={42}
                   />
                   Wróć do kroku nr 1
                 </button>
@@ -193,7 +196,13 @@ export default function Step4({ activeStep, setActiveStep }) {
                   className='btn btn--main btn--rounded disabled:opacity-50 disabled:cursor-not-allowed'
                 >
                   Następny krok
-                  <img className='ml-5' src='/assets/arrow-next.svg' alt='' />
+                  <Image
+                    width={42}
+                    height={42}
+                    className='ml-5'
+                    src='/assets/arrow-next.svg'
+                    alt=''
+                  />
                 </button>
               )}
 
@@ -202,10 +211,12 @@ export default function Step4({ activeStep, setActiveStep }) {
                 onClick={() => setActiveStep(activeStep + 1)}
                 className='btn btn--circle pointer-none disabled:opacity-50 disabled:cursor-not-allowed fixed hidden right-10 xl:flex items-center justify-center top-[50%] translate-y-[-50%]'
               >
-                <img
+                <Image
                   className='min-w-[42px]'
                   src='/assets/arrow-next.svg'
                   alt=''
+                  width={42}
+                  height={42}
                 />
               </button>
             </div>

@@ -9,6 +9,7 @@ import {
 } from '@/store/slices/formSlice';
 import { Select, SelectItem, Input, CircularProgress } from '@nextui-org/react';
 import {} from '@nextui-org/react';
+import Image from 'next/image';
 
 export default function FormAside({ setFormAsideVisibility }) {
   const dispatch = useDispatch();
@@ -233,7 +234,12 @@ export default function FormAside({ setFormAsideVisibility }) {
                     )}
 
                     {loading ? null : (
-                      <img className='ml-5' src='/assets/arrow-next.svg' />
+                      <Image
+                        width={42}
+                        height={42}
+                        className='ml-5'
+                        src='/assets/arrow-next.svg'
+                      />
                     )}
                   </button>
                   <p className='text-2xl text-white xl:min-w-[350px] text-center font-semibold '>

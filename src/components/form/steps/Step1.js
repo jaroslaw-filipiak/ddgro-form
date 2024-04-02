@@ -63,7 +63,13 @@ export default function Step1({ activeStep, setActiveStep }) {
                 className='btn btn--main btn--rounded pointer-none disabled:opacity-50 disabled:cursor-not-allowed'
               >
                 Następny krok
-                <img className='ml-5' src='/assets/arrow-next.svg' alt='' />
+                <Image
+                  className='ml-5'
+                  src='/assets/arrow-next.svg'
+                  alt='arrow-next'
+                  width={42}
+                  height={42}
+                />
               </button>
             </div>
 
@@ -72,10 +78,12 @@ export default function Step1({ activeStep, setActiveStep }) {
               onClick={() => setActiveStep(activeStep + 1)}
               className='btn btn--circle pointer-none disabled:opacity-50 disabled:cursor-not-allowed fixed hidden right-10 xl:flex items-center justify-center top-[50%] translate-y-[-50%]'
             >
-              <img
+              <Image
                 className='min-w-[42px]'
                 src='/assets/arrow-next.svg'
-                alt=''
+                alt='arrow-next'
+                width={42}
+                height={42}
               />
             </button>
           </div>

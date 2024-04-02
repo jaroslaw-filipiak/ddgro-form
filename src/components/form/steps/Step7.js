@@ -23,6 +23,8 @@ import {
   setM_RAPTOR_ORDER,
 } from '@/store/slices/formSlice';
 
+import Image from 'next/image';
+
 function capitalizeFirstLetter(string) {
   if (string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
@@ -787,7 +789,12 @@ export default function Step7({ setFormAsideVisibility }) {
                 className='btn btn--main btn--rounded'
               >
                 Odbierz PDF
-                <img className='ml-5' src='/assets/arrow-next.svg' />
+                <Image
+                  width={42}
+                  height={42}
+                  className='ml-5'
+                  src='/assets/arrow-next.svg'
+                />
               </button>
             </div>
           </div>

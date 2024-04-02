@@ -20,6 +20,7 @@ import { ChevronDownIcon } from './ChevronDownIcon';
 import { capitalize } from './utils';
 import { ItemCounter } from './ItemCounter';
 import { useSelector, useDispatch } from 'react-redux';
+import Image from 'next/image';
 
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
@@ -360,16 +361,24 @@ export default function Step6({ activeStep, setActiveStep }) {
                 className='btn btn--main btn--rounded'
               >
                 Następny krok
-                <img className='ml-5' src='/assets/arrow-next.svg' alt='' />
+                <Image
+                  width={42}
+                  height={42}
+                  className='ml-5'
+                  src='/assets/arrow-next.svg'
+                  alt=''
+                />
               </button>
               <button
                 onClick={() => setActiveStep(activeStep + 1)}
                 className='btn btn--circle pointer-none disabled:opacity-50 disabled:cursor-not-allowed fixed hidden right-10 xl:flex items-center justify-center top-[50%] translate-y-[-50%]'
               >
-                <img
+                <Image
                   className='min-w-[42px]'
                   src='/assets/arrow-next.svg'
                   alt=''
+                  width={42}
+                  height={42}
                 />
               </button>
             </div>

@@ -18,6 +18,7 @@ import {
 } from '@/store/slices/formSlice';
 import InputRow from '../controls/InputRow';
 import InputRowSelect from '../controls/InputRowSelect';
+import Image from 'next/image';
 
 export default function Step2({ activeStep, setActiveStep }) {
   const dispatch = useDispatch();
@@ -303,7 +304,13 @@ export default function Step2({ activeStep, setActiveStep }) {
                 className='btn btn--main btn--rounded disabled:opacity-50 disabled:cursor-not-allowed'
               >
                 Następny krok
-                <img className='ml-5' src='/assets/arrow-next.svg' alt='' />
+                <image
+                  width={42}
+                  height={42}
+                  className='ml-5'
+                  src='/assets/arrow-next.svg'
+                  alt=''
+                />
               </button>
 
               <button
@@ -315,10 +322,12 @@ export default function Step2({ activeStep, setActiveStep }) {
                 }
                 className='btn btn--circle pointer-none disabled:opacity-50 disabled:cursor-not-allowed fixed hidden right-10 xl:flex items-center justify-center top-[50%] translate-y-[-50%]'
               >
-                <img
+                <Image
                   className='min-w-[42px]'
                   src='/assets/arrow-next.svg'
                   alt=''
+                  width={42}
+                  height={42}
                 />
               </button>
             </div>
