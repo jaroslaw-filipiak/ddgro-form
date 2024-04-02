@@ -12,7 +12,7 @@ const nextConfig = {
   // images: { unoptimized: true },
   images: {
     loader: 'imgix',
-    path: '/clients/ddgro-api/form',
+    path: '',
   },
 };
 
