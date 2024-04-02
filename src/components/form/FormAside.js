@@ -103,7 +103,7 @@ export default function FormAside({ setFormAsideVisibility }) {
     };
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/application`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/public/api/application`,
         {
           method: 'POST',
           headers: {
