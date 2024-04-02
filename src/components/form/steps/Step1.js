@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { changeType } from '@/store/slices/formSlice';
+import Image from 'next/image';
 
 export default function Step1({ activeStep, setActiveStep }) {
   const type = useSelector((state) => state.form.type);
@@ -40,10 +41,13 @@ export default function Step1({ activeStep, setActiveStep }) {
                   type === 'wood' ? 'selected' : ''
                 } relative flex flex-col items-center justify-center cursor-pointer hover:opacity-90 transition-all`}
               >
-                <img
+                <Image
                   className='max-w-full'
                   src='/assets/deski-img.png'
                   role='presentation'
+                  alt='deski-img'
+                  width={282}
+                  height={206}
                 />
                 <p className=' text-black text-opacity-75 text-2xl font-bold mt-3'>
                   Deski
