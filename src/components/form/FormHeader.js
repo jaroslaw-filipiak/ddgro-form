@@ -11,22 +11,22 @@ export default function FormHeader({
 }) {
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    console.log('assetPrefix to slash');
-    fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/accesories`)
-      .then((response) => response.json())
-      .then((data) => {
-        dispatch(setAccesories(data?.data || []));
-      });
-  }, []);
+  // useEffect(() => {
+  //   console.log('assetPrefix to slash');
+  //   fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/accesories`)
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       dispatch(setAccesories(data?.data || []));
+  //     });
+  // }, []);
 
-  useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/products`)
-      .then((response) => response.json())
-      .then((data) => {
-        dispatch(setProducts(data?.data || []));
-      });
-  }, []);
+  // useEffect(() => {
+  //   fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/products`)
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       dispatch(setProducts(data?.data || []));
+  //     });
+  // }, []);
 
   return (
     <>
