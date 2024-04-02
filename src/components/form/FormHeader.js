@@ -12,7 +12,7 @@ export default function FormHeader({
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log('check asset prefix');
+    console.log('assetPrefix to slash');
     fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/accesories`)
       .then((response) => response.json())
       .then((data) => {
