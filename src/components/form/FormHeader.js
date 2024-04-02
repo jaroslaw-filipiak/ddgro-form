@@ -27,10 +27,10 @@ export default function FormHeader({
     fetcher
   );
 
-  dispatch(setProducts(products || []));
+  dispatch(setProducts(products?.data || []));
 
   console.log(accesories);
-  console.log(products);
+  console.log(products?.data);
   // useEffect(() => {
   //   console.log('assetPrefix to slash');
   //   fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/accesories`)
