@@ -4,7 +4,7 @@ const path = require('path');
 const nextConfig = {
   output: 'export',
   basePath: '/clients/ddgro-api/form',
-  assetPrefix: '.',
+  assetPrefix: '/clients/ddgro-api/form/',
   sassOptions: {
     includePaths: [path.join(__dirname, 'styles')],
   },
