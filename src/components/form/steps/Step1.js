@@ -8,10 +8,9 @@ export default function Step1({ activeStep, setActiveStep }) {
   return (
     <>
       <section>
-        <h1> Node Env: {process.env.NODE_ENV}</h1>
         <div className='step--wrapper step-1 bg-[#f7f5f5] relative'>
           {/* label absolute */}
-          <div className='absolue inline-flex left-0 top-0 bg-main pt-3 pb-3 pl-8 pr-</div>8 text-white font-bold text-base'>
+          <div className='absolue inline-flex left-0 top-0 bg-main pt-3 pb-3 pl-8 pr-8 text-white font-bold text-base'>
             Wybór nawierzchni tarasu
           </div>
           {/* content + padding */}
@@ -27,10 +26,12 @@ export default function Step1({ activeStep, setActiveStep }) {
                   type === 'slab' ? 'selected' : ''
                 } relative flex flex-col items-center justify-center cursor-pointer hover:opacity-90 transition-all`}
               >
-                <img
+                <Image
                   className='max-w-full'
                   src='/assets/plyty-img.png'
-                  role='presentation'
+                  alt='deski-img'
+                  width={282}
+                  height={206}
                 />
                 <p className=' text-black text-opacity-75 text-2xl font-bold mt-3'>
                   Płyty
@@ -45,7 +46,6 @@ export default function Step1({ activeStep, setActiveStep }) {
                 <Image
                   className='max-w-full'
                   src='/assets/deski-img.png'
-                  role='presentation'
                   alt='deski-img'
                   width={282}
                   height={206}

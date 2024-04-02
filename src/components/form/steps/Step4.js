@@ -19,7 +19,7 @@ export default function Step4({ activeStep, setActiveStep }) {
       id: 1,
       title: 'Seria Spiral',
       series: 'spiral',
-      img: '/assets/series-spiral-slab.png',
+      img: `${process.env.IMAGE_BASE_URL}/assets/series-spiral-slab.png`,
       type: 'slab',
       distance: '10-210',
     },

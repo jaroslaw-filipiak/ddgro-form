@@ -4,6 +4,8 @@ import {
   setStep3Validation,
 } from '@/store/slices/formSlice';
 
+import Image from 'next/image';
+
 export default function Step3({ activeStep, setActiveStep }) {
   const dispatch = useDispatch();
   const support_type = useSelector((state) => state.form.support_type);
@@ -48,11 +50,15 @@ export default function Step3({ activeStep, setActiveStep }) {
                   } cursor-pointer hover:opacity-60 transition-all`}
                   htmlFor='type1'
                 >
-                  <img
-                    className='max-w-full mx-auto'
+                  <Image
+                    className='max-w-full'
                     src='/assets/type-1.png'
                     role='presentation'
+                    alt='deski-img'
+                    width={219}
+                    height={219}
                   />
+
                   <input
                     type='radio'
                     id='type1'
@@ -70,11 +76,15 @@ export default function Step3({ activeStep, setActiveStep }) {
                   } cursor-pointer hover:opacity-60 transition-all`}
                   htmlFor='type2'
                 >
-                  <img
+                  <Image
                     className='max-w-full'
                     src='/assets/type-2.png'
                     role='presentation'
+                    alt='deski-img'
+                    width={219}
+                    height={219}
                   />
+
                   <input
                     type='radio'
                     id='type2'
@@ -92,10 +102,13 @@ export default function Step3({ activeStep, setActiveStep }) {
                   } cursor-pointer hover:opacity-60 transition-all`}
                   htmlFor='type3'
                 >
-                  <img
+                  <Image
                     className='max-w-full'
                     src='/assets/type-3.png'
                     role='presentation'
+                    alt='deski-img'
+                    width={416}
+                    height={219}
                   />
                   <input
                     type='radio'
@@ -114,10 +127,13 @@ export default function Step3({ activeStep, setActiveStep }) {
                   } cursor-pointer hover:opacity-60 transition-all`}
                   htmlFor='type4'
                 >
-                  <img
+                  <Image
                     className='max-w-full'
                     src='/assets/type-4.png'
                     role='presentation'
+                    alt='deski-img'
+                    width={416}
+                    height={219}
                   />
                   <input
                     type='radio'
