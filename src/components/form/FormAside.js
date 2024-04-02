@@ -127,7 +127,7 @@ export default function FormAside({ setFormAsideVisibility }) {
       console.log('error===========');
 
       console.log('form===========');
-      console.log(form);
+      console.log(JSON.stringify(form));
       console.log('form===========');
       setLoading(false);
     }
