@@ -135,9 +135,11 @@ export default function FormAside({ setFormAsideVisibility }) {
       <div className='relative'>
         <div className='fixed left-0 top-0 z-20 bg-main w-full h-screen'>
           <button className='absolute z-50 right-12 top-10 hover:opacity-80 transition-all'>
-            <img
+            <Image
               onClick={() => setFormAsideVisibility(false)}
               src='/assets/close.png'
+              width={16}
+              height={16}
             />
           </button>
           <div className='flex flex-col lg:flex-row lg:min-h-screen '>
