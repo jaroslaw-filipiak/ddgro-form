@@ -1,6 +1,6 @@
 import FormNav from './FormNav';
 import { useSelector, useDispatch } from 'react-redux';
-import { useEffect } from 'react';
+import { use, useEffect } from 'react';
 import { setAccesories, setProducts } from '@/store/slices/formSlice';
 
 export default function FormHeader({
@@ -10,6 +10,10 @@ export default function FormHeader({
   setFormAsideVisibility,
 }) {
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    console.log('images: { unoptimized: true }');
+  }, []);
 
   // useEffect(() => {
   //   console.log('assetPrefix to slash');
