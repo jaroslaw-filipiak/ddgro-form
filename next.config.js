@@ -6,7 +6,7 @@ const nextConfig = {
   output: 'export',
   // basePath: !isProd ? '/clients/ddgro-api/form' : undefined,
   basePath: '/clients/ddgro-api/form',
-  // assetPrefix: !isProd ? '/clients/ddgro-api/form/' : undefined,
+  assetPrefix: '/clients/ddgro-api/form/',
   sassOptions: {
     includePaths: [path.join(__dirname, 'styles')],
   },
