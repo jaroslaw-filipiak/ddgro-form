@@ -8,9 +8,10 @@ export default function Step1({ activeStep, setActiveStep }) {
   return (
     <>
       <section>
+        <h1> Node Env: {process.env.NODE_ENV}</h1>
         <div className='step--wrapper step-1 bg-[#f7f5f5] relative'>
           {/* label absolute */}
-          <div className='absolue inline-flex left-0 top-0 bg-main pt-3 pb-3 pl-8 pr-8 text-white font-bold text-base'>
+          <div className='absolue inline-flex left-0 top-0 bg-main pt-3 pb-3 pl-8 pr-</div>8 text-white font-bold text-base'>
             Wybór nawierzchni tarasu
           </div>
           {/* content + padding */}

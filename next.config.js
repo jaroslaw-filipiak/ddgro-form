@@ -1,20 +1,8 @@
-const path = require('path');
-const isProd = process.env.NODE_ENV === 'production';
+// next.config.js
+const { NODE_ENV } = process.env;
 
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  output: 'export',
-  // basePath: !isProd ? '/clients/ddgro-api/form' : undefined,
-  basePath: '/clients/ddgro-api/form',
-  assetPrefix: '/clients/ddgro-api/form/',
-  sassOptions: {
-    includePaths: [path.join(__dirname, 'styles')],
-  },
-  // images: { unoptimized: true },
-  images: {
-    loader: 'imgix',
-    path: '',
-  },
-};
-
-module.exports = nextConfig;
+if (NODE_ENV === 'production') {
+  module.exports = require('./next.config.prod');
+} else {
+  module.exports = require('./next.config.dev');
+}
