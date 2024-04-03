@@ -99,7 +99,7 @@ export default function Step4({ activeStep, setActiveStep }) {
       <section>
         <div className='step--wrapper step-4 bg-[#f7f5f5]  relative'>
           {/* label absolute */}
-          <div className='absolue inline-flex left-0 top-0  text-white font-bold text-base flex flex-col gap-1 items-start justify-center'>
+          <div className='absolue  left-0 top-0  text-white font-bold text-base flex flex-col gap-1 items-start justify-center'>
             <p className='bg-main pt-3 pb-3 pl-8 pr-8'>System</p>
 
             {type && (
@@ -136,12 +136,12 @@ export default function Step4({ activeStep, setActiveStep }) {
             )}
           </div>
           {/* content + padding */}
-          <div className='step--inner pt-20 pb-20 pl-10 pr-10 lg:w-10/12 mx-auto'>
+          <div className='step--inner pt-20 pb-20 lg:pl-10 lg:pr-10 lg:w-10/12 mx-auto'>
             <div className='flex flex-wrap items-start xl:justify-center justify-start gap-6 xl:gap-2'>
               {/* items   slab / wood */}
 
               {!type && (
-                <div className='text-4xl text-center'>
+                <div className='text-2xl lg:text-4xl text-center'>
                   Wybierz rodzaj nawierzchni tarasu (pkt 1), bez tych danych nie
                   będziemy w stanie wyświelić systemu wsporników
                 </div>

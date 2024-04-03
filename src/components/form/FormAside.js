@@ -149,11 +149,12 @@ export default function FormAside({ setFormAsideVisibility }) {
               src='/assets/close.png'
               width={36}
               height={36}
+              alt='close-icon'
             />
           </button>
           <div className='flex flex-col lg:flex-row lg:min-h-screen '>
-            <div className='w-full p-10 flex items-start flex-col justify-center lg:w-7/12 2xl:w-6/12'>
-              <p className='font-bold text-2xl xl:text-3xl 2xl:text-4xl text-white mb-4 2xl:mb-12'>
+            <div className='w-full p-10 pt-28 lg:pt-10 flex items-start flex-col justify-center lg:w-7/12 2xl:w-6/12'>
+              <p className='font-bold text-2xl xl:text-3xl 2xl:text-2xl lg:text-4xl text-white mb-4 2xl:mb-12'>
                 Odbierz PDF <br className='hidden xl:block' />z indywidualną
                 ofertą
               </p>
@@ -254,6 +255,7 @@ export default function FormAside({ setFormAsideVisibility }) {
                         height={42}
                         className='ml-5'
                         src='/assets/arrow-next.svg'
+                        alt='arrow-next'
                       />
                     )}
                   </button>
@@ -264,7 +266,7 @@ export default function FormAside({ setFormAsideVisibility }) {
               </form>
             </div>
             <div
-              className='w-full lg:w-5/12 2xl:w-6/12 bg-main flex flex-col items-center justify-center p-10 bg-cover bg-center'
+              className=' hidden w-full lg:w-5/12 2xl:w-6/12 bg-main lg:flex flex-col items-center justify-center p-10 bg-cover bg-center'
               style={{
                 backgroundImage: `url(${imageBaseUrl}/assets/ddgro-aside-bg.png)`,
               }}

@@ -80,20 +80,22 @@ export default function Step5({ activeStep, setActiveStep }) {
                   </p>
                 </ModalBody>
                 <ModalFooter>
-                  <Button
-                    radius='lg'
-                    color='primary'
-                    onPress={() => setActiveStep(activeStep + 1)}
-                  >
-                    Tak, chce dodać dodatkowe produkty samodzielnie
-                  </Button>
-                  <Button
-                    radius='lg'
-                    color='primary'
-                    onPress={() => setActiveStep(activeStep + 2)}
-                  >
-                    Nie ,przechodze do podsumowania
-                  </Button>
+                  <div className='flex flex-col lg:flex-row items-stretch gap-2 justify-center mx-auto'>
+                    <Button
+                      radius='lg'
+                      color='primary'
+                      onPress={() => setActiveStep(activeStep + 1)}
+                    >
+                      Tak, chce dodać dodatkowe produkty samodzielnie
+                    </Button>
+                    <Button
+                      radius='lg'
+                      color='primary'
+                      onPress={() => setActiveStep(activeStep + 2)}
+                    >
+                      Nie ,przechodze do podsumowania
+                    </Button>
+                  </div>
                 </ModalFooter>
               </>
             )}
@@ -108,7 +110,7 @@ export default function Step5({ activeStep, setActiveStep }) {
             </p>
           </div>
           {/* content + padding */}
-          <div className='step--inner pt-20 pb-20 pl-10 pr-10 lg:w-10/12 mx-auto'>
+          <div className='step--inner pt-20 pb-20 lg:pl-10 lg:pr-10 lg:w-10/12 mx-auto'>
             {/* one serie db info */}
             <div className='series--info'>
               <p className='text-2xl font-bold textaccesories-black text-opacity-70 pt-16 pb-9'>

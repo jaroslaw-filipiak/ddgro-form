@@ -298,7 +298,7 @@ export default function Step6({ activeStep, setActiveStep }) {
             <div className='series--info'>
               <header className='flex items-center justify-start gap-10'>
                 <div>
-                  <p className='text-4xl font-bold text-black text-opacity-70'>
+                  <p className='text-2xl lg:text-4xl font-bold text-black text-opacity-70'>
                     Przeglądaj cały asortyment DDGRO
                   </p>
                   <pre>

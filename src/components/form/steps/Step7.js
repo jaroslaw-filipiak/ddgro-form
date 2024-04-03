@@ -643,7 +643,7 @@ export default function Step7({ setFormAsideVisibility }) {
             <p className='bg-main pt-3 pb-3 pl-8 pr-8'>Podsumowanie</p>
           </div>
           {/* content + padding */}
-          <div className='step--inner pt-20 pb-20 pl-10 pr-10 lg:w-10/12 mx-auto'>
+          <div className='step--inner pt-20 pb-20 lg:pl-10 lg:pr-10 lg:w-10/12 mx-auto'>
             <div>
               <p className='text-2xl font-bold text-black text-opacity-70 pb-9'>
                 Wprowadzone parametry
@@ -794,6 +794,7 @@ export default function Step7({ setFormAsideVisibility }) {
                   height={42}
                   className='ml-5'
                   src='/assets/arrow-next.svg'
+                  alt='arrow next'
                 />
               </button>
             </div>

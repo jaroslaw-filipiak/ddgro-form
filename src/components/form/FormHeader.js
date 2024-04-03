@@ -15,7 +15,7 @@ export default function FormHeader({
   const dispatch = useDispatch();
   const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
-  useEffect(() => {}, []);
+  // useEffect(() => {}, []);
 
   const { data: accesories } = useSWR(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/public/api/accesories`,
@@ -28,6 +28,7 @@ export default function FormHeader({
   );
 
   dispatch(setProducts(products?.data || []));
+  dispatch(setAccesories(accesories?.data || []));
 
   console.log(accesories);
   console.log(products?.data);
@@ -50,24 +51,24 @@ export default function FormHeader({
 
   return (
     <>
-      <section className='pb-32 h-12'>
+      <section className='lg:pb-32 h-12'>
         <div className='w-full columns1 md:columns-2 flex flex-col md:flex-row items-center justify-center gap-14'>
-          <div className='w-3/12'>
+          <div className='lg:w-2/12'>
             <div
               className='cursor-pointer hover:opacity-80'
               onClick={() => setActiveStep(1)}
             >
               <Image
-                className='max-w-full'
+                className='max-w-[160px] lg:max-w-[190px]'
                 src='/assets/logo.svg'
                 role='presentation'
                 alt='deski-img'
-                width={214}
-                height={45}
+                width={190}
+                height={60}
               />
             </div>
           </div>
-          <div className='w-full'>
+          <div className='w-full hidden lg:block'>
             <FormNav
               activeStep={activeStep}
               setActiveStep={setActiveStep}

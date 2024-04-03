@@ -10,12 +10,12 @@ export default function Step1({ activeStep, setActiveStep }) {
       <section>
         <div className='step--wrapper step-1 bg-[#f7f5f5] relative'>
           {/* label absolute */}
-          <div className='absolue inline-flex left-0 top-0 bg-main pt-3 pb-3 pl-8 pr-8 text-white font-bold text-base'>
+          <div className='absolue  left-0 top-0 bg-main pt-3 pb-3 pl-8 pr-8 text-white font-bold text-base hidden lg:inline-flex'>
             Wybór nawierzchni tarasu
           </div>
           {/* content + padding */}
-          <div className='step--inner pt-20 pb-20 pl-10 pr-10'>
-            <div className='p3 text-4xl font-bold text-center'>
+          <div className='step--inner pt-20 pb-20 lg:pl-10 lg:pr-10'>
+            <div className='p3 text-2xl lg:text-4xl font-bold text-center'>
               Co będzie na tarasie ?
             </div>
             {/* items */}
@@ -27,7 +27,7 @@ export default function Step1({ activeStep, setActiveStep }) {
                 } relative flex flex-col items-center justify-center cursor-pointer hover:opacity-90 transition-all`}
               >
                 <Image
-                  className='max-w-full'
+                  className='max-w-full selection:bg-transparent'
                   src='/assets/plyty-img.png'
                   alt='deski-img'
                   width={282}
@@ -44,7 +44,7 @@ export default function Step1({ activeStep, setActiveStep }) {
                 } relative flex flex-col items-center justify-center cursor-pointer hover:opacity-90 transition-all`}
               >
                 <Image
-                  className='max-w-full'
+                  className='max-w-full selection:bg-transparent'
                   src='/assets/deski-img.png'
                   alt='deski-img'
                   width={282}

@@ -4,7 +4,7 @@ const initialState = {
   type: '', // slab or wood
   total_area: '',
   count: '',
-  gap_between_slabs: '',
+  gap_between_slabs: 5,
   lowest: '',
   highest: '',
   terrace_thickness: '',

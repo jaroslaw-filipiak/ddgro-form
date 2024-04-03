@@ -33,17 +33,17 @@ export default function Step3({ activeStep, setActiveStep }) {
           className='step--wrapper step-3 bg-[#f7f5f5]  relative'
         >
           {/* label absolute */}
-          <div className='absolue inline-flex left-0 top-0 bg-main pt-3 pb-3 pl-8 pr-8 text-white font-bold text-base'>
+          <div className='lg:absolute lg:left-0 lg:top-0 bg-main pt-3 pb-3 pl-8 pr-8 text-white font-bold text-base  lg:inline-flex'>
             Rodzaj podparcia
           </div>
           {/* content + padding */}
-          <div className='step--inner pt-20 pb-20 pl-10 pr-10 lg:w-8/12 mx-auto'>
+          <div className='step--inner pt-20 pb-20 lg:pl-10 lg:pr-10 lg:w-8/12 mx-auto'>
             <div
               onChange={onChangeValue}
-              className='flex flex-wrap items-start justify-center'
+              className='flex flex-col lg:flex-row flex-wrap items-center lg:items-start justify-center'
             >
               {/* items */}
-              <div className='w-full lg:w-6/12 flex flex-col items-center justify-center p-5 relative'>
+              <div className='w-6/12 lg:w-6/12 flex flex-col items-center justify-center p-5 relative'>
                 <label
                   className={`${
                     support_type === 'type1' ? 'selected--center' : null
@@ -69,7 +69,7 @@ export default function Step3({ activeStep, setActiveStep }) {
                 </label>
               </div>
 
-              <div className='w-full lg:w-6/12  flex flex-col items-center justify-center p-5 relative'>
+              <div className='w-6/12 lg:w-6/12  flex flex-col items-center justify-center p-5 relative'>
                 <label
                   className={`${
                     support_type === 'type2' ? 'selected--center' : null
@@ -95,7 +95,7 @@ export default function Step3({ activeStep, setActiveStep }) {
                 </label>
               </div>
 
-              <div className='w-full lg:w-6/12  flex flex-col items-center justify-center p-5 relative'>
+              <div className='w-9/12 lg:w-6/12  flex flex-col items-center justify-center p-5 relative'>
                 <label
                   className={`${
                     support_type === 'type3' ? 'selected--center' : null
@@ -120,7 +120,7 @@ export default function Step3({ activeStep, setActiveStep }) {
                 </label>
               </div>
 
-              <div className='w-full lg:w-6/12  flex flex-col items-center justify-center p-5 relative'>
+              <div className='w-9/12 lg:w-6/12  flex flex-col items-center justify-center p-5 relative'>
                 <label
                   className={`${
                     support_type === 'type4' ? 'selected--center' : null

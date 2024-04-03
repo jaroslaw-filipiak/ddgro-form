@@ -28,7 +28,7 @@ export default function InputRow({
   return (
     <>
       {forType === type || forType === 'all' ? (
-        <div className='input-row  flex items-center justify-between'>
+        <div className='input-row  flex flex-col lg:flex-row items-stretch lg:items-center justify-center lg:justify-between'>
           <div className='inline-flex  flex-col lg:flex-row lg:items-center justify-start gap-2 lg:gap-3'>
             <p className='text-opacity-50 text-lg lg:text-xl font-medium text-black'>
               {title}
@@ -44,7 +44,7 @@ export default function InputRow({
           </div>
 
           <input
-            className='text-base p-4 lg:pl-10 lg:pr-10 lg:pt-5 lg:pb-5 text-center font-medium'
+            className='text-base p-4 lg:pl-10 lg:pr-10 lg:pt-5 lg:pb-5 text-center font-medium lg:w-[247px] lg:h-[64px]'
             placeholder={placeholder}
             type='text'
             value={value}

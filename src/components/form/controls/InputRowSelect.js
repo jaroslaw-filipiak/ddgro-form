@@ -27,8 +27,8 @@ export default function InputRow({
   return (
     <>
       {forType === type || forType === 'all' ? (
-        <div className='input-row  flex items-center justify-between'>
-          <div className='inline-flex  flex-col lg:flex-row lg:items-center justify-start gap-2 lg:gap-3'>
+        <div className='input-row flex flex-col lg:flex-row items-stretch lg:items-center justify-center lg:justify-between '>
+          <div className='inline-flex flex-col lg:flex-row lg:items-center justify-start gap-2 lg:gap-3'>
             <p className='text-opacity-50 text-lg lg:text-xl font-medium text-black'>
               {title}
             </p>
@@ -42,24 +42,17 @@ export default function InputRow({
             )}
           </div>
 
-          {/* <input
-            className='text-base p-4 lg:pl-10 lg:pr-10 lg:pt-5 lg:pb-5 text-center font-medium'
-            placeholder={placeholder}
-            type='text'
-            value={value}
-            onChange={onChange}
-          /> */}
-
           <select
-            className='text-base p-4  lg:pt-5 lg:pb-5 text-center font-medium min-w-[256px]'
-            value={value}
+            className='text-base p-4 font-medium lg:w-[247px] lg:h-[64px]'
+            value={value ? value : '5'}
             onChange={onChange}
           >
-            <option value='' disabled selected>
-              Wybierz grubość fugi,
+            <option className='text-center' value='3'>
+              3mm
             </option>
-            <option value='3'>3mm</option>
-            <option value='5'>5mm</option>
+            <option className='text-center' value='5'>
+              5mm
+            </option>
           </select>
         </div>
       ) : null}

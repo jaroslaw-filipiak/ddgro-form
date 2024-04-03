@@ -1,5 +1,5 @@
 .btn {
-  @apply inline-flex items-center justify-center pl-10 pr-10 pt-5 pb-5 font-bold text-2xl hover:opacity-90 transition-all cursor-pointer;
+  @apply inline-flex items-center justify-center max-lg:w-full lg:pl-10 lg:pr-10 pt-3 lg:pt-5 lg:pb-5 pb-3 font-bold text-xl lg:text-2xl hover:opacity-90 transition-all cursor-pointer;
 
   &--main {
     @apply bg-main text-white;
@@ -11,7 +11,7 @@
   }
 
   &--circle {
-    @apply rounded-full w-20 h-20 bg-main text-white text-4xl;
+    @apply rounded-full w-20 h-20 bg-main text-white text-2xl lg:text-4xl;
   }
 
   &--rounded {

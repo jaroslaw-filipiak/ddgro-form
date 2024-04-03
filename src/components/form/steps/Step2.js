@@ -101,7 +101,7 @@ export default function Step2({ activeStep, setActiveStep }) {
       <section onChange={() => handleValidated()}>
         <div className='step--wrapper step-2 bg-[#f7f5f5]  relative'>
           {/* label absolute */}
-          <div className='absolue inline-flex left-0 top-0 bg-main pt-3 pb-3 pl-8 pr-8 text-white font-bold text-base'>
+          <div className='absolue  left-0 top-0 bg-main pt-3 pb-3 pl-8 pr-8 text-white font-bold text-base hidden lg:inline-flex'>
             Rodzaj podparcia
           </div>
           {/* content + padding */}
@@ -122,6 +122,7 @@ export default function Step2({ activeStep, setActiveStep }) {
                       role='presentation'
                       width={177}
                       height={130}
+                      alt='plyty-img'
                     />
                     <p className=' text-black text-opacity-75 text-2xl font-bold mt-3'>
                       Płyty
@@ -139,6 +140,7 @@ export default function Step2({ activeStep, setActiveStep }) {
                       role='presentation'
                       width={177}
                       height={130}
+                      alt='deski-img'
                     />
                     <p className=' text-black text-opacity-75 text-2xl font-bold mt-3'>
                       Deski
@@ -308,12 +310,12 @@ export default function Step2({ activeStep, setActiveStep }) {
                 className='btn btn--main btn--rounded disabled:opacity-50 disabled:cursor-not-allowed'
               >
                 Następny krok
-                <image
+                <Image
                   width={42}
                   height={42}
                   className='ml-5'
                   src='/assets/arrow-next.svg'
-                  alt=''
+                  alt='arrow'
                 />
               </button>
 
@@ -329,7 +331,7 @@ export default function Step2({ activeStep, setActiveStep }) {
                 <Image
                   className='min-w-[42px]'
                   src='/assets/arrow-next.svg'
-                  alt=''
+                  alt='arrow'
                   width={42}
                   height={42}
                 />
