@@ -105,12 +105,6 @@ export default function FormAside({ setFormAsideVisibility }) {
 
     // `${process.env.NEXT_PUBLIC_API_BASE_URL}/public/api/application`,
     try {
-      if (NODE_ENV === 'development') {
-        url = '/api/application';
-      } else if (NODE_ENV === 'production') {
-        url = '/public/api/application';
-      }
-
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/public/api/application`,
         {
