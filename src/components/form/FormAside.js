@@ -31,6 +31,8 @@ export default function FormAside({ setFormAsideVisibility }) {
   };
 
   const handleForm = async (e) => {
+    setLoading(true);
+
     const form = {
       type: state.type,
       total_area: state.total_area,
@@ -103,7 +105,6 @@ export default function FormAside({ setFormAsideVisibility }) {
 
     // `${process.env.NEXT_PUBLIC_API_BASE_URL}/public/api/application`,
     try {
-      setLoading(true);
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/public/api/application`,
         {
