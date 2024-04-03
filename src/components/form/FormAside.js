@@ -33,6 +33,14 @@ export default function FormAside({ setFormAsideVisibility }) {
   const handleForm = async (e) => {
     setLoading(true);
 
+    const url = () => {
+      if (NODE_ENV === 'development') {
+        return `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/application`;
+      } else {
+        return `${process.env.NEXT_PUBLIC_API_BASE_URL}/public/api/application`;
+      }
+    };
+
     const form = {
       type: state.type,
       total_area: state.total_area,
@@ -105,17 +113,14 @@ export default function FormAside({ setFormAsideVisibility }) {
 
     // `${process.env.NEXT_PUBLIC_API_BASE_URL}/public/api/application`,
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/public/api/application`,
-        {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(form),
-        }
-      );
+      const response = await fetch(url(), {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(form),
+      });
       console.log('node env: ' + NODE_ENV);
       console.log(form);
       const data = await response.json();

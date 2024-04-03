@@ -14,24 +14,32 @@ export default function FormHeader({
 }) {
   const dispatch = useDispatch();
   const fetcher = (...args) => fetch(...args).then((res) => res.json());
+  const NODE_ENV = process.env.NODE_ENV;
 
-  // useEffect(() => {}, []);
+  const accesoriesURL = () => {
+    if (NODE_ENV === 'development') {
+      return `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/accesories`;
+    } else {
+      return `${process.env.NEXT_PUBLIC_API_BASE_URL}/public/api/accesories`;
+    }
+  };
 
-  const { data: accesories } = useSWR(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/public/api/accesories`,
-    fetcher
-  );
+  const productsURL = () => {
+    if (NODE_ENV === 'development') {
+      return `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/products`;
+    } else {
+      return `${process.env.NEXT_PUBLIC_API_BASE_URL}/public/api/products`;
+    }
+  };
 
-  const { data: products } = useSWR(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/public/api/products`,
-    fetcher
-  );
+  const { data: accesories } = useSWR(accesoriesURL(), fetcher);
+  const { data: products } = useSWR(productsURL(), fetcher);
 
   dispatch(setProducts(products?.data || []));
   dispatch(setAccesories(accesories?.data || []));
 
-  console.log(accesories);
-  console.log(products?.data);
+  // TODO: cleanup before deployment
+
   // useEffect(() => {
   //   console.log('assetPrefix to slash');
   //   fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/accesories`)
