@@ -229,7 +229,10 @@ export default function FormAside({ setFormAsideVisibility }) {
                 <div className='w-full flex flex-col items-end justify-start mt-6 2xl:mt-20 mb-6 2xl:mb-16 gap-6'>
                   <button
                     type='submit'
-                    onClick={() => setFormAsideVisibility(true)}
+                    onClick={() => {
+                      setFormAsideVisibility(true);
+                      setLoading(true);
+                    }}
                     className='xl:min-w-[350px] btn btn--main btn--main__small max-w-[230px]  border-[2px] border-white btn--rounded pl-10 pr-10'
                   >
                     {loading ? 'Wysyłanie...' : 'Wyślij'}
