@@ -18,6 +18,7 @@ export default function FormAside({ setFormAsideVisibility }) {
   const [loading, setLoading] = useState(false);
   const state = useSelector((state) => state.form);
   const imageBaseUrl = process.env.NEXT_PUBLIC_IMAGE_BASE_URL;
+  const NODE_ENV = process.env.NODE_ENV;
 
   const items = [
     { value: 'Architekt', label: 'Architektem' },
@@ -101,6 +102,7 @@ export default function FormAside({ setFormAsideVisibility }) {
        */
       // =============================
     };
+
     // `${process.env.NEXT_PUBLIC_API_BASE_URL}/public/api/application`,
     try {
       const response = await fetch(
@@ -114,6 +116,7 @@ export default function FormAside({ setFormAsideVisibility }) {
           body: JSON.stringify(form),
         }
       );
+      console.log('node env: ' + NODE_ENV);
       console.log(form);
       const data = await response.json();
       console.log(data);
