@@ -18,12 +18,12 @@ export default function FormHeader({
   useEffect(() => {}, []);
 
   const { data: accesories } = useSWR(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/accesories`,
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/public/api/accesories`,
     fetcher
   );
 
   const { data: products } = useSWR(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/products`,
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/public/api/products`,
     fetcher
   );
 
