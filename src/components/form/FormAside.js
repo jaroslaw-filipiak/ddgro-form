@@ -1,7 +1,7 @@
 // Now we can use the React-Redux hooks to let React components interact with the Redux store. We can read data from the store with useSelector, and dispatch actions using useDispatch
 
 import { useSelector, useDispatch } from 'react-redux';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   changeEmail,
   changeNameSurname,
@@ -101,9 +101,10 @@ export default function FormAside({ setFormAsideVisibility }) {
        */
       // =============================
     };
+    // `${process.env.NEXT_PUBLIC_API_BASE_URL}/public/api/application`,
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/public/api/application`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/application`,
         {
           method: 'POST',
           headers: {
@@ -117,10 +118,11 @@ export default function FormAside({ setFormAsideVisibility }) {
       const data = await response.json();
       console.log(data);
       setResponse(data);
+      setLoading(false);
 
       window.setTimeout(() => {
         // location.reload();
-      }, 6000);
+      }, 3000);
     } catch (e) {
       console.log('error===========');
       console.log(e);
