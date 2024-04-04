@@ -129,14 +129,13 @@ export default function FormAside({ setFormAsideVisibility }) {
       window.setTimeout(() => {
         setLoading(false);
         setResponse(data);
-
-        // location.reload();
       }, 3000);
     } catch (e) {
       console.log('error===========');
       console.log(e);
       console.log('error===========');
 
+      setResponse(e);
       console.log('form===========');
       console.log(JSON.stringify(form));
       console.log('form===========');
