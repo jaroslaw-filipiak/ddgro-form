@@ -22,6 +22,7 @@ export default function Step5({ activeStep, setActiveStep }) {
   const main_system = useSelector((state) => state.form.main_system);
   const type = useSelector((state) => state.form.type);
   const accesories = useSelector((state) => state.form.accesories);
+  const accesoriesForType = accesories.filter((item) => item.for_type === type);
   const filteredItems = useSelector(
     (state) => state.form.additional_accessories
   );
@@ -34,6 +35,60 @@ export default function Step5({ activeStep, setActiveStep }) {
   useEffect(() => {
     setCheckedItems(filteredItems);
   }, [filteredItems]);
+
+  const accesoriesForSlab = [
+    {
+      id: 1,
+      slug: 'sh',
+      title: 'SH100 guma na wspornik',
+      img: '/assets/placeholder-96-68.png',
+    },
+    {
+      id: 2,
+      slug: 'glowica-samopoziomujaca',
+      title: 'Głowica samopoziomująca',
+      img: '/assets/placeholder-96-68.png',
+    },
+    {
+      id: 3,
+      slug: 'sbr-3mm',
+      title: 'Guma pod wspornik 3mm',
+      img: '/assets/placeholder-96-68.png',
+    },
+    {
+      id: 4,
+      slug: 'sbr-8mm',
+      title: 'Guma pod wspornik 8mm',
+      img: '/assets/placeholder-96-68.png',
+    },
+  ];
+
+  const accesoriesForWood = [
+    {
+      id: 5,
+      slug: '-po',
+      title: 'Podkładka Ochronna PO',
+      img: '/assets/placeholder-96-68.png',
+    },
+    {
+      id: 6,
+      slug: 'kn',
+      title: 'Korektor Nachylenia KN',
+      img: '/assets/placeholder-96-68.png',
+    },
+    {
+      id: 7,
+      slug: 'pa',
+      title: 'Podkładka Akustyczna PA',
+      img: '/assets/placeholder-96-68.png',
+    },
+    {
+      id: 8,
+      slug: 'podkladka-gumowa-pod-wspornik',
+      title: 'Podkładka gumowa pod wspornik 170x170x3 mm',
+      img: '/assets/placeholder-96-68.png',
+    },
+  ];
 
   const onChangeValue = (event) => {
     // const item = document.querySelector(`.item-${event.target.id}`);
@@ -112,78 +167,144 @@ export default function Step5({ activeStep, setActiveStep }) {
           {/* content + padding */}
           <div className='step--inner pt-20 pb-20 lg:pl-10 lg:pr-10 lg:w-10/12 mx-auto'>
             {/* one serie db info */}
-            <div className='series--info'>
-              <p className='text-2xl font-bold textaccesories-black text-opacity-70 pt-16 pb-9'>
-                {loading ? 'Wczytuje dane...' : 'Wybierz akcesoria'}
-              </p>
 
-              {loading ? (
-                'wczytywanie danych...'
-              ) : (
-                <div className='series--accesories flex flex-col gap-6'>
-                  {/* loop items */}
+            {!type && (
+              <div className='text-2xl lg:text-4xl text-center'>
+                Wybierz rodzaj nawierzchni tarasu (pkt 1), bez tych danych nie
+                będziemy w stanie wyświelić listy akcesoriów
+              </div>
+            )}
 
-                  {accesories.map((item) => {
-                    return (
-                      <div
-                        key={item.id}
-                        className={`relative hover:opacity-80 input-accesories--wrapper ${
-                          checkedItems.filter((checked) =>
-                            checked.includes(item.id)
-                          ).length > 0
-                            ? 'selected__top-left'
-                            : ''
-                        }`}
-                      >
-                        <label className='cursor-pointer' htmlFor={item.id}>
-                          <input
-                            type='checkbox'
-                            id={item.id}
-                            name={item.id}
-                            value={item.id}
-                            className='hidden input-accesories'
-                            onChange={(event) => onChangeValue(event)}
-                          />
-                          <div className='flex items-center justify-between'>
-                            <div className='flex items-center justify-start gap-3 lg:gap-6'>
-                              <Image
-                                width={96}
-                                height={68}
-                                src='/assets/placeholder-96-68.png'
+            {type && (
+              <div className='series--info'>
+                <p className='text-2xl font-bold textaccesories-black text-opacity-70 pt-16 pb-9'>
+                  {loading
+                    ? 'Wczytuje dane...'
+                    : 'Wybierz  dodatkowe akcesoria'}
+                </p>
+
+                {loading ? (
+                  'wczytywanie danych...'
+                ) : (
+                  <div className='series--accesories flex flex-col gap-6'>
+                    {type === 'slab' &&
+                      accesoriesForSlab.map((item) => {
+                        return (
+                          <div
+                            key={item.slug}
+                            className={`relative hover:opacity-80 input-accesories--wrapper ${
+                              checkedItems.includes(item.slug.toString())
+                                ? 'selected__top-left'
+                                : ''
+                            }`}
+                          >
+                            <label className='cursor-pointer'>
+                              <input
+                                type='checkbox'
+                                id={item.slug}
+                                name={item.title}
+                                value={item.title}
+                                onChange={onChangeValue}
+                                className='hidden input-accesories'
                               />
-                              <div>
-                                <p className='text-lg lg:text-2xl font-bold text-black text-opacity-70 '>
-                                  {item.name}
-                                </p>
-                                <p className=' text-lg text-black text-opacity-50 font-normal'>
-                                  {/* Dzięki prawidłowo zaprojektowanej konstrukcji
-                                  wspornik MAX w pełni ... */}
-                                </p>
+                              <div className='flex items-center justify-between'>
+                                <div className='flex items-center justify-start gap-3 lg:gap-6'>
+                                  <Image
+                                    width={96}
+                                    height={68}
+                                    src='/assets/placeholder-96-68.png'
+                                    alt='placeholder'
+                                  />
+                                  <div>
+                                    <p className='text-lg lg:text-2xl font-bold text-black text-opacity-70 selection:bg-none'>
+                                      {item.title}
+                                    </p>
+                                  </div>
+                                </div>
                               </div>
-                            </div>
-                            {
-                              // <div className='border w-[38px] h-[38px] rounded-full bg-white flex items-center '></div>
-                            }
+                            </label>
                           </div>
-                        </label>
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
-            </div>
+                        );
+                      })}
+
+                    {type === 'wood' &&
+                      accesoriesForWood.map((item) => {
+                        return (
+                          <div
+                            key={item.slug}
+                            className={`relative hover:opacity-80 input-accesories--wrapper ${
+                              checkedItems.includes(item.slug.toString())
+                                ? 'selected__top-left'
+                                : ''
+                            }`}
+                          >
+                            <label className='cursor-pointer'>
+                              <input
+                                type='checkbox'
+                                id={item.slug}
+                                name={item.title}
+                                value={item.title}
+                                onChange={onChangeValue}
+                                className='hidden input-accesories'
+                              />
+                              <div className='flex items-center justify-between'>
+                                <div className='flex items-center justify-start gap-3 lg:gap-6'>
+                                  <Image
+                                    width={96}
+                                    height={68}
+                                    src='/assets/placeholder-96-68.png'
+                                    alt='placeholder'
+                                  />
+                                  <div>
+                                    <p className='text-lg lg:text-2xl font-bold text-black text-opacity-70  selection:bg-none'>
+                                      {item.title}
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>
+                            </label>
+                          </div>
+                        );
+                      })}
+                  </div>
+                )}
+              </div>
+            )}
+
             {/* mobile btn */}
             <div className='w-full flex items-center justify-center mt-20 mb-16'>
-              <button onClick={onOpen} className='btn btn--main btn--rounded'>
-                Następny krok
-                <Image
-                  width={42}
-                  height={42}
-                  className='ml-5'
-                  src='/assets/arrow-next.svg'
-                  alt=''
-                />
-              </button>
+              {!type && (
+                <button
+                  onClick={() => setActiveStep((activeStep = 1))}
+                  className='btn btn--main btn--rounded disabled:opacity-50 disabled:cursor-not-allowed pr-14'
+                >
+                  <Image
+                    className='mr-5 transform rotate-180'
+                    src='/assets/arrow-next.svg'
+                    alt=''
+                    width={42}
+                    height={42}
+                  />
+                  Wróć do kroku nr 1
+                </button>
+              )}
+
+              {type && (
+                <button
+                  onClick={() => setActiveStep(activeStep + 1)}
+                  className='btn btn--main btn--rounded disabled:opacity-50 disabled:cursor-not-allowed'
+                >
+                  Następny krok
+                  <Image
+                    width={42}
+                    height={42}
+                    className='ml-5'
+                    src='/assets/arrow-next.svg'
+                    alt=''
+                  />
+                </button>
+              )}
+
               <button
                 onClick={() => setActiveStep(activeStep + 1)}
                 className='btn btn--circle pointer-none disabled:opacity-50 disabled:cursor-not-allowed fixed hidden right-10 xl:flex items-center justify-center top-[50%] translate-y-[-50%]'

@@ -24,6 +24,7 @@ export default function Step4({ activeStep, setActiveStep }) {
       img: `${imageBaseUrl}/assets/series-spiral-slab.png`,
       type: 'slab',
       distance: '10-210',
+      min: 10,
     },
     {
       id: 2,
@@ -32,6 +33,7 @@ export default function Step4({ activeStep, setActiveStep }) {
       img: `${imageBaseUrl}/assets/series-standard-slab.png`,
       type: 'slab',
       distance: '30-420',
+      min: 30,
     },
     {
       id: 3,
@@ -40,6 +42,7 @@ export default function Step4({ activeStep, setActiveStep }) {
       img: `${imageBaseUrl}/assets/series-max-slab.png`,
       type: 'slab',
       distance: '45-950',
+      min: 45,
     },
     // {
     //   id: 4,
@@ -57,6 +60,7 @@ export default function Step4({ activeStep, setActiveStep }) {
       img: `${imageBaseUrl}/assets/series-raptor-wood.png`,
       type: 'wood',
       distance: '15-245',
+      min: 15,
     },
     {
       id: 6,
@@ -65,6 +69,7 @@ export default function Step4({ activeStep, setActiveStep }) {
       img: `${imageBaseUrl}/assets/series-spiral-wood.png`,
       type: 'wood',
       distance: '10-210',
+      min: 10,
     },
     {
       id: 7,
@@ -73,6 +78,7 @@ export default function Step4({ activeStep, setActiveStep }) {
       img: `${imageBaseUrl}/assets/series-standard-wood.png`,
       type: 'wood',
       distance: '30-420',
+      min: 30,
     },
     {
       id: 8,
@@ -81,6 +87,7 @@ export default function Step4({ activeStep, setActiveStep }) {
       img: `${imageBaseUrl}/assets/series-max-wood.png`,
       type: 'wood',
       distance: '45-950',
+      min: 45,
     },
     {
       id: 9,
@@ -89,6 +96,7 @@ export default function Step4({ activeStep, setActiveStep }) {
       img: `${imageBaseUrl}/assets/series-standard-to-100-wood.png`,
       type: 'wood',
       distance: '0-100',
+      min: 0,
     },
   ]);
 

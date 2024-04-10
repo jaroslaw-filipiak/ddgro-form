@@ -4,7 +4,7 @@ const initialState = {
   type: '', // slab or wood
   total_area: '',
   count: '',
-  gap_between_slabs: 5,
+  gap_between_slabs: 3,
   lowest: '',
   highest: '',
   terrace_thickness: '',
@@ -24,10 +24,11 @@ const initialState = {
   additional_accessories: [],
   additional_products: [],
   name_surname: '',
-  email: '',
+  email: 'info@j-filipiak.pl',
   proffestion: '',
   terms_accepted: false,
   accesories: [],
+  accesoriesForSelectedType: [],
   products: [],
   productsWithExtraValues: [],
   // ============================
@@ -179,6 +180,12 @@ export const formSlice = createSlice({
     },
     setAccesories: (state, action) => {
       state.accesories = action.payload;
+    },
+    getAccesoriesByType: (state, action) => {
+      const accesories = state.accesories.filter(
+        (item) => item.type === action.payload
+      );
+      state.accesoriesForSelectedType = accesories;
     },
     setProducts: (state, action) => {
       state.products = action.payload;
@@ -398,6 +405,7 @@ export const {
   changeMainSystem,
   setAdditionalAccessories,
   setAccesories,
+  getAccesoriesByType,
   setProducts,
   addExtraCountToProduct,
   calculateHowManyTitlesCanFillTheSquare,

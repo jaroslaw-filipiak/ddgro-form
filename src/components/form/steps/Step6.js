@@ -33,6 +33,7 @@ export default function Step6({ activeStep, setActiveStep }) {
   const columns = [
     { name: 'id', uid: 'id', sortable: true },
     { name: 'Nazwa', uid: 'name', sortable: true },
+    { name: 'Nazwa skrócona', uid: 'short_name', sortable: true },
     { name: 'Seria', uid: 'series', sortable: true },
     { name: 'Akcje', uid: 'actions', sortable: false },
   ];
@@ -117,7 +118,12 @@ export default function Step6({ activeStep, setActiveStep }) {
       case 'id':
         return <div>{product.id}</div>;
       case 'name':
-        return <div>{product.name}</div>;
+        return (
+          <div>
+            {product.name}
+            <strong> ({product.short_name})</strong>
+          </div>
+        );
       case 'series':
         let words = product.series.split('-');
         let capitalizedWords = words.map((word) => capitalizeFirstLetter(word));
