@@ -1,5 +1,5 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from "react-redux";
+import { useState, useEffect } from "react";
 import {
   Table,
   TableHeader,
@@ -8,7 +8,7 @@ import {
   TableRow,
   TableCell,
   getKeyValue,
-} from '@nextui-org/react';
+} from "@nextui-org/react";
 
 import {
   setSections,
@@ -18,7 +18,7 @@ import {
   setAverageInEachSectionSpiral,
   setM_SPIRAL,
   setM_SPIRAL_ORDER,
-} from '@/store/slices/formSlice';
+} from "@/store/slices/formSlice";
 
 export default function Matrix() {
   const dispatch = useDispatch();
@@ -38,20 +38,20 @@ export default function Matrix() {
 
   const columns = [
     {
-      key: 'wys_mm',
-      label: 'wys_mm',
+      key: "wys_mm",
+      label: "wys_mm",
     },
     {
-      key: 'range',
-      label: 'przedział',
+      key: "range",
+      label: "przedział",
     },
     {
-      key: 'condition',
-      label: 'warunek',
+      key: "condition",
+      label: "warunek",
     },
     {
-      key: 'count_in_range',
-      label: 'ilość w predziale',
+      key: "count_in_range",
+      label: "ilość w predziale",
     },
   ];
 
@@ -79,30 +79,30 @@ export default function Matrix() {
     const calculateRange = (item) => {
       switch (true) {
         case item.wys_mm >= 10 && item.wys_mm <= 16:
-          return '10-17';
+          return "10-17";
         case item.wys_mm >= 17 && item.wys_mm <= 29:
-          return '17-30';
+          return "17-30";
         case item.wys_mm >= 30 && item.wys_mm <= 45:
-          return '30-45';
+          return "30-45";
         case item.wys_mm >= 46 && item.wys_mm <= 69:
-          return '45-70';
+          return "45-70";
         case item.wys_mm >= 70 && item.wys_mm <= 119:
-          return '70-120';
+          return "70-120";
         case item.wys_mm >= 120 && item.wys_mm <= 219:
-          return '120-220';
+          return "120-220";
         case item.wys_mm >= 220 && item.wys_mm <= 319:
-          return '220-320';
+          return "220-320";
         case item.wys_mm >= 320 && item.wys_mm <= 420:
-          return '320-420';
+          return "320-420";
         case item.wys_mm >= 421 && item.wys_mm <= 549:
-          return '350-550';
+          return "350-550";
         case item.wys_mm >= 550 && item.wys_mm <= 749:
-          return '550-750';
+          return "550-750";
         case item.wys_mm >= 750 && item.wys_mm <= 950:
-          return '750-950';
+          return "750-950";
 
         default:
-          return '';
+          return "";
       }
     };
 
@@ -141,30 +141,42 @@ export default function Matrix() {
     const calculateRange = (item) => {
       switch (true) {
         case item.wys_mm >= 10 && item.wys_mm <= 16:
-          return '10-17';
+          return "10-17";
         case item.wys_mm >= 17 && item.wys_mm <= 29:
-          return '17-30';
-        case item.wys_mm >= 30 && item.wys_mm <= 45:
-          return '30-45';
-        case item.wys_mm >= 46 && item.wys_mm <= 69:
-          return '45-70';
-        case item.wys_mm >= 70 && item.wys_mm <= 119:
-          return '70-120';
-        case item.wys_mm >= 120 && item.wys_mm <= 219:
-          return '120-220';
+          return "17-30";
+        case item.wys_mm >= 30 && item.wys_mm <= 49:
+          return "30-50";
+        case item.wys_mm >= 50 && item.wys_mm <= 69:
+          return "50-70";
+        case item.wys_mm >= 70 && item.wys_mm <= 89:
+          return "70-90";
+        case item.wys_mm >= 90 && item.wys_mm <= 109:
+          return "90-110";
+        case item.wys_mm >= 110 && item.wys_mm <= 129:
+          return "110-130";
+        case item.wys_mm >= 130 && item.wys_mm <= 149:
+          return "130-150";
+        case item.wys_mm >= 150 && item.wys_mm <= 169:
+          return "150-170";
+        case item.wys_mm >= 170 && item.wys_mm <= 189:
+          return "170-190";
+        case item.wys_mm >= 190 && item.wys_mm <= 210:
+          return "190-210";
+        case item.wys_mm >= 211 && item.wys_mm <= 219:
+          return "120-220";
         case item.wys_mm >= 220 && item.wys_mm <= 319:
-          return '220-320';
+          return "220-320";
         case item.wys_mm >= 320 && item.wys_mm <= 420:
-          return '320-420';
+          return "320-420";
         case item.wys_mm >= 421 && item.wys_mm <= 549:
-          return '350-550';
+          return "350-550";
         case item.wys_mm >= 550 && item.wys_mm <= 749:
-          return '550-750';
+          return "550-750";
         case item.wys_mm >= 750 && item.wys_mm <= 950:
-          return '750-950';
+          return "750-950";
 
         default:
-          return '';
+          return "";
       }
     };
 
@@ -315,10 +327,10 @@ export default function Matrix() {
   };
 
   return (
-    <div className='matrix pt-4 pb-4 border border-dashed mt-5'>
+    <div className="matrix pt-4 pb-4 border border-dashed mt-5">
       <header>
         <button
-          className='btn btn--main btn--rounded'
+          className="btn btn--main btn--rounded"
           onClick={handleCalculate}
         >
           Calculate
@@ -332,8 +344,8 @@ export default function Matrix() {
           <div>Liczba w przedziale: {state.count_in_each_section}</div>
         </div>
       </header>
-      <div className='table w-full'>
-        <Table aria-label='Example table with dynamic content'>
+      <div className="table w-full">
+        <Table aria-label="Example table with dynamic content">
           <TableHeader columns={columns}>
             {(column) => (
               <TableColumn key={column.key}>{column.label}</TableColumn>
