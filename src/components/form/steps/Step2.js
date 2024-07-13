@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import {
   changeType,
   changeTotalArea,
@@ -15,10 +15,10 @@ import {
   changeSlabLength,
   changeSlabThickness,
   setStep2Validation,
-} from '@/store/slices/formSlice';
-import InputRow from '../controls/InputRow';
-import InputRowSelect from '../controls/InputRowSelect';
-import Image from 'next/image';
+} from "@/store/slices/formSlice";
+import InputRow from "../controls/InputRow";
+import InputRowSelect from "../controls/InputRowSelect";
+import Image from "next/image";
 
 export default function Step2({ activeStep, setActiveStep }) {
   const dispatch = useDispatch();
@@ -59,7 +59,7 @@ export default function Step2({ activeStep, setActiveStep }) {
   ]);
 
   const handleValidated = () => {
-    if (type === 'slab') {
+    if (type === "slab") {
       if (
         total_area &&
         count &&
@@ -82,10 +82,10 @@ export default function Step2({ activeStep, setActiveStep }) {
         count &&
         lowest &&
         highest &&
-        terrace_thickness &&
-        distance_between_joists &&
-        distance_between_supports_under_the_joist &&
-        joist_height
+        distance_between_joists
+        //  TODO:  terrace_thickness &&  ???
+        //  distance_between_supports_under_the_joist && ???
+        //  joist_height ???
       ) {
         dispatch(setStep2Validation(1));
         setValidated(1);
@@ -111,9 +111,9 @@ export default function Step2({ activeStep, setActiveStep }) {
                 {/* TODO: move to another component */}
                 <div className='flex flex-col items-center justify-center gap-10 '>
                   <div
-                    onClick={() => dispatch(changeType('slab'))}
+                    onClick={() => dispatch(changeType("slab"))}
                     className={`${
-                      type === 'slab' ? 'selected' : ''
+                      type === "slab" ? "selected" : ""
                     } relative flex items-center justify-center cursor-pointer gap-7 hover:opacity-90 transition-all`}
                   >
                     <Image
@@ -129,9 +129,9 @@ export default function Step2({ activeStep, setActiveStep }) {
                     </p>
                   </div>
                   <div
-                    onClick={() => dispatch(changeType('wood'))}
+                    onClick={() => dispatch(changeType("wood"))}
                     className={`${
-                      type === 'wood' ? 'selected' : ''
+                      type === "wood" ? "selected" : ""
                     } relative flex items-center justify-center cursor-pointer gap-7 hover:opacity-90 transition-all`}
                   >
                     <Image
@@ -303,7 +303,7 @@ export default function Step2({ activeStep, setActiveStep }) {
               <button
                 disabled={!step2validation}
                 onClick={() =>
-                  type === 'wood'
+                  type === "wood"
                     ? setActiveStep(4)
                     : setActiveStep(activeStep + 1)
                 }
@@ -322,7 +322,7 @@ export default function Step2({ activeStep, setActiveStep }) {
               <button
                 disabled={!step2validation}
                 onClick={() =>
-                  type === 'wood'
+                  type === "wood"
                     ? setActiveStep(4)
                     : setActiveStep(activeStep + 1)
                 }
