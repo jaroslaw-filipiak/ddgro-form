@@ -31,6 +31,7 @@ export default function FormAside({ setFormAsideVisibility }) {
   };
 
   const handleForm = async (e) => {
+    setResponse(null);
     setLoading(true);
 
     const form = {
@@ -135,10 +136,8 @@ export default function FormAside({ setFormAsideVisibility }) {
         }
       );
 
-      window.setTimeout(() => {
-        setLoading(false);
-        setResponse(data);
-      }, 3000);
+      setLoading(false);
+      setResponse(data);
     } catch (e) {
       console.log("error===========");
       console.log(e);
