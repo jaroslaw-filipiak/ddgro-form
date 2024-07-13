@@ -125,9 +125,6 @@ export default function Step7({ setFormAsideVisibility }) {
           return "550-750";
         case item.wys_mm >= 750 && item.wys_mm <= 950:
           return "750-950";
-
-        default:
-          return "";
       }
     };
 
@@ -162,7 +159,6 @@ export default function Step7({ setFormAsideVisibility }) {
         condition: 0,
       };
     }
-
     const calculateRange = (item) => {
       switch (true) {
         case item.wys_mm >= 10 && item.wys_mm <= 16:
@@ -185,18 +181,21 @@ export default function Step7({ setFormAsideVisibility }) {
           return "150-170";
         case item.wys_mm >= 170 && item.wys_mm <= 189:
           return "170-190";
-        case item.wys_mm >= 190 && item.wys_mm <= 209:
+        case item.wys_mm >= 190 && item.wys_mm <= 210:
           return "190-210";
+        case item.wys_mm >= 211 && item.wys_mm <= 219:
+          return "120-220";
         case item.wys_mm >= 220 && item.wys_mm <= 319:
           return "220-320";
-        case item.wys_mm >= 320 && item.wys_mm <= 419:
+        case item.wys_mm >= 320 && item.wys_mm <= 420:
           return "320-420";
-        case item.wys_mm >= 350 && item.wys_mm <= 549:
+        case item.wys_mm >= 421 && item.wys_mm <= 549:
           return "350-550";
         case item.wys_mm >= 550 && item.wys_mm <= 749:
           return "550-750";
         case item.wys_mm >= 750 && item.wys_mm <= 950:
           return "750-950";
+
         default:
           return "";
       }
@@ -234,7 +233,6 @@ export default function Step7({ setFormAsideVisibility }) {
       };
     }
 
-    // TODO: 30-50 oraz 45-75 , od 45-50 jest jeden przedzial..
     const calculateRange = (item) => {
       switch (true) {
         case item.wys_mm >= 10 && item.wys_mm <= 16:
@@ -255,9 +253,6 @@ export default function Step7({ setFormAsideVisibility }) {
           return "550-750";
         case item.wys_mm >= 750 && item.wys_mm <= 950:
           return "750-950";
-
-        default:
-          return "";
       }
     };
 
@@ -314,9 +309,6 @@ export default function Step7({ setFormAsideVisibility }) {
           return "550-750";
         case item.wys_mm >= 750 && item.wys_mm <= 950:
           return "750-950";
-
-        default:
-          return "";
       }
     };
 
