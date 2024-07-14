@@ -11,7 +11,7 @@
   }
 
   &--circle {
-    @apply rounded-full w-20 h-20 bg-main text-white text-2xl lg:text-4xl;
+    @apply rounded-full w-20 h-20 bg-main text-white text-2xl lg:text-4xl hidden xl:flex;
   }
 
   &--rounded {
