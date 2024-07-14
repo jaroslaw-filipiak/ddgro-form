@@ -1,24 +1,24 @@
-'use client';
+"use client";
 
 // use client means that this code will be executed on browser , so i can use Provieder for
 // redux
 
-import { store } from '@/store/index';
-import { Provider } from 'react-redux';
-import { useState, useEffect } from 'react';
-import Matrix from '@/components/form/debug/Matrix';
+import { store } from "@/store/index";
+import { Provider } from "react-redux";
+import { useState, useEffect } from "react";
+import Matrix from "@/components/form/debug/Matrix"; // deprecated
 
-import { NextUIProvider } from '@nextui-org/system';
-import FormHeader from './FormHeader';
-import FormAside from './FormAside';
+import { NextUIProvider } from "@nextui-org/system";
+import FormHeader from "./FormHeader";
+import FormAside from "./FormAside";
 
-import Step1 from './steps/Step1';
-import Step2 from './steps/Step2';
-import Step3 from './steps/Step3';
-import Step4 from './steps/Step4';
-import Step5 from './steps/Step5';
-import Step6 from './steps/Step6';
-import Step7 from './steps/Step7';
+import Step1 from "./steps/Step1";
+import Step2 from "./steps/Step2";
+import Step3 from "./steps/Step3";
+import Step4 from "./steps/Step4";
+import Step5 from "./steps/Step5";
+import Step6 from "./steps/Step6";
+import Step7 from "./steps/Step7";
 
 export default function Form() {
   const [activeStep, setActiveStep] = useState(1);

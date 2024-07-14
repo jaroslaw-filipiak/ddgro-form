@@ -98,6 +98,15 @@ export default function FormAside({ setFormAsideVisibility }) {
       m_max_order: state.M_MAX_ORDER,
 
       // =============================
+      // M_RAPTOR
+      // =============================
+
+      sections_raptor: state.sectionsRaptor,
+      count_in_each_section_max: state.count_in_each_section_raptor,
+      m_raptor: state.M_RAPTOR,
+      m_raptor_order: state.M_RAPTOR_ORDER,
+
+      // =============================
       /*
        * Trzeba wysłać całą matryce w zależności do wyboru głównego systemu
        * np: M_STANDARD jako cały obiekt + wyliczone wartości

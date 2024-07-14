@@ -288,22 +288,31 @@ export default function Step7({ setFormAsideVisibility }) {
       };
     }
 
-    // TODO: Check and update ranges/steps
     const calculateRange = (item) => {
       switch (true) {
-        case item.wys_mm >= 10 && item.wys_mm <= 16:
+        case item.wys_mm >= 10 && item.wys_mm <= 14:
           return "10-17";
-        case item.wys_mm >= 17 && item.wys_mm <= 29:
-          return "17-30";
-        case item.wys_mm >= 30 && item.wys_mm <= 49:
-          return "30-50";
-        case item.wys_mm >= 45 && item.wys_mm <= 74:
-          return "45-75";
-        case item.wys_mm >= 75 && item.wys_mm <= 149:
-          return "75-150";
-        case item.wys_mm >= 150 && item.wys_mm <= 349:
-          return "150-350";
-        case item.wys_mm >= 350 && item.wys_mm <= 549:
+        case item.wys_mm >= 15 && item.wys_mm <= 34:
+          return "15-35";
+        case item.wys_mm >= 35 && item.wys_mm <= 64:
+          return "35-65";
+        case item.wys_mm >= 65 && item.wys_mm <= 94:
+          return "65-95";
+        case item.wys_mm >= 95 && item.wys_mm <= 124:
+          return "95-125";
+        case item.wys_mm >= 125 && item.wys_mm <= 154:
+          return "125-155";
+        case item.wys_mm >= 155 && item.wys_mm <= 184:
+          return "155-185";
+        case item.wys_mm >= 185 && item.wys_mm <= 214:
+          return "185-215";
+        case item.wys_mm >= 215 && item.wys_mm <= 245:
+          return "215-245";
+        case item.wys_mm >= 246 && item.wys_mm <= 319:
+          return "220-320";
+        case item.wys_mm >= 320 && item.wys_mm <= 420:
+          return "320-420";
+        case item.wys_mm >= 421 && item.wys_mm <= 549:
           return "350-550";
         case item.wys_mm >= 550 && item.wys_mm <= 749:
           return "550-750";

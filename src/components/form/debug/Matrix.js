@@ -1,3 +1,11 @@
+/*
+ *
+ * DEPRECATED
+ *
+ *
+ *
+ */
+
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import {
@@ -327,10 +335,10 @@ export default function Matrix() {
   };
 
   return (
-    <div className="matrix pt-4 pb-4 border border-dashed mt-5">
+    <div className='matrix pt-4 pb-4 border border-dashed mt-5'>
       <header>
         <button
-          className="btn btn--main btn--rounded"
+          className='btn btn--main btn--rounded'
           onClick={handleCalculate}
         >
           Calculate
@@ -344,8 +352,8 @@ export default function Matrix() {
           <div>Liczba w przedziale: {state.count_in_each_section}</div>
         </div>
       </header>
-      <div className="table w-full">
-        <Table aria-label="Example table with dynamic content">
+      <div className='table w-full'>
+        <Table aria-label='Example table with dynamic content'>
           <TableHeader columns={columns}>
             {(column) => (
               <TableColumn key={column.key}>{column.label}</TableColumn>
