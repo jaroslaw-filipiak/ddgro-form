@@ -30,6 +30,10 @@ export default function FormAside({ setFormAsideVisibility }) {
     dispatch(changeProffesion(item.currentKey));
   };
 
+  const additional_products = state.products.filter(
+    (product) => product.count > 0
+  );
+
   const handleForm = async (e) => {
     setResponse(null);
     setLoading(true);
@@ -61,8 +65,8 @@ export default function FormAside({ setFormAsideVisibility }) {
       proffesion: state.proffesion,
       terms_accepted: 1,
       slabs_count: state.slabs_count,
-      products: state.products,
-      accesories: state.accesories,
+      products: additional_products,
+      // accesories: state.accesories,
       additional_accessories: state.additional_accessories,
       supports_count: state.supports_count,
 

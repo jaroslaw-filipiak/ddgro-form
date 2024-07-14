@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react';
-import { MinusIcon } from './MinusIcon';
-import { PlusIcon } from './PlusIcon';
-import { Button } from '@nextui-org/react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect } from "react";
+import { MinusIcon } from "./MinusIcon";
+import { PlusIcon } from "./PlusIcon";
+import { Button } from "@nextui-org/react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   addExtraCountToProduct,
   setAdditionalProducts,
-} from '@/store/slices/formSlice';
+} from "@/store/slices/formSlice";
 
 export const ItemCounter = (props) => {
   const dispatch = useDispatch();
@@ -28,7 +28,7 @@ export const ItemCounter = (props) => {
       if (product.id === ID) {
         return {
           ...product,
-          extraCount: newCount,
+          count: parseInt(newCount),
         };
       } else {
         return product;
@@ -46,7 +46,7 @@ export const ItemCounter = (props) => {
         type='number'
         className='border p-1'
         placeholder='podaj dodatkową ilość'
-        value={count ? count : ''}
+        value={count ? count : ""}
       />
     </>
   );
