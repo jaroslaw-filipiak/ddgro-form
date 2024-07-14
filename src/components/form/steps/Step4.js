@@ -1,7 +1,7 @@
-import { useSelector, useDispatch } from 'react-redux';
-import { useState } from 'react';
-import { changeMainSystem, setStep4Validation } from '@/store/slices/formSlice';
-import Image from 'next/image';
+import { useSelector, useDispatch } from "react-redux";
+import { useState } from "react";
+import { changeMainSystem, setStep4Validation } from "@/store/slices/formSlice";
+import Image from "next/image";
 
 export default function Step4({ activeStep, setActiveStep }) {
   const dispatch = useDispatch();
@@ -19,84 +19,66 @@ export default function Step4({ activeStep, setActiveStep }) {
   const [series] = useState([
     {
       id: 1,
-      title: 'Seria Spiral',
-      series: 'spiral',
+      title: "Seria Spiral",
+      series: "spiral",
       img: `${imageBaseUrl}/assets/series-spiral-slab.png`,
-      type: 'slab',
-      distance: '10-210',
+      type: "slab",
+      distance: "10-210",
       min: 10,
     },
     {
       id: 2,
-      title: 'Seria Standard',
-      series: 'standard',
+      title: "Seria Standard",
+      series: "standard",
       img: `${imageBaseUrl}/assets/series-standard-slab.png`,
-      type: 'slab',
-      distance: '30-420',
+      type: "slab",
+      distance: "30-420",
       min: 30,
     },
     {
       id: 3,
-      title: 'Seria Max',
-      series: 'max',
+      title: "Seria Max",
+      series: "max",
       img: `${imageBaseUrl}/assets/series-max-slab.png`,
-      type: 'slab',
-      distance: '45-950',
+      type: "slab",
+      distance: "45-950",
       min: 45,
     },
-    // {
-    //   id: 4,
-    //   title: 'Seria Alu',
-    //   series: 'alu',
-    //   img: '/assets/series-alu-slab.png',
-    //   type: 'slab',
-    //   distance: '40-200',
-    // },
-
     {
       id: 5,
-      title: 'Seria Raptor',
-      series: 'raptor',
+      title: "Seria Raptor",
+      series: "raptor",
       img: `${imageBaseUrl}/assets/series-raptor-wood.png`,
-      type: 'wood',
-      distance: '15-245',
+      type: "wood",
+      distance: "15-245",
       min: 15,
     },
     {
       id: 6,
-      title: 'Seria Spiral',
-      series: 'spiral',
+      title: "Seria Spiral",
+      series: "spiral",
       img: `${imageBaseUrl}/assets/series-spiral-wood.png`,
-      type: 'wood',
-      distance: '10-210',
+      type: "wood",
+      distance: "10-210",
       min: 10,
     },
     {
       id: 7,
-      title: 'Seria Standard',
-      series: 'standard',
+      title: "Seria Standard",
+      series: "standard",
       img: `${imageBaseUrl}/assets/series-standard-wood.png`,
-      type: 'wood',
-      distance: '30-420',
+      type: "wood",
+      distance: "30-420",
       min: 30,
     },
     {
       id: 8,
-      title: 'Seria Max',
-      series: 'max',
+      title: "Seria Max",
+      series: "max",
       img: `${imageBaseUrl}/assets/series-max-wood.png`,
-      type: 'wood',
-      distance: '45-950',
+      type: "wood",
+      distance: "45-950",
       min: 45,
-    },
-    {
-      id: 9,
-      title: 'Seria Standard',
-      series: 'standard-to-100',
-      img: `${imageBaseUrl}/assets/series-standard-to-100-wood.png`,
-      type: 'wood',
-      distance: '0-100',
-      min: 0,
     },
   ]);
 
@@ -161,7 +143,7 @@ export default function Step4({ activeStep, setActiveStep }) {
                     onClick={(event) => onChangeValue(event, item)}
                     key={item.id}
                     className={`item xl:w-4/12 mb-10 relative cursor-pointer hover:opacity-60 transition-all  flex flex-col items-start selection:bg-none ${
-                      item.series === selectedMainSystem ? 'selected' : null
+                      item.series === selectedMainSystem ? "selected" : null
                     }`}
                   >
                     <img

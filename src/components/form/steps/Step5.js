@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import {
   setAccesories,
   setAdditionalAccessories,
-} from '@/store/slices/formSlice';
+} from "@/store/slices/formSlice";
 
 import {
   Modal,
@@ -13,9 +13,9 @@ import {
   ModalFooter,
   Button,
   useDisclosure,
-} from '@nextui-org/react';
+} from "@nextui-org/react";
 
-import Image from 'next/image';
+import Image from "next/image";
 
 export default function Step5({ activeStep, setActiveStep }) {
   const dispatch = useDispatch();
@@ -36,75 +36,74 @@ export default function Step5({ activeStep, setActiveStep }) {
     setCheckedItems(filteredItems);
   }, [filteredItems]);
 
+  // TODO: full data from db record or fetch from db
+
   const accesoriesForSlab = [
     {
       id: 1,
-      slug: 'sh',
-      title: 'SH100 guma na wspornik',
-      img: '/assets/placeholder-96-68.png',
+      slug: "sh",
+      title: "SH100 guma na wspornik",
+      img: "/assets/placeholder-96-68.png",
     },
     {
       id: 2,
-      slug: 'glowica-samopoziomujaca',
-      title: 'Głowica samopoziomująca',
-      img: '/assets/placeholder-96-68.png',
+      slug: "glowica-samopoziomujaca",
+      title: "Głowica samopoziomująca",
+      img: "/assets/placeholder-96-68.png",
     },
     {
       id: 3,
-      slug: 'sbr-3mm',
-      title: 'Guma pod wspornik 3mm',
-      img: '/assets/placeholder-96-68.png',
+      slug: "sbr-3mm",
+      title: "Guma pod wspornik 3mm",
+      img: "/assets/placeholder-96-68.png",
     },
     {
       id: 4,
-      slug: 'sbr-8mm',
-      title: 'Guma pod wspornik 8mm',
-      img: '/assets/placeholder-96-68.png',
+      slug: "sbr-8mm",
+      title: "Guma pod wspornik 8mm",
+      img: "/assets/placeholder-96-68.png",
     },
   ];
 
   const accesoriesForWood = [
     {
       id: 5,
-      slug: '-po',
-      title: 'Podkładka Ochronna PO',
-      img: '/assets/placeholder-96-68.png',
+      slug: "-po",
+      title: "Podkładka Ochronna PO",
+      img: "/assets/placeholder-96-68.png",
     },
     {
       id: 6,
-      slug: 'kn',
-      title: 'Korektor Nachylenia KN',
-      img: '/assets/placeholder-96-68.png',
+      slug: "kn",
+      title: "Korektor Nachylenia KN",
+      img: "/assets/placeholder-96-68.png",
     },
     {
       id: 7,
-      slug: 'pa',
-      title: 'Podkładka Akustyczna PA',
-      img: '/assets/placeholder-96-68.png',
+      slug: "pa",
+      title: "Podkładka Akustyczna PA",
+      img: "/assets/placeholder-96-68.png",
     },
     {
       id: 8,
-      slug: 'podkladka-gumowa-pod-wspornik',
-      title: 'Podkładka gumowa pod wspornik 170x170x3 mm',
-      img: '/assets/placeholder-96-68.png',
+      slug: "podkladka-gumowa-pod-wspornik",
+      title: "Podkładka gumowa pod wspornik 170x170x3 mm",
+      img: "/assets/placeholder-96-68.png",
     },
   ];
 
   const onChangeValue = (event) => {
-    // const item = document.querySelector(`.item-${event.target.id}`);
-    console.log('onchangevalue');
+    console.log("onchangevalue");
     if (event.target.checked) {
       const newCheckedItems = [...checkedItems, event.target.id];
       setCheckedItems([...checkedItems, event.target.id]);
       dispatch(setAdditionalAccessories(newCheckedItems));
-      // item.classList.add('selected__top-left');
     } else {
       const newCheckedItems = checkedItems.filter(
         (item) => item !== event.target.id
       );
       setCheckedItems(newCheckedItems);
       dispatch(setAdditionalAccessories(newCheckedItems));
-      // item.classList.remove('selected__top-left');
     }
   };
 
@@ -179,23 +178,23 @@ export default function Step5({ activeStep, setActiveStep }) {
               <div className='series--info'>
                 <p className='text-2xl font-bold textaccesories-black text-opacity-70 pt-16 pb-9'>
                   {loading
-                    ? 'Wczytuje dane...'
-                    : 'Wybierz  dodatkowe akcesoria'}
+                    ? "Wczytuje dane..."
+                    : "Wybierz  dodatkowe akcesoria"}
                 </p>
 
                 {loading ? (
-                  'wczytywanie danych...'
+                  "wczytywanie danych..."
                 ) : (
                   <div className='series--accesories flex flex-col gap-6'>
-                    {type === 'slab' &&
+                    {type === "slab" &&
                       accesoriesForSlab.map((item) => {
                         return (
                           <div
                             key={item.slug}
                             className={`relative hover:opacity-80 input-accesories--wrapper ${
                               checkedItems.includes(item.slug.toString())
-                                ? 'selected__top-left'
-                                : ''
+                                ? "selected__top-left"
+                                : ""
                             }`}
                           >
                             <label className='cursor-pointer'>
@@ -227,15 +226,15 @@ export default function Step5({ activeStep, setActiveStep }) {
                         );
                       })}
 
-                    {type === 'wood' &&
+                    {type === "wood" &&
                       accesoriesForWood.map((item) => {
                         return (
                           <div
                             key={item.slug}
                             className={`relative hover:opacity-80 input-accesories--wrapper ${
                               checkedItems.includes(item.slug.toString())
-                                ? 'selected__top-left'
-                                : ''
+                                ? "selected__top-left"
+                                : ""
                             }`}
                           >
                             <label className='cursor-pointer'>
