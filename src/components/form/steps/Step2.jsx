@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   changeType,
   changeTotalArea,
@@ -15,10 +15,10 @@ import {
   changeSlabLength,
   changeSlabThickness,
   setStep2Validation,
-} from "@/store/slices/formSlice";
-import InputRow from "../controls/InputRow";
-import InputRowSelect from "../controls/InputRowSelect";
-import Image from "next/image";
+} from '@/store/slices/formSlice';
+import InputRow from '../controls/InputRow';
+import InputRowSelect from '../controls/InputRowSelect';
+import Image from 'next/image';
 
 export default function Step2({ activeStep, setActiveStep }) {
   const dispatch = useDispatch();
@@ -59,7 +59,7 @@ export default function Step2({ activeStep, setActiveStep }) {
   ]);
 
   const handleValidated = () => {
-    if (type === "slab") {
+    if (type === 'slab') {
       if (
         total_area &&
         count &&
@@ -111,9 +111,9 @@ export default function Step2({ activeStep, setActiveStep }) {
                 {/* TODO: move to another component */}
                 <div className='flex flex-col items-center justify-center gap-10 '>
                   <div
-                    onClick={() => dispatch(changeType("slab"))}
+                    onClick={() => dispatch(changeType('slab'))}
                     className={`${
-                      type === "slab" ? "selected" : ""
+                      type === 'slab' ? 'selected' : ''
                     } relative flex items-center justify-center cursor-pointer gap-7 hover:opacity-90 transition-all`}
                   >
                     <Image
@@ -129,9 +129,9 @@ export default function Step2({ activeStep, setActiveStep }) {
                     </p>
                   </div>
                   <div
-                    onClick={() => dispatch(changeType("wood"))}
+                    onClick={() => dispatch(changeType('wood'))}
                     className={`${
-                      type === "wood" ? "selected" : ""
+                      type === 'wood' ? 'selected' : ''
                     } relative flex items-center justify-center cursor-pointer gap-7 hover:opacity-90 transition-all`}
                   >
                     <Image
@@ -150,7 +150,10 @@ export default function Step2({ activeStep, setActiveStep }) {
               </div>
               {/* inputs */}
 
-              <div className='w-full xl:w-8/12 lg:pl-20 flex flex-col gap-5 mt-10 xl:mt-0 '>
+              <div className='w-full xl:w-8/12 lg:pl-20 flex flex-col gap-5 mt-10 xl:mt-0'>
+                <div className='text-2xl font-semibold pb-20'>
+                  Podaj wymiary w milimetrach (1cm = 10 milimetrów)
+                </div>
                 {/* forType: 'wood, slab or all' */}
                 <InputRow
                   onChange={(e) =>
@@ -158,7 +161,7 @@ export default function Step2({ activeStep, setActiveStep }) {
                   }
                   value={useSelector((state) => state.form.total_area)}
                   forType='all'
-                  title='Łączna powierzchnia'
+                  title='Łączna powierzchnia (m2)'
                   placeholder='ilośc m2'
                   inputType='number'
                   // hasIndicator={true}
@@ -170,7 +173,7 @@ export default function Step2({ activeStep, setActiveStep }) {
                   }
                   value={useSelector((state) => state.form.count)}
                   forType='all'
-                  title='Ilość tarasów/ balkonów'
+                  title='Ilość tarasów/ balkonów (szt.)'
                   placeholder='szt.'
                 />
                 {/* gap between slabs */}
@@ -180,7 +183,7 @@ export default function Step2({ activeStep, setActiveStep }) {
                   }
                   value={useSelector((state) => state.form.gap_between_slabs)}
                   forType='slab'
-                  title='Szczelina pomiedzy płytami'
+                  title='Szczelina pomiedzy płytami (mm.)'
                   placeholder='mm'
                 />
 
@@ -191,7 +194,7 @@ export default function Step2({ activeStep, setActiveStep }) {
                   }
                   value={useSelector((state) => state.form.lowest)}
                   forType='all'
-                  title='Najniższy wspornik'
+                  title='Najniższy wspornik (mm.)'
                   placeholder='mm'
                   // minValue='10'
                 />
@@ -202,7 +205,7 @@ export default function Step2({ activeStep, setActiveStep }) {
                   }
                   value={useSelector((state) => state.form.highest)}
                   forType='all'
-                  title='Najwyższy wspornik'
+                  title='Najwyższy wspornik (mm.)'
                   placeholder='mm'
                 />
                 {/* changeTerraceThickness */}
@@ -226,7 +229,7 @@ export default function Step2({ activeStep, setActiveStep }) {
                     (state) => state.form.distance_between_joists
                   )}
                   forType='wood'
-                  title='Odległość pomiędzy legarami '
+                  title='Odległość pomiędzy legarami (mm.)'
                   placeholder='mm'
                   hasIndicator={true}
                   modalContent='Jaki jest rozstaw pomiędzy legarami pod deską tarasową?'
@@ -247,7 +250,7 @@ export default function Step2({ activeStep, setActiveStep }) {
                       state.form.distance_between_supports_under_the_joist
                   )}
                   forType='wood'
-                  title='Odległość pomiędzy wspornikami pod legarem'
+                  title='Odległość pomiędzy wspornikami pod legarem (mm.)'
                   placeholder='mm'
                   hasIndicator={true}
                   modalContent='Jaka ma być odległość pomiędzy wspornikami podpierającymi legar?'
@@ -271,7 +274,7 @@ export default function Step2({ activeStep, setActiveStep }) {
                   }
                   value={useSelector((state) => state.form.slab_width)}
                   forType='slab'
-                  title='Szerokość płyty'
+                  title='Szerokość płyty (mm.)'
                   placeholder='mm'
                 />
                 {/* changeSlabLength === changeDistanceBetweenJoists */}
@@ -281,7 +284,7 @@ export default function Step2({ activeStep, setActiveStep }) {
                   }
                   value={useSelector((state) => state.form.slab_height)}
                   forType='slab'
-                  title='Długość płyty'
+                  title='Długość płyty (mm.)'
                   placeholder='mm'
                 />
                 {/* changeSlabThickness */}
@@ -303,7 +306,7 @@ export default function Step2({ activeStep, setActiveStep }) {
               <button
                 disabled={!step2validation}
                 onClick={() =>
-                  type === "wood"
+                  type === 'wood'
                     ? setActiveStep(4)
                     : setActiveStep(activeStep + 1)
                 }
@@ -322,7 +325,7 @@ export default function Step2({ activeStep, setActiveStep }) {
               <button
                 disabled={!step2validation}
                 onClick={() =>
-                  type === "wood"
+                  type === 'wood'
                     ? setActiveStep(4)
                     : setActiveStep(activeStep + 1)
                 }

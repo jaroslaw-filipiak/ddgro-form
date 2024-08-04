@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   setAccesories,
   setAdditionalAccessories,
-} from "@/store/slices/formSlice";
+} from '@/store/slices/formSlice';
 
 import {
   Modal,
@@ -13,9 +13,9 @@ import {
   ModalFooter,
   Button,
   useDisclosure,
-} from "@nextui-org/react";
+} from '@nextui-org/react';
 
-import Image from "next/image";
+import Image from 'next/image';
 
 export default function Step5({ activeStep, setActiveStep }) {
   const dispatch = useDispatch();
@@ -38,62 +38,125 @@ export default function Step5({ activeStep, setActiveStep }) {
 
   // TODO: full data from db record or fetch from db
 
-  const accesoriesForSlab = [
+  const accesoriesForProducts = [
     {
       id: 1,
-      slug: "sh",
-      title: "SH100 guma na wspornik",
-      img: "/assets/placeholder-96-68.png",
+      slug: 'Podkładka wygłuszająco - wyrównująca SH na wspornik-10399',
+      for_client: 'Podkładka wygłuszająco - wyrównująca SH na wspornik',
+      to_series: ['standard'],
+      code: 10399,
+      img: '/assets/placeholder-96-68.png',
+      name: 'Podkładka wygłuszająco - wyrównująca SH100',
+      short_name: 'SH100',
     },
     {
       id: 2,
-      slug: "glowica-samopoziomujaca",
-      title: "Głowica samopoziomująca",
-      img: "/assets/placeholder-96-68.png",
+      slug: 'Podkładka wygłuszająco - wyrównująca SH na wspornik-10314',
+      for_client: 'Podkładka wygłuszająco - wyrównująca SH na wspornik',
+      to_series: ['spiral', 'max'],
+      code: 10314,
+      img: '/assets/placeholder-96-68.png',
+      name: 'Podkładka wygłuszająco - wyrównująca SH145',
+      short_name: 'SH145',
     },
     {
       id: 3,
-      slug: "sbr-3mm",
-      title: "Guma pod wspornik 3mm",
-      img: "/assets/placeholder-96-68.png",
+      slug: 'Podkładki gumowe pod wsporniki SBR gr. 8 mm-102559',
+      for_client: 'Podkładki gumowe pod wsporniki SBR gr. 8 mm',
+      to_series: ['spiral', 'standard'],
+      code: 102559,
+      img: '/assets/placeholder-96-68.png',
+      name: 'Podkładki gumowe pod wsporniki SBR  200x200 MM',
+      short_name: 'SBR200/8',
     },
     {
       id: 4,
-      slug: "sbr-8mm",
-      title: "Guma pod wspornik 8mm",
-      img: "/assets/placeholder-96-68.png",
+      slug: 'Podkładki gumowe pod wsporniki SBR gr 3 mm-10414',
+      for_client: 'Podkładki gumowe pod wsporniki SBR gr 3 mm',
+      to_series: ['max'],
+      code: 10414,
+      img: '/assets/placeholder-96-68.png',
+      name: 'Podkładki gumowe pod wsporniki MAX SBR  220x220 MM (Akcesoria)',
+      short_name: 'SBR220/3',
     },
-  ];
-
-  const accesoriesForWood = [
     {
       id: 5,
-      slug: "-po",
-      title: "Podkładka Ochronna PO",
-      img: "/assets/placeholder-96-68.png",
+      slug: 'Podkładki gumowe pod wsporniki SBR gr 3 mm-107485',
+      for_client: 'Podkładki gumowe pod wsporniki SBR gr 3 mm',
+      to_series: ['raptor'],
+      code: 107485,
+      img: '/assets/placeholder-96-68.png',
+      name: 'Podkładki gumowe pod wsporniki SBR 170x170 MM',
+      short_name: 'DDR PG',
     },
     {
       id: 6,
-      slug: "kn",
-      title: "Korektor Nachylenia KN",
-      img: "/assets/placeholder-96-68.png",
+      slug: 'Podkładki gumowe pod wsporniki SBR gr 3 mm-102557',
+      for_client: 'Podkładki gumowe pod wsporniki SBR gr 3 mm',
+      to_series: ['spiral', 'standard'],
+      code: 102557,
+      img: '/assets/placeholder-96-68.png',
+      name: 'Podkładki gumowe pod wsporniki SBR  200x200 MM',
+      short_name: 'SBR200/3',
     },
     {
       id: 7,
-      slug: "pa",
-      title: "Podkładka Akustyczna PA",
-      img: "/assets/placeholder-96-68.png",
+      slug: 'Głowica samopoziomująca-10170',
+      for_client: 'Głowica samopoziomująca',
+      to_series: ['standard'],
+      code: 10170,
+      img: '/assets/placeholder-96-68.png',
+      name: 'Głowica samopoziomująca 7%',
+      short_name: 'LE',
     },
     {
       id: 8,
-      slug: "podkladka-gumowa-pod-wspornik",
-      title: "Podkładka gumowa pod wspornik 170x170x3 mm",
-      img: "/assets/placeholder-96-68.png",
+      slug: 'Głowica samopoziomująca-10680',
+      for_client: 'Głowica samopoziomująca',
+      to_series: ['max', 'spiral'],
+      code: 10680,
+      img: '/assets/placeholder-96-68.png',
+      name: 'Głowica samopoziomująca SPIRAL i dystanse 3 mm*',
+      short_name: 'SPIRAL LE',
+    },
+    {
+      id: 9,
+      slug: 'Podkładka ochronna-107483',
+      for_client: 'Podkładka ochronna',
+      to_series: ['raptor'],
+      code: 107483,
+      img: '/assets/placeholder-96-68.png',
+      name: 'Podkładka ochronna',
+      short_name: 'DDR PO',
+    },
+    {
+      id: 10,
+      slug: 'Podkładka akustyczna-107484',
+      for_client: 'Podkładka akustyczna',
+      to_series: ['raptor'],
+      code: 107484,
+      img: '/assets/placeholder-96-68.png',
+      name: 'Podkłakda akustyczna',
+      short_name: 'DDR PA',
+    },
+    {
+      id: 11,
+      slug: 'Korektor nachylenia 7%-10908',
+      for_client: 'Korektor nachylenia 7%',
+      to_series: ['raptor'],
+      code: 10908,
+      img: '/assets/placeholder-96-68.png',
+      name: 'Korektor nachylenia 7%',
+      short_name: 'DDR KN',
     },
   ];
 
+  const filteredAccesories = accesoriesForProducts.filter((item) =>
+    item.to_series.includes(main_system)
+  );
+
   const onChangeValue = (event) => {
-    console.log("onchangevalue");
+    console.log('onchangevalue');
     if (event.target.checked) {
       const newCheckedItems = [...checkedItems, event.target.id];
       setCheckedItems([...checkedItems, event.target.id]);
@@ -178,93 +241,50 @@ export default function Step5({ activeStep, setActiveStep }) {
               <div className='series--info'>
                 <p className='text-2xl font-bold textaccesories-black text-opacity-70 pt-16 pb-9'>
                   {loading
-                    ? "Wczytuje dane..."
-                    : "Wybierz  dodatkowe akcesoria"}
+                    ? 'Wczytuje dane...'
+                    : `Wybierz dodatkowe akcesoria, wybrany system: ${main_system}`}
                 </p>
 
                 {loading ? (
-                  "wczytywanie danych..."
+                  'wczytywanie danych...'
                 ) : (
                   <div className='series--accesories flex flex-col gap-6'>
-                    {type === "slab" &&
-                      accesoriesForSlab.map((item) => {
-                        return (
-                          <div
-                            key={item.slug}
-                            className={`relative hover:opacity-80 input-accesories--wrapper ${
-                              checkedItems.includes(item.slug.toString())
-                                ? "selected__top-left"
-                                : ""
-                            }`}
-                          >
-                            <label className='cursor-pointer'>
-                              <input
-                                type='checkbox'
-                                id={item.slug}
-                                name={item.title}
-                                value={item.title}
-                                onChange={onChangeValue}
-                                className='hidden input-accesories'
+                    {filteredAccesories.map((item) => (
+                      <div
+                        key={item.slug}
+                        className={`relative hover:opacity-80 input-accesories--wrapper ${
+                          checkedItems.includes(item.slug.toString())
+                            ? 'selected__top-left'
+                            : ''
+                        }`}
+                      >
+                        <label className='cursor-pointer'>
+                          <input
+                            type='checkbox'
+                            id={item.slug}
+                            name={item.title}
+                            value={item.title}
+                            onChange={onChangeValue}
+                            className='hidden input-accesories'
+                          />
+                          <div className='flex items-center justify-between'>
+                            <div className='flex items-center justify-start gap-3 lg:gap-6'>
+                              <Image
+                                width={96}
+                                height={68}
+                                src='/assets/placeholder-96-68.png'
+                                alt='placeholder'
                               />
-                              <div className='flex items-center justify-between'>
-                                <div className='flex items-center justify-start gap-3 lg:gap-6'>
-                                  <Image
-                                    width={96}
-                                    height={68}
-                                    src='/assets/placeholder-96-68.png'
-                                    alt='placeholder'
-                                  />
-                                  <div>
-                                    <p className='text-lg lg:text-2xl font-bold text-black text-opacity-70 selection:bg-none'>
-                                      {item.title}
-                                    </p>
-                                  </div>
-                                </div>
+                              <div>
+                                <p className='text-lg lg:text-2xl font-bold text-black text-opacity-70 selection:bg-none'>
+                                  {item.for_client}
+                                </p>
                               </div>
-                            </label>
+                            </div>
                           </div>
-                        );
-                      })}
-
-                    {type === "wood" &&
-                      accesoriesForWood.map((item) => {
-                        return (
-                          <div
-                            key={item.slug}
-                            className={`relative hover:opacity-80 input-accesories--wrapper ${
-                              checkedItems.includes(item.slug.toString())
-                                ? "selected__top-left"
-                                : ""
-                            }`}
-                          >
-                            <label className='cursor-pointer'>
-                              <input
-                                type='checkbox'
-                                id={item.slug}
-                                name={item.title}
-                                value={item.title}
-                                onChange={onChangeValue}
-                                className='hidden input-accesories'
-                              />
-                              <div className='flex items-center justify-between'>
-                                <div className='flex items-center justify-start gap-3 lg:gap-6'>
-                                  <Image
-                                    width={96}
-                                    height={68}
-                                    src='/assets/placeholder-96-68.png'
-                                    alt='placeholder'
-                                  />
-                                  <div>
-                                    <p className='text-lg lg:text-2xl font-bold text-black text-opacity-70  selection:bg-none'>
-                                      {item.title}
-                                    </p>
-                                  </div>
-                                </div>
-                              </div>
-                            </label>
-                          </div>
-                        );
-                      })}
+                        </label>
+                      </div>
+                    ))}
                   </div>
                 )}
               </div>
