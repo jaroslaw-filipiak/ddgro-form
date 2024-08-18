@@ -1,15 +1,16 @@
 // Now we can use the React-Redux hooks to let React components interact with the Redux store. We can read data from the store with useSelector, and dispatch actions using useDispatch
 
-import { useSelector, useDispatch } from "react-redux";
-import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from 'react-redux';
+import { useState, useEffect } from 'react';
 import {
   changeEmail,
+  changePhone,
   changeNameSurname,
   changeProffesion,
-} from "@/store/slices/formSlice";
-import { Select, SelectItem, Input, CircularProgress } from "@nextui-org/react";
-import {} from "@nextui-org/react";
-import Image from "next/image";
+} from '@/store/slices/formSlice';
+import { Select, SelectItem, Input, CircularProgress } from '@nextui-org/react';
+import {} from '@nextui-org/react';
+import Image from 'next/image';
 
 export default function FormAside({ setFormAsideVisibility }) {
   const dispatch = useDispatch();
@@ -21,8 +22,11 @@ export default function FormAside({ setFormAsideVisibility }) {
   const NODE_ENV = process.env.NODE_ENV;
 
   const items = [
-    { value: "Architekt", label: "Architektem" },
-    { value: "Montażysta", label: "Montażystą" },
+    { value: 'klient-indywidualny', label: 'Klientem indywidualnym' },
+    { value: 'Wykonawcą', label: 'Wykonawcą' },
+    { value: 'Dystrybutorem', label: 'Dystrybutorem' },
+    { value: 'Architektem', label: 'Architektem' },
+    { value: 'GW/Deweloper', label: 'GW/Deweloper' },
   ];
 
   const handleSelectionChange = (item) => {
@@ -62,6 +66,7 @@ export default function FormAside({ setFormAsideVisibility }) {
       main_system: state.main_system,
       name_surname: state.name_surname,
       email: state.email,
+      phone: state.phone,
       proffesion: state.proffesion,
       terms_accepted: 1,
       slabs_count: state.slabs_count,
@@ -121,10 +126,10 @@ export default function FormAside({ setFormAsideVisibility }) {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/application`,
         {
-          method: "POST",
+          method: 'POST',
           headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify(form),
         }
@@ -140,10 +145,10 @@ export default function FormAside({ setFormAsideVisibility }) {
       const sendOrder = await fetch(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/application/send-order-summary/${data.id}`,
         {
-          method: "POST",
+          method: 'POST',
           headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify(sendOrderData),
         }
@@ -152,14 +157,14 @@ export default function FormAside({ setFormAsideVisibility }) {
       setLoading(false);
       setResponse(data);
     } catch (e) {
-      console.log("error===========");
+      console.log('error===========');
       console.log(e);
-      console.log("error===========");
+      console.log('error===========');
 
       setResponse(e);
-      console.log("form===========");
+      console.log('form===========');
       console.log(JSON.stringify(form));
-      console.log("form===========");
+      console.log('form===========');
       setLoading(false);
     }
   };
@@ -220,6 +225,23 @@ export default function FormAside({ setFormAsideVisibility }) {
                       placeholder='Wpisz adres email'
                     />
                   </div>
+
+                  {/* telefon */}
+                  <div className='flex w-full lg:w-6/12 flex-col'>
+                    <label
+                      className='text-lg text-white font-medium mb-2 '
+                      htmlFor='phone'
+                    >
+                      telefon
+                    </label>
+
+                    <Input
+                      onChange={(e) => dispatch(changePhone(e.target.value))}
+                      className='text-base  text-center font-medium rounded-md w-full'
+                      type='text'
+                      placeholder='telefon'
+                    />
+                  </div>
                 </div>
 
                 {/* select input */}
@@ -261,14 +283,14 @@ export default function FormAside({ setFormAsideVisibility }) {
                     }}
                     className='xl:min-w-[350px] btn btn--main btn--main__small max-w-[230px]  border-[2px] border-white btn--rounded pl-10 pr-10'
                   >
-                    {loading ? "Wysyłanie..." : "Wyślij"}
+                    {loading ? 'Wysyłanie...' : 'Wyślij'}
                     {loading && (
                       <CircularProgress
                         classNames={{
-                          svg: "w-10 h-10 drop-shadow-md",
-                          indicator: "stroke-white",
-                          track: "stroke-white/10",
-                          value: "text-3xl font-semibold text-white",
+                          svg: 'w-10 h-10 drop-shadow-md',
+                          indicator: 'stroke-white',
+                          track: 'stroke-white/10',
+                          value: 'text-3xl font-semibold text-white',
                         }}
                         aria-label='Loading...'
                       />
@@ -311,7 +333,11 @@ export default function FormAside({ setFormAsideVisibility }) {
                       strokeLinecap='round'
                       strokeLinejoin='round'
                     >
-                      <path stroke='none' d='M0 0h24v24H0z' fill='none' />
+                      <path
+                        stroke='none'
+                        d='M0 0h24v24H0z'
+                        fill='none'
+                      />
                       <path
                         d='M12 2c5.523 0 10 4.477 10 10a10 10 0 0 1 -19.995 .324l-.005 -.324l.004 -.28c.148 -5.393 4.566 -9.72 9.996 -9.72zm.01 13l-.127 .007a1 1 0 0 0 0 1.986l.117 .007l.127 -.007a1 1 0 0 0 0 -1.986l-.117 -.007zm-.01 -8a1 1 0 0 0 -.993 .883l-.007 .117v4l.007 .117a1 1 0 0 0 1.986 0l.007 -.117v-4l-.007 -.117a1 1 0 0 0 -.993 -.883z'
                         strokeWidth='0'

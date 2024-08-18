@@ -1,31 +1,32 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  type: "", // slab or wood
-  total_area: "",
-  count: "",
+  type: '', // slab or wood
+  total_area: '',
+  count: '',
   gap_between_slabs: 3,
-  lowest: "",
-  highest: "",
-  terrace_thickness: "",
-  distance_between_joists: "",
-  distance_between_supports_under_the_joist: "",
-  joist_height: "",
-  slab_width: "",
-  slab_height: "",
-  slab_thickness: "",
-  medium_size: "",
-  sqrt: "",
-  tiles_per_row: "",
-  sum_of_tiles: "",
-  value: "",
-  support_type: "", // 1 , 2 , 3 , 4
-  main_system: "", // spiral, standard, max, raptor aka alu
+  lowest: '',
+  highest: '',
+  terrace_thickness: '',
+  distance_between_joists: '',
+  distance_between_supports_under_the_joist: '',
+  joist_height: '',
+  slab_width: '',
+  slab_height: '',
+  slab_thickness: '',
+  medium_size: '',
+  sqrt: '',
+  tiles_per_row: '',
+  sum_of_tiles: '',
+  value: '',
+  support_type: '', // 1 , 2 , 3 , 4
+  main_system: '', // spiral, standard, max, raptor aka alu
   additional_accessories: [],
   additional_products: [],
-  name_surname: "",
-  email: "info@j-filipiak.pl",
-  proffestion: "",
+  name_surname: '',
+  email: '',
+  phone: '',
+  proffestion: '',
   terms_accepted: false,
   accesories: [],
   accesoriesForSelectedType: [],
@@ -90,7 +91,7 @@ const initialState = {
 };
 
 export const formSlice = createSlice({
-  name: "form",
+  name: 'form',
   initialState,
   reducers: {
     changeType: (state, action) => {
@@ -98,14 +99,17 @@ export const formSlice = createSlice({
       // reset main system when type is changed
       // if type === wood then support_type = type1
 
-      if (action.payload === "wood") {
-        state.support_type = "type1";
+      if (action.payload === 'wood') {
+        state.support_type = 'type1';
       }
 
       state.main_system = null;
     },
     changeEmail: (state, action) => {
       state.email = action.payload;
+    },
+    changePhone: (state, action) => {
+      state.phone = action.payload;
     },
     changeProffesion: (state, action) => {
       state.proffesion = action.payload;
@@ -175,7 +179,7 @@ export const formSlice = createSlice({
       state.additional_accessories = action.payload;
     },
     setAdditionalProducts: (state, action) => {
-      console.log("setAdditionalProducts");
+      console.log('setAdditionalProducts');
       state.products = action.payload;
     },
     setAccesories: (state, action) => {
@@ -245,14 +249,14 @@ export const formSlice = createSlice({
       state.tiles_per_row = tilesPerRow;
     },
     calculateSupportsCount: (state, action) => {
-      if (state.support_type === "type1") {
+      if (state.support_type === 'type1') {
         // x51 * b5
         // x51 = (1+x47)* (1+x48)
 
         const totalSupports =
           (state.NO_PAYERS_PER_ROW + 1) * (state.NO_PAYERS_PER_COLUMN + 1);
         state.supports_count = totalSupports * state.count;
-      } else if (state.support_type === "type2") {
+      } else if (state.support_type === 'type2') {
         // X51*B5+B23
         // x51 = (1+x47)* (1+x48)
 
@@ -263,7 +267,7 @@ export const formSlice = createSlice({
           state.slabs_count;
 
         state.supports_count = totalSupports;
-      } else if (state.support_type === "type3") {
+      } else if (state.support_type === 'type3') {
         console.log(state.support_type);
         /*
          *
@@ -282,7 +286,7 @@ export const formSlice = createSlice({
         state.supports_count = state.TOTAL_NO_PEDESTALS * state.count;
 
         // state.supports_count = c25 * b25;
-      } else if (state.support_type === "type4") {
+      } else if (state.support_type === 'type4') {
         // =B25+B23
 
         // ======== B25 =========
@@ -386,6 +390,7 @@ export const {
   decrement,
   incrementByAmount,
   changeEmail,
+  changePhone,
   changeProffesion,
   changeNameSurname,
   changeType,
