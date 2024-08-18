@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useEffect, useRef, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   calculateHowManyTitlesCanFillTheSquare,
   calculateSupportsCount,
@@ -21,9 +21,9 @@ import {
   setAverageInEachSectionRaptor,
   setM_RAPTOR,
   setM_RAPTOR_ORDER,
-} from "@/store/slices/formSlice";
+} from '@/store/slices/formSlice';
 
-import Image from "next/image";
+import Image from 'next/image';
 
 function capitalizeFirstLetter(string) {
   if (string) {
@@ -63,20 +63,20 @@ export default function Step7({ setFormAsideVisibility }) {
   // columns for M_STANDARD and other MATRIX OBJ
   const columns = [
     {
-      key: "wys_mm",
-      label: "wys_mm",
+      key: 'wys_mm',
+      label: 'wys_mm',
     },
     {
-      key: "range",
-      label: "przedział",
+      key: 'range',
+      label: 'przedział',
     },
     {
-      key: "condition",
-      label: "warunek",
+      key: 'condition',
+      label: 'warunek',
     },
     {
-      key: "count_in_range",
-      label: "ilość w predziale",
+      key: 'count_in_range',
+      label: 'ilość w predziale',
     },
   ];
 
@@ -104,27 +104,27 @@ export default function Step7({ setFormAsideVisibility }) {
     const calculateRange = (item) => {
       switch (true) {
         case item.wys_mm >= 10 && item.wys_mm <= 16:
-          return "10-17";
+          return '10-17';
         case item.wys_mm >= 17 && item.wys_mm <= 29:
-          return "17-30";
+          return '17-30';
         case item.wys_mm >= 30 && item.wys_mm <= 45:
-          return "30-45";
+          return '30-45';
         case item.wys_mm >= 46 && item.wys_mm <= 69:
-          return "45-70";
+          return '45-70';
         case item.wys_mm >= 70 && item.wys_mm <= 119:
-          return "70-120";
+          return '70-120';
         case item.wys_mm >= 120 && item.wys_mm <= 219:
-          return "120-220";
+          return '120-220';
         case item.wys_mm >= 220 && item.wys_mm <= 319:
-          return "220-320";
+          return '220-320';
         case item.wys_mm >= 320 && item.wys_mm <= 420:
-          return "320-420";
+          return '320-420';
         case item.wys_mm >= 421 && item.wys_mm <= 549:
-          return "350-550";
+          return '350-550';
         case item.wys_mm >= 550 && item.wys_mm <= 749:
-          return "550-750";
+          return '550-750';
         case item.wys_mm >= 750 && item.wys_mm <= 950:
-          return "750-950";
+          return '750-950';
       }
     };
 
@@ -162,42 +162,42 @@ export default function Step7({ setFormAsideVisibility }) {
     const calculateRange = (item) => {
       switch (true) {
         case item.wys_mm >= 10 && item.wys_mm <= 16:
-          return "10-17";
+          return '10-17';
         case item.wys_mm >= 17 && item.wys_mm <= 29:
-          return "17-30";
+          return '17-30';
         case item.wys_mm >= 30 && item.wys_mm <= 49:
-          return "30-50";
+          return '30-50';
         case item.wys_mm >= 50 && item.wys_mm <= 69:
-          return "50-70";
+          return '50-70';
         case item.wys_mm >= 70 && item.wys_mm <= 89:
-          return "70-90";
+          return '70-90';
         case item.wys_mm >= 90 && item.wys_mm <= 109:
-          return "90-110";
+          return '90-110';
         case item.wys_mm >= 110 && item.wys_mm <= 129:
-          return "110-130";
+          return '110-130';
         case item.wys_mm >= 130 && item.wys_mm <= 149:
-          return "130-150";
+          return '130-150';
         case item.wys_mm >= 150 && item.wys_mm <= 169:
-          return "150-170";
+          return '150-170';
         case item.wys_mm >= 170 && item.wys_mm <= 189:
-          return "170-190";
+          return '170-190';
         case item.wys_mm >= 190 && item.wys_mm <= 210:
-          return "190-210";
+          return '190-210';
         case item.wys_mm >= 211 && item.wys_mm <= 219:
-          return "120-220";
+          return '120-220';
         case item.wys_mm >= 220 && item.wys_mm <= 319:
-          return "220-320";
+          return '220-320';
         case item.wys_mm >= 320 && item.wys_mm <= 420:
-          return "320-420";
+          return '320-420';
         case item.wys_mm >= 421 && item.wys_mm <= 549:
-          return "350-550";
+          return '350-550';
         case item.wys_mm >= 550 && item.wys_mm <= 749:
-          return "550-750";
+          return '550-750';
         case item.wys_mm >= 750 && item.wys_mm <= 950:
-          return "750-950";
+          return '750-950';
 
         default:
-          return "";
+          return '';
       }
     };
 
@@ -236,23 +236,23 @@ export default function Step7({ setFormAsideVisibility }) {
     const calculateRange = (item) => {
       switch (true) {
         case item.wys_mm >= 10 && item.wys_mm <= 16:
-          return "10-17";
+          return '10-17';
         case item.wys_mm >= 17 && item.wys_mm <= 29:
-          return "17-30";
+          return '17-30';
         case item.wys_mm >= 30 && item.wys_mm <= 44:
-          return "30-50";
+          return '30-50';
         case item.wys_mm >= 45 && item.wys_mm <= 74:
-          return "45-75";
+          return '45-75';
         case item.wys_mm >= 75 && item.wys_mm <= 149:
-          return "75-150";
+          return '75-150';
         case item.wys_mm >= 150 && item.wys_mm <= 349:
-          return "150-350";
+          return '150-350';
         case item.wys_mm >= 350 && item.wys_mm <= 549:
-          return "350-550";
+          return '350-550';
         case item.wys_mm >= 550 && item.wys_mm <= 749:
-          return "550-750";
+          return '550-750';
         case item.wys_mm >= 750 && item.wys_mm <= 950:
-          return "750-950";
+          return '750-950';
       }
     };
 
@@ -291,33 +291,33 @@ export default function Step7({ setFormAsideVisibility }) {
     const calculateRange = (item) => {
       switch (true) {
         case item.wys_mm >= 10 && item.wys_mm <= 14:
-          return "10-17";
+          return '10-17';
         case item.wys_mm >= 15 && item.wys_mm <= 34:
-          return "15-35";
+          return '15-35';
         case item.wys_mm >= 35 && item.wys_mm <= 64:
-          return "35-65";
+          return '35-65';
         case item.wys_mm >= 65 && item.wys_mm <= 94:
-          return "65-95";
+          return '65-95';
         case item.wys_mm >= 95 && item.wys_mm <= 124:
-          return "95-125";
+          return '95-125';
         case item.wys_mm >= 125 && item.wys_mm <= 154:
-          return "125-155";
+          return '125-155';
         case item.wys_mm >= 155 && item.wys_mm <= 184:
-          return "155-185";
+          return '155-185';
         case item.wys_mm >= 185 && item.wys_mm <= 214:
-          return "185-215";
+          return '185-215';
         case item.wys_mm >= 215 && item.wys_mm <= 245:
-          return "215-245";
+          return '215-245';
         case item.wys_mm >= 246 && item.wys_mm <= 319:
-          return "220-320";
+          return '220-320';
         case item.wys_mm >= 320 && item.wys_mm <= 420:
-          return "320-420";
+          return '320-420';
         case item.wys_mm >= 421 && item.wys_mm <= 549:
-          return "350-550";
+          return '350-550';
         case item.wys_mm >= 550 && item.wys_mm <= 749:
-          return "550-750";
+          return '550-750';
         case item.wys_mm >= 750 && item.wys_mm <= 950:
-          return "750-950";
+          return '750-950';
       }
     };
 
@@ -593,16 +593,16 @@ export default function Step7({ setFormAsideVisibility }) {
 
   const matrixCalculate = () => {
     try {
-      console.log("creating matrix M_STANDARD MATRIX");
+      console.log('creating matrix M_STANDARD MATRIX');
       M_STANDARD();
-      console.log("creating matrix M_SPIRAL MATRIX");
+      console.log('creating matrix M_SPIRAL MATRIX');
       M_SPIRAL();
-      console.log("creating matrix M_MAX");
+      console.log('creating matrix M_MAX');
       M_MAX();
-      console.log("creating matrix M_RAPTOR");
+      console.log('creating matrix M_RAPTOR');
       M_RAPTOR();
     } catch (error) {
-      console.log("problem with creating matrix...");
+      console.log('problem with creating matrix...');
       console.log(error);
     }
   };
@@ -653,7 +653,7 @@ export default function Step7({ setFormAsideVisibility }) {
                       Rodzaj nawierzchni:
                     </p>
                     <p className='text-lg text-black text-opacity-70 font-bold'>
-                      {state.type === "wood" ? "Deski" : "Płyty"}
+                      {state.type === 'wood' ? 'Deski' : 'Płyty'}
                     </p>
                   </li>
                 )}
@@ -719,7 +719,7 @@ export default function Step7({ setFormAsideVisibility }) {
                       Czy wybrano dodatkowe akcesoria:
                     </p>
                     <p className='text-lg text-black text-opacity-70 font-bold'>
-                      {state?.additional_accessories ? "Tak" : "Nie"}
+                      {state?.additional_accessories ? 'Tak' : 'Nie'}
                     </p>
                   </li>
                 )}
@@ -740,30 +740,30 @@ export default function Step7({ setFormAsideVisibility }) {
                   </p>
                   <div className='flex items-center'>
                     <p className='text-black text-opacity-50 text-base pl-4'>
-                      {state?.supports_count ? state?.supports_count : "-"}
+                      {state?.supports_count ? state?.supports_count : '-'}
                     </p>
                   </div>
                 </li>
 
                 <li
                   className={`flex items-center justify-between border-b border-black border-opacity-50 p-6 ${
-                    state.type === "wood" ? "hidden" : ""
+                    state.type === 'wood' ? 'hidden' : ''
                   }`}
                 >
                   <p
                     className={`text-xl text-black text-opacity-50 font-normal ${
-                      state.type === "wood" ? "hidden" : ""
+                      state.type === 'wood' ? 'hidden' : ''
                     }`}
                   >
                     Liczba płyt:
                   </p>
                   <div
                     className={`flex items-center ${
-                      state.type === "wood" ? "hidden" : ""
+                      state.type === 'wood' ? 'hidden' : ''
                     }`}
                   >
                     <p className='text-black text-opacity-50 text-base pl-4'>
-                      {state?.slabs_count ? state?.slabs_count : "-"}
+                      {state?.slabs_count ? state?.slabs_count : '-'}
                     </p>
                   </div>
                 </li>

@@ -44,7 +44,7 @@ export default function Step5({ activeStep, setActiveStep }) {
       slug: 'Podkładka wygłuszająco - wyrównująca SH na wspornik-10399',
       for_client: 'Podkładka wygłuszająco - wyrównująca SH na wspornik',
       to_series: ['standard'],
-      code: 10399,
+      code: 10039,
       img: '/assets/placeholder-96-68.png',
       name: 'Podkładka wygłuszająco - wyrównująca SH100',
       short_name: 'SH100',
@@ -80,6 +80,7 @@ export default function Step5({ activeStep, setActiveStep }) {
       short_name: 'SBR220/3',
     },
     {
+      // TODO: nie mam tego w bazie
       id: 5,
       slug: 'Podkładki gumowe pod wsporniki SBR gr 3 mm-107485',
       for_client: 'Podkładki gumowe pod wsporniki SBR gr 3 mm',
@@ -157,14 +158,28 @@ export default function Step5({ activeStep, setActiveStep }) {
 
   const onChangeValue = (event) => {
     console.log('onchangevalue');
+    console.log(event);
+    console.log(event.target.value);
+    console.log(event.target.id);
+
+    const searchString = 'Podkładki';
+
     if (event.target.checked) {
       const newCheckedItems = [...checkedItems, event.target.id];
+
+      const found = newCheckedItems.some((item) => item.includes(searchString));
+      console.log(found);
+
       setCheckedItems([...checkedItems, event.target.id]);
       dispatch(setAdditionalAccessories(newCheckedItems));
     } else {
       const newCheckedItems = checkedItems.filter(
         (item) => item !== event.target.id
       );
+
+      const found = newCheckedItems.some((item) => item.includes(searchString));
+      console.log(found);
+
       setCheckedItems(newCheckedItems);
       dispatch(setAdditionalAccessories(newCheckedItems));
     }
@@ -252,6 +267,7 @@ export default function Step5({ activeStep, setActiveStep }) {
                     {filteredAccesories.map((item) => (
                       <div
                         key={item.slug}
+                        id={item.id}
                         className={`relative hover:opacity-80 input-accesories--wrapper ${
                           checkedItems.includes(item.slug.toString())
                             ? 'selected__top-left'
@@ -261,6 +277,7 @@ export default function Step5({ activeStep, setActiveStep }) {
                         <label className='cursor-pointer'>
                           <input
                             type='checkbox'
+                            object={item}
                             id={item.slug}
                             name={item.title}
                             value={item.title}

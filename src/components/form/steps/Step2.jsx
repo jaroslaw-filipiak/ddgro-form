@@ -23,6 +23,9 @@ import Image from 'next/image';
 export default function Step2({ activeStep, setActiveStep }) {
   const dispatch = useDispatch();
   const [validated, setValidated] = useState(0);
+  const imageBaseUrl = process.env.NEXT_PUBLIC_IMAGE_BASE_URL;
+  const [validateLowestMessage, setvalidateLowestMessage] = useState(false);
+  const [validateHighestMessage, setvalidateHighestMessage] = useState(false);
 
   const {
     type,
@@ -58,14 +61,39 @@ export default function Step2({ activeStep, setActiveStep }) {
     joist_height,
   ]);
 
+  const validateLowest = (value) => {
+    if (value < 10) {
+      setvalidateLowestMessage(
+        'Wartość dla: "Najniższy wspornik (mm.)" nie może być mniejsza niż 10mm'
+      );
+      setValidated(0);
+    } else {
+      setvalidateLowestMessage(false);
+    }
+  };
+
+  const validateHighest = (value) => {
+    console.log('validateHighest', value);
+    if (value > 950) {
+      setvalidateHighestMessage(
+        'Wartość dla: "Wyższy wspornik (mm.)" nie może być większa niż 950mm'
+      );
+      setValidated(0);
+    } else {
+      setvalidateHighestMessage(false);
+    }
+  };
+
   const handleValidated = () => {
+    console.log(lowest, highest);
     if (type === 'slab') {
       if (
         total_area &&
         count &&
         gap_between_slabs &&
-        lowest &&
+        lowest >= 10 &&
         highest &&
+        highest <= 950 &&
         slab_width &&
         slab_height
         // slab_thickness
@@ -80,8 +108,8 @@ export default function Step2({ activeStep, setActiveStep }) {
       if (
         total_area &&
         count &&
-        lowest &&
-        highest &&
+        lowest >= 10 &&
+        highest <= 950 &&
         distance_between_joists
         //  TODO:  terrace_thickness &&  ???
         //  distance_between_supports_under_the_joist && ???
@@ -164,7 +192,6 @@ export default function Step2({ activeStep, setActiveStep }) {
                   title='Łączna powierzchnia (m2)'
                   placeholder='ilośc m2'
                   inputType='number'
-                  // hasIndicator={true}
                 />
                 {/* count */}
                 <InputRow
@@ -189,25 +216,54 @@ export default function Step2({ activeStep, setActiveStep }) {
 
                 {/* lowest */}
                 <InputRow
-                  onChange={(e) =>
-                    dispatch(chageLowest(Number(e.target.value)))
-                  }
+                  onChange={(e) => {
+                    dispatch(chageLowest(Number(e.target.value)));
+
+                    const id = e.nativeEvent?.srcElement?.id;
+                    if (id === 'lowest') {
+                      validateLowest(e.target.value);
+                    }
+                  }}
                   value={useSelector((state) => state.form.lowest)}
                   forType='all'
                   title='Najniższy wspornik (mm.)'
-                  placeholder='mm'
-                  // minValue='10'
+                  minValue={10}
+                  inputType={'number'}
+                  placeholder='min. 10mm'
+                  name='lowest'
+                  inputID='lowest'
+                  isValidate={true}
                 />
+                {validateLowestMessage && (
+                  <p className='text-red-500 -mt-[45px]'>
+                    {validateLowestMessage}
+                  </p>
+                )}
                 {/* highest */}
                 <InputRow
-                  onChange={(e) =>
-                    dispatch(changeHighest(Number(e.target.value)))
-                  }
+                  onChange={(e) => {
+                    dispatch(changeHighest(Number(e.target.value)));
+                    const id = e.nativeEvent?.srcElement?.id;
+                    if (id === 'highest') {
+                      validateHighest(e.target.value);
+                    }
+                  }}
                   value={useSelector((state) => state.form.highest)}
                   forType='all'
-                  title='Najwyższy wspornik (mm.)'
-                  placeholder='mm'
+                  title='Wyższy wspornik (mm.)'
+                  minValue={0}
+                  maxValue={950}
+                  inputType={'number'}
+                  placeholder='max. 950mm'
+                  name='highest'
+                  inputID='highest'
+                  isValidate={true}
                 />
+                {validateHighestMessage && (
+                  <p className='text-red-500 -mt-[45px]'>
+                    {validateHighestMessage}
+                  </p>
+                )}
                 {/* changeTerraceThickness */}
                 {/* <InputRow
                   onChange={(e) =>
@@ -232,7 +288,7 @@ export default function Step2({ activeStep, setActiveStep }) {
                   title='Odległość pomiędzy legarami (mm.)'
                   placeholder='mm'
                   hasIndicator={true}
-                  modalContent='Jaki jest rozstaw pomiędzy legarami pod deską tarasową?'
+                  modalContent={`<img class="rounded-lg" src="${imageBaseUrl}/assets/odleglosc-legary-1.png" /> <p style="margin-top: 20px"> Jaki jest rozstaw pomiędzy legarami pod deską tarasową?</p>`}
                 />
                 {/* changeSlabWidth */}
 
