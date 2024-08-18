@@ -288,7 +288,7 @@ export default function Step2({ activeStep, setActiveStep }) {
                   title='Odległość pomiędzy legarami (mm.)'
                   placeholder='mm'
                   hasIndicator={true}
-                  modalContent={`<img class="rounded-lg" src="${imageBaseUrl}/assets/odleglosc-legary-1.png" /> <p style="margin-top: 20px"> Jaki jest rozstaw pomiędzy legarami pod deską tarasową?</p>`}
+                  modalContent={`<img class="rounded-lg" src="${imageBaseUrl}/assets/odleglosc-legary-1.png" /><img class="rounded-lg" src="${imageBaseUrl}/assets/odleglosc-legary-2.png" /><img class="rounded-lg" src="${imageBaseUrl}/assets/odleglosc-legary-3.png" /> <p style="margin-top: 20px"> Jaki jest rozstaw pomiędzy legarami pod deską tarasową?</p>`}
                 />
                 {/* changeSlabWidth */}
 
@@ -309,7 +309,7 @@ export default function Step2({ activeStep, setActiveStep }) {
                   title='Odległość pomiędzy wspornikami pod legarem (mm.)'
                   placeholder='mm'
                   hasIndicator={true}
-                  modalContent='Jaka ma być odległość pomiędzy wspornikami podpierającymi legar?'
+                  modalContent={`<img class="rounded-lg" src="${imageBaseUrl}/assets/odleglosc-wsporniki-1.png" /><img class="rounded-lg" src="${imageBaseUrl}/assets/odleglosc-wsporniki-2.png" /><p style="margin-top: 20px">Jaka ma być odległość pomiędzy wspornikami podpierającymi legar?</p>`}
                 />
 
                 {/* changeJoistHeight */}
