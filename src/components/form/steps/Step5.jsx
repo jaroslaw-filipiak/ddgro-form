@@ -31,14 +31,9 @@ export default function Step5({ activeStep, setActiveStep }) {
   const [data, setData] = useState([]);
   const [loading, isLoading] = useState(false);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-
-  useEffect(() => {
-    setCheckedItems(filteredItems);
-  }, [filteredItems]);
-
-  // TODO: full data from db record or fetch from db
-
-  const accesoriesForProducts = [
+  const [has3, setHas3] = useState(false);
+  const [has8, setHas8] = useState(false);
+  const [accesoriesForProducts, setAccesoriesForProducts] = useState([
     {
       id: 1,
       slug: 'Podkładka wygłuszająco - wyrównująca SH na wspornik-10399',
@@ -48,6 +43,7 @@ export default function Step5({ activeStep, setActiveStep }) {
       img: '/assets/placeholder-96-68.png',
       name: 'Podkładka wygłuszająco - wyrównująca SH100',
       short_name: 'SH100',
+      visible: true,
     },
     {
       id: 2,
@@ -58,6 +54,7 @@ export default function Step5({ activeStep, setActiveStep }) {
       img: '/assets/placeholder-96-68.png',
       name: 'Podkładka wygłuszająco - wyrównująca SH145',
       short_name: 'SH145',
+      visible: true,
     },
     {
       id: 3,
@@ -68,6 +65,7 @@ export default function Step5({ activeStep, setActiveStep }) {
       img: '/assets/placeholder-96-68.png',
       name: 'Podkładki gumowe pod wsporniki SBR  200x200 MM',
       short_name: 'SBR200/8',
+      visible: true,
     },
     {
       id: 4,
@@ -78,6 +76,7 @@ export default function Step5({ activeStep, setActiveStep }) {
       img: '/assets/placeholder-96-68.png',
       name: 'Podkładki gumowe pod wsporniki MAX SBR  220x220 MM (Akcesoria)',
       short_name: 'SBR220/3',
+      visible: true,
     },
     {
       // TODO: nie mam tego w bazie
@@ -89,6 +88,7 @@ export default function Step5({ activeStep, setActiveStep }) {
       img: '/assets/placeholder-96-68.png',
       name: 'Podkładki gumowe pod wsporniki SBR 170x170 MM',
       short_name: 'DDR PG',
+      visible: true,
     },
     {
       id: 6,
@@ -99,6 +99,7 @@ export default function Step5({ activeStep, setActiveStep }) {
       img: '/assets/placeholder-96-68.png',
       name: 'Podkładki gumowe pod wsporniki SBR  200x200 MM',
       short_name: 'SBR200/3',
+      visible: true,
     },
     {
       id: 7,
@@ -109,6 +110,7 @@ export default function Step5({ activeStep, setActiveStep }) {
       img: '/assets/placeholder-96-68.png',
       name: 'Głowica samopoziomująca 7%',
       short_name: 'LE',
+      visible: true,
     },
     {
       id: 8,
@@ -119,6 +121,7 @@ export default function Step5({ activeStep, setActiveStep }) {
       img: '/assets/placeholder-96-68.png',
       name: 'Głowica samopoziomująca SPIRAL i dystanse 3 mm*',
       short_name: 'SPIRAL LE',
+      visible: true,
     },
     {
       id: 9,
@@ -129,6 +132,7 @@ export default function Step5({ activeStep, setActiveStep }) {
       img: '/assets/placeholder-96-68.png',
       name: 'Podkładka ochronna',
       short_name: 'DDR PO',
+      visible: true,
     },
     {
       id: 10,
@@ -139,6 +143,7 @@ export default function Step5({ activeStep, setActiveStep }) {
       img: '/assets/placeholder-96-68.png',
       name: 'Podkłakda akustyczna',
       short_name: 'DDR PA',
+      visible: true,
     },
     {
       id: 11,
@@ -149,11 +154,18 @@ export default function Step5({ activeStep, setActiveStep }) {
       img: '/assets/placeholder-96-68.png',
       name: 'Korektor nachylenia 7%',
       short_name: 'DDR KN',
+      visible: true,
     },
-  ];
+  ]);
 
-  const filteredAccesories = accesoriesForProducts.filter((item) =>
-    item.to_series.includes(main_system)
+  useEffect(() => {
+    setCheckedItems(filteredItems);
+  }, [filteredItems, accesoriesForProducts]);
+
+  // TODO: full data from db record or fetch from db
+
+  const filteredAccesories = accesoriesForProducts.filter(
+    (item) => item.to_series.includes(main_system) && item.visible === true
   );
 
   const onChangeValue = (event) => {
@@ -161,14 +173,54 @@ export default function Step5({ activeStep, setActiveStep }) {
     console.log(event);
     console.log(event.target.value);
     console.log(event.target.id);
+    const search8mmString =
+      'Podkładki gumowe pod wsporniki SBR gr. 8 mm-102559';
 
-    const searchString = 'Podkładki';
+    const search3mmString = /3 mm-.*/;
 
     if (event.target.checked) {
+      // checked
       const newCheckedItems = [...checkedItems, event.target.id];
+      const found8mm = newCheckedItems.some((item) =>
+        item.includes(search8mmString)
+      );
 
-      const found = newCheckedItems.some((item) => item.includes(searchString));
-      console.log(found);
+      const found3mm = newCheckedItems.some((item) =>
+        search3mmString.test(item)
+      );
+
+      if (found8mm) {
+        // zaznaczono podkładki 8mm
+        setHas8(true);
+
+        // wylącz podkładki 3mm
+        accesoriesForProducts.map((item) => {
+          item.id === 6 ? (item.visible = false) : item;
+        });
+      } else {
+        // nie zaznaczono podkładek 8mm
+        // włącz podkładki 3mm
+        accesoriesForProducts.map((item) => {
+          item.id === 6 ? (item.visible = true) : item;
+        });
+      }
+
+      if (found3mm) {
+        // zaznaczono podkładki 3mm
+        setHas3(true);
+        console.log('chkecked 3mm');
+
+        // wylącz podkładki 8mm
+        accesoriesForProducts.map((item) => {
+          item.id === 3 ? (item.visible = false) : item;
+        });
+      } else {
+        // nie zaznaczono podkładek 3mm
+        // włącz podkładki 8mm
+        accesoriesForProducts.map((item) => {
+          item.id === 3 ? (item.visible = true) : item;
+        });
+      }
 
       setCheckedItems([...checkedItems, event.target.id]);
       dispatch(setAdditionalAccessories(newCheckedItems));
@@ -177,8 +229,29 @@ export default function Step5({ activeStep, setActiveStep }) {
         (item) => item !== event.target.id
       );
 
-      const found = newCheckedItems.some((item) => item.includes(searchString));
-      console.log(found);
+      const found8mm = newCheckedItems.some((item) =>
+        item.includes(search8mmString)
+      );
+
+      const found3mm = newCheckedItems.some((item) =>
+        item.includes(search3mmString)
+      );
+
+      if (!found8mm) {
+        // nie zaznaczono podkładek 8mm
+        // włącz podkładki 3mm
+        accesoriesForProducts.map((item) => {
+          item.id === 6 ? (item.visible = true) : item;
+        });
+      }
+
+      if (!found3mm) {
+        // nie zaznaczono podkładek 3mm
+        // włącz podkładki 8mm
+        accesoriesForProducts.map((item) => {
+          item.id === 3 ? (item.visible = true) : item;
+        });
+      }
 
       setCheckedItems(newCheckedItems);
       dispatch(setAdditionalAccessories(newCheckedItems));
@@ -257,7 +330,7 @@ export default function Step5({ activeStep, setActiveStep }) {
                 <p className='text-2xl font-bold textaccesories-black text-opacity-70 pt-16 pb-9'>
                   {loading
                     ? 'Wczytuje dane...'
-                    : `Wybierz dodatkowe akcesoria, wybrany system: ${main_system}`}
+                    : `Wybierz dodatkowe akcesoria, wybrany system: ${main_system}, czy wybrano podkładki 8mm ? ${has8}`}
                 </p>
 
                 {loading ? (
