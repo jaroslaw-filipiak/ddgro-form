@@ -62,7 +62,12 @@ export default function Step2({ activeStep, setActiveStep }) {
   ]);
 
   const validateLowest = (value) => {
-    if (value > highest) {
+    if (
+      highest !== '' &&
+      lowest !== '' &&
+      highest.length > 0 &&
+      value > highest
+    ) {
       setvalidateLowestMessage(
         'Wartość dla: "Najniższy wspornik (mm.)" nie może być większa niż wartość dla: "Wyższy wspornik (mm.)"'
       );
