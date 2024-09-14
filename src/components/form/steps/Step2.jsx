@@ -62,11 +62,20 @@ export default function Step2({ activeStep, setActiveStep }) {
   ]);
 
   const validateLowest = (value) => {
+    if (value > highest) {
+      setvalidateLowestMessage(
+        'Wartość dla: "Najniższy wspornik (mm.)" nie może być większa niż wartość dla: "Wyższy wspornik (mm.)"'
+      );
+      setValidated(0);
+      return;
+    }
+
     if (value < 10) {
       setvalidateLowestMessage(
         'Wartość dla: "Najniższy wspornik (mm.)" nie może być mniejsza niż 10mm'
       );
       setValidated(0);
+      return;
     } else {
       setvalidateLowestMessage(false);
     }
@@ -74,11 +83,24 @@ export default function Step2({ activeStep, setActiveStep }) {
 
   const validateHighest = (value) => {
     console.log('validateHighest', value);
+    console.log('lowest', lowest);
+    console.log('highest', highest);
+    console.log(value);
+
+    if (value < lowest) {
+      setvalidateHighestMessage(
+        'Wartość dla: "Wyższy wspornik (mm.)" nie może być mniejsza niż wartość dla: "Najniższy wspornik (mm.)"'
+      );
+      setValidated(0);
+      return;
+    }
+
     if (value > 950) {
       setvalidateHighestMessage(
         'Wartość dla: "Wyższy wspornik (mm.)" nie może być większa niż 950mm'
       );
       setValidated(0);
+      return;
     } else {
       setvalidateHighestMessage(false);
     }
@@ -235,7 +257,7 @@ export default function Step2({ activeStep, setActiveStep }) {
                   isValidate={true}
                 />
                 {validateLowestMessage && (
-                  <p className='text-red-500 -mt-[45px]'>
+                  <p className='text-red-500 -mt-[35px] max-w-lg'>
                     {validateLowestMessage}
                   </p>
                 )}
@@ -260,7 +282,7 @@ export default function Step2({ activeStep, setActiveStep }) {
                   isValidate={true}
                 />
                 {validateHighestMessage && (
-                  <p className='text-red-500 -mt-[45px]'>
+                  <p className='text-red-500 -mt-[35px] max-w-xl'>
                     {validateHighestMessage}
                   </p>
                 )}
