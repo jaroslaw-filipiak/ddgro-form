@@ -33,6 +33,14 @@ export default function Step5({ activeStep, setActiveStep }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [has3, setHas3] = useState(false);
   const [has8, setHas8] = useState(false);
+
+  /**
+   *
+   *  TODO:
+   *  To powinno być pobierane z bazy danych
+   *
+   *
+   */
   const [accesoriesForProducts, setAccesoriesForProducts] = useState([
     {
       id: 1,
@@ -44,6 +52,18 @@ export default function Step5({ activeStep, setActiveStep }) {
       name: 'Podkładka wygłuszająco - wyrównująca SH100',
       short_name: 'SH100',
       visible: true,
+      //
+      _id: {
+        $oid: '66816d6d9bce9862a73a73cc',
+      },
+      short_name: 'SH100',
+      height_mm: 1.5,
+      height_inch: '1/16',
+      packaging: 1000,
+      euro_palet: 40000,
+      price_net: 1.29,
+      system: 'standard',
+      count: 100,
     },
     {
       id: 2,
@@ -52,9 +72,20 @@ export default function Step5({ activeStep, setActiveStep }) {
       to_series: ['spiral', 'max'],
       code: 10314,
       img: '/assets/placeholder-96-68.png',
+      visible: true,
+      //
+
+      _id: {
+        $oid: '66816d6d9bce9862a73a73cd',
+      },
       name: 'Podkładka wygłuszająco - wyrównująca SH145',
       short_name: 'SH145',
-      visible: true,
+      height_mm: 1.5,
+      height_inch: '1/17',
+      packaging: 500,
+      euro_palet: 20000,
+      price_net: 1.56,
+      count: 100,
     },
     {
       id: 3,
@@ -63,20 +94,39 @@ export default function Step5({ activeStep, setActiveStep }) {
       to_series: ['spiral', 'standard'],
       code: 102559,
       img: '/assets/placeholder-96-68.png',
-      name: 'Podkładki gumowe pod wsporniki SBR  200x200 MM',
+      name: 'Podkładki gumowe pod wsporniki MAX SBR  220x220 MM (Akcesoria) / SBR200/8',
       short_name: 'SBR200/8',
       visible: true,
+      height_mm: 8,
+      height_inch: '5/16',
+      packaging: 20,
+      euro_palet: 3200,
+      price_net: 5.67,
+      for_type: 'slab',
+      system: 'max', // system max w bazie danych ale tutaj dla spiral oraz standard ??? TODO: sprawdzić
+      count: 100,
     },
     {
       id: 4,
       slug: 'Podkładki gumowe pod wsporniki SBR gr 3 mm-10414',
       for_client: 'Podkładki gumowe pod wsporniki SBR gr 3 mm',
       to_series: ['max'],
-      code: 10414,
       img: '/assets/placeholder-96-68.png',
+      visible: true,
+      //
+      _id: {
+        $oid: '66816d6d9bce9862a73a73d1',
+      },
+      code: 10414,
       name: 'Podkładki gumowe pod wsporniki MAX SBR  220x220 MM (Akcesoria)',
       short_name: 'SBR220/3',
-      visible: true,
+      height_mm: 3,
+      packaging: 40,
+      euro_palet: 6400,
+      price_net: 4.41,
+      for_type: 'slab',
+      system: 'max',
+      count: 100,
     },
     {
       // TODO: nie mam tego w bazie
@@ -95,11 +145,22 @@ export default function Step5({ activeStep, setActiveStep }) {
       slug: 'Podkładki gumowe pod wsporniki SBR gr 3 mm-102557',
       for_client: 'Podkładki gumowe pod wsporniki SBR gr 3 mm',
       to_series: ['spiral', 'standard'],
-      code: 102557,
       img: '/assets/placeholder-96-68.png',
+      visible: true,
+      //
+      _id: {
+        $oid: '66816d6d9bce9862a73a73cf',
+      },
+      code: 102557,
       name: 'Podkładki gumowe pod wsporniki SBR  200x200 MM',
       short_name: 'SBR200/3',
-      visible: true,
+      height_mm: 3,
+      height_inch: '1/8',
+      packaging: 60,
+      euro_palet: 9600,
+      price_net: 3.68,
+      for_type: 'slab',
+      system: 'standard,spiral',
     },
     {
       id: 7,
@@ -109,10 +170,23 @@ export default function Step5({ activeStep, setActiveStep }) {
       code: 10170,
       img: '/assets/placeholder-96-68.png',
       name: 'Głowica samopoziomująca 7%',
-      short_name: 'LE',
       visible: true,
+      //
+      _id: {
+        $oid: '66816d6d9bce9862a73a73f0',
+      },
+      // code: 1017010039, // TODO: sprawdzić ale chyba 10170
+      short_name: 'LE',
+      height_mm: 16,
+      height_inch: '5/8',
+      packaging: 250,
+      euro_palet: 5000,
+      price_net: 4.99,
+      for_type: 'slab',
+      system: 'standard',
     },
     {
+      // to jest w kolekcji produkty
       id: 8,
       slug: 'Głowica samopoziomująca-10680',
       for_client: 'Głowica samopoziomująca',
@@ -120,10 +194,25 @@ export default function Step5({ activeStep, setActiveStep }) {
       code: 10680,
       img: '/assets/placeholder-96-68.png',
       name: 'Głowica samopoziomująca SPIRAL i dystanse 3 mm*',
-      short_name: 'SPIRAL LE',
       visible: true,
+      //
+      _id: {
+        $oid: '6678676c0e5fa6eb83b6a5ae',
+      },
+      series: 'spiral',
+      type: 'slab',
+      distance_code: 10680,
+      name: 'Głowica samopoziomująca SPIRAL i dystanse 3 mm*',
+      short_name: 'SPIRAL LE',
+      height_mm: 16,
+      height_inch: '5/8',
+      packaging: 100,
+      euro_palet: 2000,
+      price_net: 7.44,
+      count: 100,
     },
     {
+      // tez w produktach
       id: 9,
       slug: 'Podkładka ochronna-107483',
       for_client: 'Podkładka ochronna',
@@ -133,8 +222,23 @@ export default function Step5({ activeStep, setActiveStep }) {
       name: 'Podkładka ochronna',
       short_name: 'DDR PO',
       visible: true,
+      price_net: 100.8,
+      //
+      _id: {
+        $oid: '6678676c0e5fa6eb83b6a604',
+      },
+      series: 'raptor',
+      type: 'wood',
+      distance_code: 107483,
+      height_mm: 2,
+      height_inch: '3/38',
+      packaging: 100,
+      euro_palet: 16000,
+      price_net: 1.62,
+      count: 100,
     },
     {
+      // TODO: tego nie ma w bazie
       id: 10,
       slug: 'Podkładka akustyczna-107484',
       for_client: 'Podkładka akustyczna',
@@ -144,6 +248,8 @@ export default function Step5({ activeStep, setActiveStep }) {
       name: 'Podkłakda akustyczna',
       short_name: 'DDR PA',
       visible: true,
+      price_net: 100.8,
+      count: 100,
     },
     {
       id: 11,
@@ -155,6 +261,15 @@ export default function Step5({ activeStep, setActiveStep }) {
       name: 'Korektor nachylenia 7%',
       short_name: 'DDR KN',
       visible: true,
+      //
+      _id: {
+        $oid: '66afa657f52db10b8fc3f886',
+      },
+      height_mm: 10,
+      packaging: 50,
+      euro_palet: 4000,
+      price_net: 3.47,
+      count: 100,
     },
   ]);
 
@@ -180,8 +295,13 @@ export default function Step5({ activeStep, setActiveStep }) {
         ...checkedItems,
         {
           id: event.target.id,
-          code: event.target.dataset.code,
           slug: event.target.dataset.slug,
+          for_client: event.target.dataset.name,
+          code: event.target.dataset.code,
+          name: event.target.dataset.name,
+          short_name: event.target.dataset.short_name,
+          price_net: event.target.dataset.price_net,
+          count: event.target.dataset.count,
         },
       ];
     } else {
@@ -346,9 +466,12 @@ export default function Step5({ activeStep, setActiveStep }) {
                             onChange={onChangeValue}
                             className='hidden input-accesories'
                             data-id={item.id}
-                            data-name={item.name}
-                            data-code={item.code}
                             data-slug={item.slug}
+                            data-code={item.code}
+                            data-name={item.name}
+                            data-short_name={item.short_name}
+                            data-price_net={item.price_net}
+                            data-count={item.count}
                           />
                           <div className='flex items-center justify-between'>
                             <div className='flex items-center justify-start gap-3 lg:gap-6'>
