@@ -142,19 +142,25 @@ export default function FormAside({ setFormAsideVisibility }) {
         to: form.email,
       };
 
-      const sendOrder = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/application/send-order-summary/${data.id}`,
-        {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(sendOrderData),
-        }
-      );
+      window.setTimeout(async () => {
+        const sendOrder = await fetch(
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/application/send-order-summary/${data.id}`,
+          {
+            method: 'POST',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(sendOrderData),
+          }
+        );
 
-      setLoading(false);
+        const resFromSendOrder = await sendOrder.json();
+
+        setResponse(resFromSendOrder);
+        setLoading(false);
+      }, 4000);
+
       setResponse(data);
     } catch (e) {
       console.log('error===========');

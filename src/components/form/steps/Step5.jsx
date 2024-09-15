@@ -169,93 +169,87 @@ export default function Step5({ activeStep, setActiveStep }) {
   );
 
   const onChangeValue = (event) => {
-    console.log('onchangevalue');
-    console.log(event);
-    console.log(event.target.value);
-    console.log(event.target.id);
-    const search8mmString =
-      'Podkładki gumowe pod wsporniki SBR gr. 8 mm-102559';
-
+    const search8mmString = /8 mm-.*/;
     const search3mmString = /3 mm-.*/;
 
+    let updatedCheckedItems;
+
     if (event.target.checked) {
-      // checked
-      const newCheckedItems = [...checkedItems, event.target.id];
-      const found8mm = newCheckedItems.some((item) =>
-        item.includes(search8mmString)
-      );
-
-      const found3mm = newCheckedItems.some((item) =>
-        search3mmString.test(item)
-      );
-
-      if (found8mm) {
-        // zaznaczono podkładki 8mm
-        setHas8(true);
-
-        // wylącz podkładki 3mm
-        accesoriesForProducts.map((item) => {
-          item.id === 6 ? (item.visible = false) : item;
-        });
-      } else {
-        // nie zaznaczono podkładek 8mm
-        // włącz podkładki 3mm
-        accesoriesForProducts.map((item) => {
-          item.id === 6 ? (item.visible = true) : item;
-        });
-      }
-
-      if (found3mm) {
-        // zaznaczono podkładki 3mm
-        setHas3(true);
-        console.log('chkecked 3mm');
-
-        // wylącz podkładki 8mm
-        accesoriesForProducts.map((item) => {
-          item.id === 3 ? (item.visible = false) : item;
-        });
-      } else {
-        // nie zaznaczono podkładek 3mm
-        // włącz podkładki 8mm
-        accesoriesForProducts.map((item) => {
-          item.id === 3 ? (item.visible = true) : item;
-        });
-      }
-
-      setCheckedItems([...checkedItems, event.target.id]);
-      dispatch(setAdditionalAccessories(newCheckedItems));
+      // Add the checked item
+      updatedCheckedItems = [
+        ...checkedItems,
+        {
+          id: event.target.id,
+          code: event.target.dataset.code,
+          slug: event.target.dataset.slug,
+        },
+      ];
     } else {
-      const newCheckedItems = checkedItems.filter(
-        (item) => item !== event.target.id
+      // Remove the unchecked item
+      updatedCheckedItems = checkedItems.filter(
+        (item) => item.id !== event.target.id
       );
-
-      const found8mm = newCheckedItems.some((item) =>
-        item.includes(search8mmString)
-      );
-
-      const found3mm = newCheckedItems.some((item) =>
-        item.includes(search3mmString)
-      );
-
-      if (!found8mm) {
-        // nie zaznaczono podkładek 8mm
-        // włącz podkładki 3mm
-        accesoriesForProducts.map((item) => {
-          item.id === 6 ? (item.visible = true) : item;
-        });
-      }
-
-      if (!found3mm) {
-        // nie zaznaczono podkładek 3mm
-        // włącz podkładki 8mm
-        accesoriesForProducts.map((item) => {
-          item.id === 3 ? (item.visible = true) : item;
-        });
-      }
-
-      setCheckedItems(newCheckedItems);
-      dispatch(setAdditionalAccessories(newCheckedItems));
     }
+
+    const found8mm = updatedCheckedItems.some((item) =>
+      search8mmString.test(item.slug)
+    );
+
+    const found3mm = updatedCheckedItems.some((item) =>
+      search3mmString.test(item.slug)
+    );
+
+    if (found8mm) {
+      setHas8(true);
+      // Disable 3mm items
+      accesoriesForProducts.forEach((item) => {
+        if (item.slug.match(search3mmString)) {
+          item.visible = false;
+        }
+      });
+    } else {
+      setHas8(false);
+      // Enable 3mm items
+      accesoriesForProducts.forEach((item) => {
+        if (item.slug.match(search3mmString)) {
+          item.visible = true;
+        }
+      });
+    }
+
+    if (found3mm) {
+      setHas3(true);
+      // Disable 8mm items
+      accesoriesForProducts.forEach((item) => {
+        if (item.slug.match(search8mmString)) {
+          item.visible = false;
+        }
+      });
+    } else {
+      setHas3(false);
+      // Enable 8mm items
+      accesoriesForProducts.forEach((item) => {
+        if (item.slug.match(search8mmString)) {
+          item.visible = true;
+        }
+      });
+    }
+
+    // Update state and dispatch
+    setCheckedItems(updatedCheckedItems);
+    dispatch(setAdditionalAccessories(updatedCheckedItems));
+  };
+
+  const isChecked = (id) => {
+    return checkedItems.some((item) => item.id == id);
+  };
+
+  const isChecked8mm = () => {
+    return checkedItems.some((item) => item.slug.match(/8 mm-.*/));
+  };
+
+  const isChecked3mm = () => {
+    return checkedItems.some((item) => item.slug.match(/3 mm-.*/));
   };
 
   return (
@@ -339,23 +333,22 @@ export default function Step5({ activeStep, setActiveStep }) {
                   <div className='series--accesories flex flex-col gap-6'>
                     {filteredAccesories.map((item) => (
                       <div
-                        key={item.slug}
-                        id={item.id}
-                        className={`relative hover:opacity-80 input-accesories--wrapper ${
-                          checkedItems.includes(item.slug.toString())
-                            ? 'selected__top-left'
-                            : ''
-                        }`}
+                        key={item.id}
+                        className={`relative hover:opacity-80 input-accesories--wrapper item-id-${
+                          item.id
+                        }  ${isChecked(item.id) ? 'selected__top-left' : ''}`}
                       >
                         <label className='cursor-pointer'>
                           <input
                             type='checkbox'
-                            object={item}
-                            id={item.slug}
-                            name={item.title}
-                            value={item.title}
+                            id={item.id}
+                            value={item.id}
                             onChange={onChangeValue}
                             className='hidden input-accesories'
+                            data-id={item.id}
+                            data-name={item.name}
+                            data-code={item.code}
+                            data-slug={item.slug}
                           />
                           <div className='flex items-center justify-between'>
                             <div className='flex items-center justify-start gap-3 lg:gap-6'>
