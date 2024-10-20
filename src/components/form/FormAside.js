@@ -42,6 +42,15 @@ export default function FormAside({ setFormAsideVisibility }) {
     setResponse(null);
     setLoading(true);
 
+    const additional_accesories_with_count = state.additional_accessories.map(
+      (item) => { 
+        return {
+          ...item,
+          count: state.supports_count,
+        };
+      }
+    )
+
     const form = {
       type: state.type,
       total_area: state.total_area,
@@ -72,7 +81,7 @@ export default function FormAside({ setFormAsideVisibility }) {
       slabs_count: state.slabs_count,
       products: additional_products,
       // accesories: state.accesories,
-      additional_accessories: state.additional_accessories,
+      additional_accessories: additional_accesories_with_count,
       supports_count: state.supports_count,
 
       // =============================

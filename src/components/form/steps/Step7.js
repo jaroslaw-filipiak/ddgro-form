@@ -34,6 +34,7 @@ function capitalizeFirstLetter(string) {
 export default function Step7({ setFormAsideVisibility }) {
   const initialized = useRef(false);
   const state = useSelector((state) => state.form);
+  const additional_accessories = useSelector((state) => state.form.additional_accessories);
   const dispatch = useDispatch();
 
   //  M_STANDARD SET
@@ -727,7 +728,7 @@ export default function Step7({ setFormAsideVisibility }) {
             </div>
 
             <div className='summary mt-20 pb-9'>
-              <p className='text-2xl font-bold text-black text-opacity-70 pb-9'>
+              <p className='text-2xl font-bold text-black text-opacity-70 '>
                 Wynik:
               </p>
 
@@ -770,6 +771,33 @@ export default function Step7({ setFormAsideVisibility }) {
               </ul>
             </div>
 
+            {/* Dodatkowe akcesoria */}
+            <div className='summary pb-9'>
+              <p className='text-2xl font-bold text-black text-opacity-70'>
+                Wybrane akcesoria:
+              </p>
+
+              <div className='square--wrapper'></div>
+
+              <ul>
+                {additional_accessories?.map((item, index) => (
+
+                  <li key={index} className='flex items-center justify-between border-b border-black border-opacity-50 p-6'>
+                    <p className='text-xl text-black text-opacity-50 font-normal'>
+                      {item.for_client}
+                    </p>
+                    <div className='flex items-center'>
+                      <p className='text-black text-opacity-50 text-base pl-4'>
+                        {item.count}
+                      </p>
+                    </div>
+                  </li>
+                ))}
+                
+
+              </ul>
+            </div>
+
             {/* mobile btn */}
             <div className='w-full flex items-center justify-center mt-20 mb-16'>
               <button
@@ -790,6 +818,7 @@ export default function Step7({ setFormAsideVisibility }) {
               </button>
             </div>
           </div>
+          
         </div>
       </section>
     </>

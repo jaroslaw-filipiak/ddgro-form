@@ -63,7 +63,7 @@ export default function Step5({ activeStep, setActiveStep }) {
       euro_palet: 40000,
       price_net: 1.29,
       system: 'standard',
-      count: 100,
+     
     },
     {
       id: 2,
@@ -85,7 +85,7 @@ export default function Step5({ activeStep, setActiveStep }) {
       packaging: 500,
       euro_palet: 20000,
       price_net: 1.56,
-      count: 100,
+      
     },
     {
       id: 3,
@@ -104,7 +104,7 @@ export default function Step5({ activeStep, setActiveStep }) {
       price_net: 5.67,
       for_type: 'slab',
       system: 'max', // system max w bazie danych ale tutaj dla spiral oraz standard ??? TODO: sprawdzić
-      count: 100,
+      
     },
     {
       id: 4,
@@ -126,7 +126,7 @@ export default function Step5({ activeStep, setActiveStep }) {
       price_net: 4.41,
       for_type: 'slab',
       system: 'max',
-      count: 100,
+      
     },
     {
       // TODO: nie mam tego w bazie
@@ -209,7 +209,7 @@ export default function Step5({ activeStep, setActiveStep }) {
       packaging: 100,
       euro_palet: 2000,
       price_net: 7.44,
-      count: 100,
+      
     },
     {
       // tez w produktach
@@ -235,7 +235,7 @@ export default function Step5({ activeStep, setActiveStep }) {
       packaging: 100,
       euro_palet: 16000,
       price_net: 1.62,
-      count: 100,
+      
     },
     {
       // TODO: tego nie ma w bazie
@@ -249,7 +249,7 @@ export default function Step5({ activeStep, setActiveStep }) {
       short_name: 'DDR PA',
       visible: true,
       price_net: 100.8,
-      count: 100,
+      
     },
     {
       id: 11,
@@ -269,7 +269,7 @@ export default function Step5({ activeStep, setActiveStep }) {
       packaging: 50,
       euro_palet: 4000,
       price_net: 3.47,
-      count: 100,
+      
     },
   ]);
 
@@ -301,7 +301,7 @@ export default function Step5({ activeStep, setActiveStep }) {
           name: event.target.dataset.name,
           short_name: event.target.dataset.short_name,
           price_net: event.target.dataset.price_net,
-          count: event.target.dataset.count,
+         
         },
       ];
     } else {
@@ -444,7 +444,7 @@ export default function Step5({ activeStep, setActiveStep }) {
                 <p className='text-2xl font-bold textaccesories-black text-opacity-70 pt-16 pb-9'>
                   {loading
                     ? 'Wczytuje dane...'
-                    : `Wybierz dodatkowe akcesoria, wybrany system: ${main_system}, czy wybrano podkładki 8mm ? ${has8}`}
+                    : `Wybierz dodatkowe akcesoria, wybrany system: ${main_system}`}
                 </p>
 
                 {loading ? (
