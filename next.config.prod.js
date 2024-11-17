@@ -3,9 +3,7 @@ const isProd = process.env.NODE_ENV === "production";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: "export",
-  basePath: "",
-  assetPrefix: "",
+
   sassOptions: {
     includePaths: [path.join(__dirname, "styles")],
   },
@@ -13,7 +11,14 @@ const nextConfig = {
   images: {
     loader: "custom",
     loaderFile: "./loader.js",
+    domains: [
+      'ddgro-form.vercel.app',
+      'kalkulator.ddgro.eu',
+      'octopus-app-jmbhj.ondigitalocean.app'
+    ],
+    unoptimized: process.env.NODE_ENV === 'production',
   },
+  output: 'export',
 };
 
 module.exports = nextConfig;
