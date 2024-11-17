@@ -27,8 +27,10 @@ export default function FormHeader({
   const { data: products } = useSWR(productsURL(), fetcher);
 
   useEffect(() => {
+    console.log(`---`);
     console.log('API Base URL:', process.env.NEXT_PUBLIC_API_BASE_URL);
     console.log(`${process.env.NODE_ENV} mode`);
+    console.log(`---`);
     if (products) {
       dispatch(setProducts(products?.data || []));
     }

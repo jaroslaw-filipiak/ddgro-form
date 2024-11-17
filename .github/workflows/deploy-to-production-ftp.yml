@@ -23,6 +23,9 @@ jobs:
       
     - name: Build Next.js app
       run: npm run build
+      env:
+        NEXT_PUBLIC_API_BASE_URL: ${{ secrets.NEXT_PUBLIC_API_BASE_URL }}
+        NEXT_PUBLIC_IMAGE_BASE_URL: ${{ secrets.NEXT_PUBLIC_IMAGE_BASE_URL }}
       
     - name: Deploy to FTP
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
