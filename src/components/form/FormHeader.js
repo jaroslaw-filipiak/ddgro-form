@@ -28,6 +28,7 @@ export default function FormHeader({
 
   useEffect(() => {
     console.log('API Base URL:', process.env.NEXT_PUBLIC_API_BASE_URL);
+    console.log(`${process.env.NODE_ENV} mode`);
     if (products) {
       dispatch(setProducts(products?.data || []));
     }
