@@ -16,17 +16,18 @@ export default function FormHeader({
   const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
   const accesoriesURL = () => {
-    return `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/accesories`;
+    return `https://${process.env.NEXT_PUBLIC_API_BASE_URL}/api/accesories`;
   };
 
   const productsURL = () => {
-    return `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/products`;
+    return `https://${process.env.NEXT_PUBLIC_API_BASE_URL}/api/products`;
   };
 
   const { data: accesories } = useSWR(accesoriesURL(), fetcher);
   const { data: products } = useSWR(productsURL(), fetcher);
 
   useEffect(() => {
+    console.log('API Base URL:', process.env.NEXT_PUBLIC_API_BASE_URL);
     if (products) {
       dispatch(setProducts(products?.data || []));
     }
