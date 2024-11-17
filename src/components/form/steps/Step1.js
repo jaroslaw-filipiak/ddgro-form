@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { changeType } from '@/store/slices/formSlice';
 import Image from 'next/image';
-import ddgro from '../../../../loader'
+// import ddgro from '../../../../loader'
 
 export default function Step1({ activeStep, setActiveStep }) {
   const type = useSelector((state) => state.form.type);
@@ -28,7 +28,7 @@ export default function Step1({ activeStep, setActiveStep }) {
                 } relative flex flex-col items-center justify-center cursor-pointer hover:opacity-90 transition-all`}
               >
                 <Image
-                  loader={ddgro}
+                
                   className='max-w-full selection:bg-transparent'
                   src='/assets/plyty-img.png'
                   alt='deski-img'
