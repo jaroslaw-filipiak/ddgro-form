@@ -1,10 +1,10 @@
-import FormNav from "./FormNav";
-import { useSelector, useDispatch } from "react-redux";
-import { use, useEffect } from "react";
-import { setAccesories, setProducts } from "@/store/slices/formSlice";
+import FormNav from './FormNav';
+import { useSelector, useDispatch } from 'react-redux';
+import { use, useEffect } from 'react';
+import { setAccesories, setProducts } from '@/store/slices/formSlice';
 
-import Image from "next/image";
-import useSWR from "swr";
+import Image from 'next/image';
+import useSWR from 'swr';
 
 export default function FormHeader({
   activeStep,
@@ -29,6 +29,7 @@ export default function FormHeader({
   useEffect(() => {
     console.log(`---`);
     console.log('API Base URL:', process.env.NEXT_PUBLIC_API_BASE_URL);
+    console.log('update 18.11.2024');
     console.log(`${process.env.NODE_ENV} mode`);
     console.log(`---`);
     if (products) {
