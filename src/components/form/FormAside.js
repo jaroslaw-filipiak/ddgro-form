@@ -23,9 +23,9 @@ export default function FormAside({ setFormAsideVisibility }) {
 
   const items = [
     { value: 'klient-indywidualny', label: 'Klientem indywidualnym' },
-    { value: 'Wykonawcą', label: 'Wykonawcą' },
-    { value: 'Dystrybutorem', label: 'Dystrybutorem' },
-    { value: 'Architektem', label: 'Architektem' },
+    { value: 'Wykowawca', label: 'Wykonawcą' },
+    { value: 'Dystrybutor', label: 'Dystrybutorem' },
+    { value: 'Architekt', label: 'Architektem' },
     { value: 'GW/Deweloper', label: 'GW/Deweloper' },
   ];
 
@@ -43,13 +43,13 @@ export default function FormAside({ setFormAsideVisibility }) {
     setLoading(true);
 
     const additional_accesories_with_count = state.additional_accessories.map(
-      (item) => { 
+      (item) => {
         return {
           ...item,
           count: state.supports_count,
         };
       }
-    )
+    );
 
     const form = {
       type: state.type,
