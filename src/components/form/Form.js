@@ -6,7 +6,7 @@
 import { store } from '@/store/index'
 import { Provider } from 'react-redux'
 import { useState, useEffect } from 'react'
-import Matrix from '@/components/form/debug/Matrix' // deprecated
+
 import { HeroUIProvider } from '@heroui/react'
 
 import FormHeader from './FormHeader'
@@ -49,7 +49,6 @@ export default function Form() {
                         />
                         {steps[activeStep - 1]}
                     </div>
-                    {/* <Matrix /> */}
                 </Provider>
             </HeroUIProvider>
         </>
