@@ -4,6 +4,7 @@ import { setAccesories, setAdditionalAccessories } from '@/store/slices/formSlic
 
 // import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure } from '@heroui-org/react'
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter } from '@heroui/modal'
+import { Button, ButtonGroup } from '@heroui/button'
 import { useDisclosure } from '@heroui/use-disclosure'
 
 import Image from 'next/image'
