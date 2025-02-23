@@ -30,7 +30,7 @@ export default function AdminProductPage() {
         return (
             <div className='flex justify-center items-center min-h-screen'>
                 <div className='flex'>
-                    <CircularProgress color='success' label='Wczytywanie...' showValueLabel={true} size='lg' />
+                    <CircularProgress color='warning' label='Wczytywanie...' showValueLabel={true} size='lg' />
                 </div>
             </div>
         )

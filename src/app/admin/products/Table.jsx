@@ -232,8 +232,31 @@ export default function AdminProductsTable({ items }) {
                                 onSelectionChange={setVisibleColumns}
                             >
                                 {columns.map(column => (
-                                    <DropdownItem key={column.uid} className='capitalize'>
-                                        {capitalize(column.name)}
+                                    <DropdownItem key={column.uid}>
+                                        {(() => {
+                                            switch (column.name) {
+                                                case 'ID':
+                                                    return 'ID'
+                                                case 'NAME':
+                                                    return 'Nazwa'
+                                                case 'SERIES':
+                                                    return 'Seria'
+                                                case 'TYPE':
+                                                    return 'Typ'
+                                                case 'DISTANCE_CODE':
+                                                    return 'Kod'
+                                                case 'SHORT_NAME':
+                                                    return 'Skrócona nazwa'
+                                                case 'HEIGHT_MM':
+                                                    return 'Wysokość (mm)'
+                                                case 'PRICE_NET':
+                                                    return 'Cena netto (PLN)'
+                                                case 'ACTIONS':
+                                                    return 'Akcje'
+                                                default:
+                                                    return ''
+                                            }
+                                        })()}
                                     </DropdownItem>
                                 ))}
                             </DropdownMenu>
@@ -314,7 +337,30 @@ export default function AdminProductsTable({ items }) {
             <TableHeader columns={headerColumns}>
                 {column => (
                     <TableColumn key={column.uid} align={column.uid === 'actions' ? 'center' : 'start'} allowsSorting={column.sortable}>
-                        {column.name === 'ACTIONS' ? '' : capitalize(column.name)}
+                        {(() => {
+                            switch (column.name) {
+                                case 'ID':
+                                    return 'ID'
+                                case 'NAME':
+                                    return 'Nazwa'
+                                case 'SERIES':
+                                    return 'Seria'
+                                case 'TYPE':
+                                    return 'Typ'
+                                case 'DISTANCE_CODE':
+                                    return 'Kod'
+                                case 'SHORT_NAME':
+                                    return 'Skrócona nazwa'
+                                case 'HEIGHT_MM':
+                                    return 'Wysokość (mm)'
+                                case 'PRICE_NET':
+                                    return 'Cena netto (PLN)'
+                                case 'ACTIONS':
+                                    return 'Akcje'
+                                default:
+                                    return ''
+                            }
+                        })()}
                     </TableColumn>
                 )}
             </TableHeader>
