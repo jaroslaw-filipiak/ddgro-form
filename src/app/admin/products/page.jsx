@@ -239,11 +239,41 @@ export const users = [
     },
 ]
 
-export function capitalize(s) {
-    return s ? s.charAt(0).toUpperCase() + s.slice(1).toLowerCase() : ''
-}
+'use client'
 
-export const PlusIcon = ({ size = 24, width, height, ...props }) => {
+import React from 'react'
+import {
+    Table,
+    TableHeader,
+    TableColumn,
+    TableBody,
+    TableRow,
+    TableCell,
+    Input,
+    Button,
+    DropdownTrigger,
+    Dropdown,
+    DropdownMenu,
+    DropdownItem,
+    Chip,
+    User,
+    Pagination,
+} from '@heroui/react'
+
+import {
+    capitalize,
+    PlusIcon,
+    VerticalDotsIcon,
+    SearchIcon,
+    ChevronDownIcon,
+    columns,
+    statusOptions,
+    users,
+    statusColorMap,
+    INITIAL_VISIBLE_COLUMNS
+} from './utils'
+
+const AdminProductsPage = () => {
     return (
         <svg aria-hidden='true' fill='none' focusable='false' height={size || height} role='presentation' viewBox='0 0 24 24' width={size || width} {...props}>
             <g fill='none' stroke='currentColor' strokeLinecap='round' strokeLinejoin='round' strokeWidth={1.5}>
