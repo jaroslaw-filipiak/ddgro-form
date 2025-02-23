@@ -431,8 +431,8 @@ export default function AdminProductsTable() {
                             base: 'w-full sm:max-w-[44%]',
                             inputWrapper: 'border-1',
                         }}
-                        placeholder='Search by name...'
-                        size='sm'
+                        placeholder='Szukaj...'
+                        size='md'
                         startContent={<SearchIcon className='text-default-300' />}
                         value={filterValue}
                         variant='bordered'
@@ -442,7 +442,7 @@ export default function AdminProductsTable() {
                     <div className='flex gap-3'>
                         <Dropdown>
                             <DropdownTrigger className='hidden sm:flex'>
-                                <Button endContent={<ChevronDownIcon className='text-small' />} size='sm' variant='flat'>
+                                <Button endContent={<ChevronDownIcon className='text-small' />} size='md' variant='flat'>
                                     Status
                                 </Button>
                             </DropdownTrigger>
@@ -463,7 +463,7 @@ export default function AdminProductsTable() {
                         </Dropdown>
                         <Dropdown>
                             <DropdownTrigger className='hidden sm:flex'>
-                                <Button endContent={<ChevronDownIcon className='text-small' />} size='sm' variant='flat'>
+                                <Button endContent={<ChevronDownIcon className='text-small' />} size='md' variant='flat'>
                                     Columns
                                 </Button>
                             </DropdownTrigger>
@@ -482,7 +482,7 @@ export default function AdminProductsTable() {
                                 ))}
                             </DropdownMenu>
                         </Dropdown>
-                        <Button className='bg-foreground text-background' endContent={<PlusIcon />} size='sm'>
+                        <Button className='bg-foreground text-background' endContent={<PlusIcon />} size='md'>
                             Add New
                         </Button>
                     </div>
@@ -563,6 +563,7 @@ export default function AdminProductsTable() {
             topContentPlacement='outside'
             onSelectionChange={setSelectedKeys}
             onSortChange={setSortDescriptor}
+            className='bg-white container py-6 px-12'
         >
             <TableHeader columns={headerColumns}>
                 {column => (
