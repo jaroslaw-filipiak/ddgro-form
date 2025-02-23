@@ -338,7 +338,7 @@ export default function AdminProductsTable({ items }) {
         return filteredUsers
     }, [items, filterValue, statusFilter])
 
-    const items = React.useMemo(() => {
+    const paginatedItems = React.useMemo(() => {
         const start = (page - 1) * rowsPerPage
         const end = start + rowsPerPage
 
@@ -346,14 +346,14 @@ export default function AdminProductsTable({ items }) {
     }, [page, filteredItems, rowsPerPage])
 
     const sortedItems = React.useMemo(() => {
-        return [...items].sort((a, b) => {
+        return [...paginatedItems].sort((a, b) => {
             const first = a[sortDescriptor.column]
             const second = b[sortDescriptor.column]
             const cmp = first < second ? -1 : first > second ? 1 : 0
 
             return sortDescriptor.direction === 'descending' ? -cmp : cmp
         })
-    }, [sortDescriptor, items])
+    }, [sortDescriptor, paginatedItems])
 
     const renderCell = React.useCallback((user, columnKey) => {
         const cellValue = user[columnKey]
@@ -518,7 +518,7 @@ export default function AdminProductsTable({ items }) {
                     onChange={setPage}
                 />
                 <span className='text-small text-default-400'>
-                    {selectedKeys === 'all' ? 'All items selected' : `${selectedKeys.size} of ${items.length} selected`}
+                    {selectedKeys === 'all' ? 'All items selected' : `${selectedKeys.size} of ${paginatedItems.length} selected`}
                 </span>
             </div>
         )
