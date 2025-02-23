@@ -308,7 +308,7 @@ export default function AdminProductsTable() {
     const [selectedKeys, setSelectedKeys] = React.useState(new Set([]))
     const [visibleColumns, setVisibleColumns] = React.useState(new Set(INITIAL_VISIBLE_COLUMNS))
     const [statusFilter, setStatusFilter] = React.useState('all')
-    const [rowsPerPage, setRowsPerPage] = React.useState(5)
+    const [rowsPerPage, setRowsPerPage] = React.useState(20)
     const [sortDescriptor, setSortDescriptor] = React.useState({
         column: 'age',
         direction: 'ascending',
@@ -487,7 +487,7 @@ export default function AdminProductsTable() {
                         </Button>
                     </div>
                 </div>
-                <div className='flex justify-between items-center'>
+                <div className='flex justify-between items-center hidden'>
                     <span className='text-default-400 text-small'>Total {users.length} users</span>
                     <label className='flex items-center text-default-400 text-small'>
                         Rows per page:
