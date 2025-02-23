@@ -303,7 +303,7 @@ const statusColorMap = {
 
 const INITIAL_VISIBLE_COLUMNS = ['name', 'role', 'status', 'actions']
 
-export default function AdminProductsTable(props) {
+export default function AdminProductsTable({ items }) {
     const [filterValue, setFilterValue] = React.useState('')
     const [selectedKeys, setSelectedKeys] = React.useState(new Set([]))
     const [visibleColumns, setVisibleColumns] = React.useState(new Set(INITIAL_VISIBLE_COLUMNS))
@@ -315,7 +315,7 @@ export default function AdminProductsTable(props) {
     })
     const [page, setPage] = React.useState(1)
 
-    const pages = Math.ceil(users.length / rowsPerPage)
+    const pages = Math.ceil(items.length / rowsPerPage)
 
     const hasSearchFilter = Boolean(filterValue)
 
@@ -326,7 +326,7 @@ export default function AdminProductsTable(props) {
     }, [visibleColumns])
 
     const filteredItems = React.useMemo(() => {
-        let filteredUsers = [...users]
+        let filteredUsers = [...items]
 
         if (hasSearchFilter) {
             filteredUsers = filteredUsers.filter(user => user.name.toLowerCase().includes(filterValue.toLowerCase()))
@@ -336,7 +336,7 @@ export default function AdminProductsTable(props) {
         }
 
         return filteredUsers
-    }, [users, filterValue, statusFilter])
+    }, [items, filterValue, statusFilter])
 
     const items = React.useMemo(() => {
         const start = (page - 1) * rowsPerPage
@@ -488,7 +488,7 @@ export default function AdminProductsTable(props) {
                     </div>
                 </div>
                 <div className='flex justify-between items-center hidden'>
-                    <span className='text-default-400 text-small'>Total {users.length} users</span>
+                    <span className='text-default-400 text-small'>Total {items.length} users</span>
                     <label className='flex items-center text-default-400 text-small'>
                         Rows per page:
                         <select className='bg-transparent outline-none text-default-400 text-small' onChange={onRowsPerPageChange}>

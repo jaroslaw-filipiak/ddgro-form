@@ -25,12 +25,12 @@ export default function AdminProductPage() {
         }
     }
 
-    if (loading) return <div>Loading...</div>
-    if (error) return <div>Error: {error}</div>
+    if (loading) return <div className="flex justify-center items-center min-h-screen">Loading...</div>
+    if (error) return <div className="flex justify-center items-center min-h-screen text-red-500">Error: {error}</div>
 
     return (
-        <div>
-            <AdminProductsTable items={products} />
+        <div className="min-h-screen bg-gray-50">
+            <AdminProductsTable items={products || []} />
         </div>
     )
 }
