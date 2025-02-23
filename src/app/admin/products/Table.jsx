@@ -17,6 +17,18 @@ import {
     Chip,
     User,
     Pagination,
+    Modal,
+    ModalContent,
+    ModalHeader,
+    ModalBody,
+    ModalFooter,
+    useDisclosure,
+    useDraggable,
+    Checkbox,
+    Link,
+    Select,
+    SelectSection,
+    SelectItem,
 } from '@heroui/react'
 
 export const columns = [
@@ -90,6 +102,10 @@ export const ChevronDownIcon = ({ strokeWidth = 1.5, ...otherProps }) => {
 const INITIAL_VISIBLE_COLUMNS = ['id', 'name', 'series', 'type', 'distance_code', 'short_name', 'height_mm', 'price_net', 'actions']
 
 export default function AdminProductsTable({ items }) {
+    const { isOpen, onOpen, onOpenChange } = useDisclosure()
+    const targetRef = React.useRef(null)
+    const { moveProps } = useDraggable({ targetRef, isDisabled: !isOpen })
+    const [backdrop, setBackdrop] = React.useState('opaque')
     const [filterValue, setFilterValue] = React.useState('')
     const [selectedKeys, setSelectedKeys] = React.useState(new Set([]))
     const [visibleColumns, setVisibleColumns] = React.useState(new Set(INITIAL_VISIBLE_COLUMNS))
@@ -172,8 +188,10 @@ export default function AdminProductsTable({ items }) {
                                 </Button>
                             </DropdownTrigger>
                             <DropdownMenu>
-                                <DropdownItem key='view'>Szczegóły</DropdownItem>
-                                <DropdownItem key='edit'>Edytuj</DropdownItem>
+                                {/* <DropdownItem key='view'>Szczegóły</DropdownItem> */}
+                                <DropdownItem key='edit' onPress={onOpen}>
+                                    Edytuj
+                                </DropdownItem>
                                 <DropdownItem key='delete'>Usuń</DropdownItem>
                             </DropdownMenu>
                         </Dropdown>
@@ -313,60 +331,117 @@ export default function AdminProductsTable({ items }) {
     )
 
     return (
-        <Table
-            isCompact
-            removeWrapper
-            aria-label='Example table with custom cells, pagination and sorting'
-            bottomContent={bottomContent}
-            bottomContentPlacement='outside'
-            checkboxesProps={{
-                classNames: {
-                    wrapper: 'after:bg-foreground after:text-background text-background',
-                },
-            }}
-            classNames={classNames}
-            selectedKeys={selectedKeys}
-            selectionMode='multiple'
-            sortDescriptor={sortDescriptor}
-            topContent={topContent}
-            topContentPlacement='outside'
-            onSelectionChange={setSelectedKeys}
-            onSortChange={setSortDescriptor}
-            className='bg-white container py-6 px-12'
-        >
-            <TableHeader columns={headerColumns}>
-                {column => (
-                    <TableColumn key={column.uid} align={column.uid === 'actions' ? 'center' : 'start'} allowsSorting={column.sortable}>
-                        {(() => {
-                            switch (column.name) {
-                                case 'ID':
-                                    return 'ID'
-                                case 'NAME':
-                                    return 'Nazwa'
-                                case 'SERIES':
-                                    return 'Seria'
-                                case 'TYPE':
-                                    return 'Typ'
-                                case 'DISTANCE_CODE':
-                                    return 'Kod'
-                                case 'SHORT_NAME':
-                                    return 'Skrócona nazwa'
-                                case 'HEIGHT_MM':
-                                    return 'Wysokość (mm)'
-                                case 'PRICE_NET':
-                                    return 'Cena netto (PLN)'
-                                case 'ACTIONS':
-                                    return 'Akcje'
-                                default:
-                                    return ''
-                            }
-                        })()}
-                    </TableColumn>
-                )}
-            </TableHeader>
-            <TableBody emptyContent={'Brak danych do wyświetlenia'} items={sortedItems}>
-                {item => <TableRow key={item.id}>{columnKey => <TableCell>{renderCell(item, columnKey)}</TableCell>}</TableRow>}
-            </TableBody>
-        </Table>
+        <>
+            <Table
+                isCompact
+                removeWrapper
+                aria-label='Example table with custom cells, pagination and sorting'
+                bottomContent={bottomContent}
+                bottomContentPlacement='outside'
+                checkboxesProps={{
+                    classNames: {
+                        wrapper: 'after:bg-foreground after:text-background text-background',
+                    },
+                }}
+                classNames={classNames}
+                selectedKeys={selectedKeys}
+                selectionMode='multiple'
+                sortDescriptor={sortDescriptor}
+                topContent={topContent}
+                topContentPlacement='outside'
+                onSelectionChange={setSelectedKeys}
+                onSortChange={setSortDescriptor}
+                className='bg-white container py-6 px-12'
+            >
+                <TableHeader columns={headerColumns}>
+                    {column => (
+                        <TableColumn key={column.uid} align={column.uid === 'actions' ? 'center' : 'start'} allowsSorting={column.sortable}>
+                            {(() => {
+                                switch (column.name) {
+                                    case 'ID':
+                                        return 'ID'
+                                    case 'NAME':
+                                        return 'Nazwa'
+                                    case 'SERIES':
+                                        return 'Seria'
+                                    case 'TYPE':
+                                        return 'Typ'
+                                    case 'DISTANCE_CODE':
+                                        return 'Kod'
+                                    case 'SHORT_NAME':
+                                        return 'Skrócona nazwa'
+                                    case 'HEIGHT_MM':
+                                        return 'Wysokość (mm)'
+                                    case 'PRICE_NET':
+                                        return 'Cena netto (PLN)'
+                                    case 'ACTIONS':
+                                        return 'Akcje'
+                                    default:
+                                        return ''
+                                }
+                            })()}
+                        </TableColumn>
+                    )}
+                </TableHeader>
+                <TableBody emptyContent={'Brak danych do wyświetlenia'} items={sortedItems}>
+                    {item => <TableRow key={item.id}>{columnKey => <TableCell>{renderCell(item, columnKey)}</TableCell>}</TableRow>}
+                </TableBody>
+            </Table>
+
+            <Modal
+                ref={targetRef}
+                size='3xl'
+                isOpen={isOpen}
+                placement='top-center'
+                onOpenChange={onOpenChange}
+                backdrop={backdrop}
+                classNames={{
+                    backdrop: 'bg-black bg-opacity-40 blur-lg backdrop-opacity-20',
+                }}
+            >
+                <ModalContent>
+                    {onClose => (
+                        <>
+                            <ModalHeader {...moveProps} className='flex flex-col gap-1'>
+                                Edytuj produkt
+                            </ModalHeader>
+                            <ModalBody>
+                                <Input label='Nazwa' placeholder='Nazwa' />
+                                <div className='flex gap-4'>
+                                    <Select className='w-full' label='Typ'>
+                                        <SelectItem key='wood'>Drewno</SelectItem>
+                                        <SelectItem key='slab'>Płyty</SelectItem>
+                                    </Select>
+                                    <Select className='w-full' label='Seria'>
+                                        <SelectItem key='spiral'>Spiral</SelectItem>
+                                        <SelectItem key='standard'>Standard</SelectItem>
+                                        <SelectItem key='max'>Max</SelectItem>
+                                    </Select>
+                                </div>
+                                <div className='flex gap-4'>
+                                    <Input label='Kod' placeholder='np: 230043' />
+                                    <Input label='Skrócona nazwa' placeholder='np: DPP050-070' />
+                                </div>
+                                <div className='flex gap-4'>
+                                    <Input label='Wysokość (mm)' placeholder='np: 40' />
+                                    <Input label='Wysokość (inch)' placeholder='wysokośc w calach' />
+                                </div>
+                                <div className='flex gap-4'>
+                                    <Input label='Cena netto (PLN)' placeholder='np: 120.00' />
+                                </div>
+                            </ModalBody>
+                            <ModalFooter>
+                                <Button color='danger' variant='flat' onPress={onClose}>
+                                    Anulut
+                                </Button>
+                                <Button color='primary' onPress={onClose}>
+                                    Zapisz
+                                </Button>
+                            </ModalFooter>
+                        </>
+                    )}
+                </ModalContent>
+            </Modal>
+        </>
     )
 }
