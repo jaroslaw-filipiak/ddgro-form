@@ -14,7 +14,7 @@ export const ItemCounter = props => {
     useEffect(() => {
         setFilteredProducts(products)
     }, [products])
-    k
+
     const handleChange = e => {
         const newCount = e.target.value
         const ID = props.item.id
