@@ -2,6 +2,7 @@
 
 import AdminProductsTable from './Table'
 import { useState, useEffect } from 'react'
+import { CircularProgress } from '@heroui/progress'
 import { fetchProducts, updateProduct } from '@/app/lib/api'
 
 export default function AdminProductPage() {
@@ -19,17 +20,24 @@ export default function AdminProductPage() {
             const data = await fetchProducts()
             setProducts(data?.data)
         } catch (err) {
-            setError('Failed to load products')
+            setError('Wystapił problem z pobraniem produktów')
         } finally {
             setLoading(false)
         }
     }
 
-    if (loading) return <div className="flex justify-center items-center min-h-screen">Loading...</div>
-    if (error) return <div className="flex justify-center items-center min-h-screen text-red-500">Error: {error}</div>
+    if (loading)
+        return (
+            <div className='flex justify-center items-center min-h-screen'>
+                <div className='flex'>
+                    <CircularProgress color='success' label='Wczytywanie...' showValueLabel={true} size='lg' />
+                </div>
+            </div>
+        )
+    if (error) return <div className='flex justify-center items-center min-h-screen text-red-500'>Error: {error}</div>
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className='min-h-screen bg-gray-50'>
             <AdminProductsTable items={products || []} />
         </div>
     )
