@@ -303,7 +303,7 @@ const statusColorMap = {
 
 const INITIAL_VISIBLE_COLUMNS = ['name', 'role', 'status', 'actions']
 
-export default function AdminProductsTable() {
+export default function AdminProductsTable(props) {
     const [filterValue, setFilterValue] = React.useState('')
     const [selectedKeys, setSelectedKeys] = React.useState(new Set([]))
     const [visibleColumns, setVisibleColumns] = React.useState(new Set(INITIAL_VISIBLE_COLUMNS))
