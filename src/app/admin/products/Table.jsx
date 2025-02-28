@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import {
     Table,
     TableHeader,
@@ -108,16 +108,12 @@ const INITIAL_VISIBLE_COLUMNS = ['id', 'name', 'series', 'type', 'distance_code'
 
 export default function AdminProductsTable({ items }) {
     const { isOpen, onOpen, onOpenChange } = useDisclosure()
-    const targetRef = React.useRef(null)
-    const [scrollBehavior, setScrollBehavior] = React.useState('inside')
-    const { moveProps } = useDraggable({ targetRef, isDisabled: !isOpen })
-    const [backdrop, setBackdrop] = React.useState('opaque')
-    const [selectedProduct, setSelectedProduct] = React.useState(null)
+    const [targetProduct, setTargetProduct] = React.useState(null) // Just to track which product to edit
     const [filterValue, setFilterValue] = React.useState('')
     const [selectedKeys, setSelectedKeys] = React.useState(new Set([]))
     const [visibleColumns, setVisibleColumns] = React.useState(new Set(INITIAL_VISIBLE_COLUMNS))
     const [error, setError] = React.useState(null)
-    const [respnose, setResponse] = React.useState(null)
+    const [response, setResponse] = React.useState(null) // Fixed typo from respnose
 
     const [rowsPerPage, setRowsPerPage] = React.useState(20)
     const [sortDescriptor, setSortDescriptor] = React.useState({
@@ -205,7 +201,7 @@ export default function AdminProductsTable({ items }) {
                                 <DropdownItem
                                     key='edit'
                                     onPress={() => {
-                                        setSelectedProduct(item)
+                                        setTargetProduct(item)
                                         setResponse(null)
                                         setError(null)
                                         onOpen()
@@ -236,64 +232,6 @@ export default function AdminProductsTable({ items }) {
             setFilterValue('')
         }
     }, [])
-
-    // Languages supported in the system
-    const supportedLanguages = ['pl', 'en', 'de', 'fr', 'es']
-    const defaultLanguage = 'pl'
-
-    // Current active language in the editor
-    const [activeLanguage, setActiveLanguage] = React.useState(defaultLanguage)
-
-    const handleInputChange = (field, value, language = null) => {
-        setSelectedProduct(prev => {
-            if (!prev) return null
-
-            // Handle multilingual fields
-            if (['name', 'short_name', 'description'].includes(field) && language) {
-                return {
-                    ...prev,
-                    [field]: {
-                        ...(prev[field] || {}),
-                        [language]: value,
-                    },
-                }
-            }
-            // Handle price fields for specific currencies
-            else if (field.startsWith('price_')) {
-                const currency = field.replace('price_', '')
-                const numValue = parseFloat(value) || 0
-
-                // Update the specific currency in the price object
-                return {
-                    ...prev,
-                    price: {
-                        ...(prev.price || {}),
-                        [currency]: numValue,
-                    },
-                    // Also update price_net if it's PLN for backwards compatibility
-                    ...(currency === 'PLN' ? { price_net: numValue } : {}),
-                }
-            }
-            // Handle numeric fields
-            else if (['packaging', 'euro_palet'].includes(field)) {
-                return {
-                    ...prev,
-                    [field]: parseInt(value) || 0,
-                }
-            }
-            // Handle standard fields
-            else {
-                return {
-                    ...prev,
-                    [field]: value,
-                }
-            }
-        })
-    }
-
-    const handleMultilingualChange = (field, value) => {
-        handleInputChange(field, value, activeLanguage)
-    }
 
     const topContent = React.useMemo(() => {
         return (
@@ -358,9 +296,9 @@ export default function AdminProductsTable({ items }) {
                                 ))}
                             </DropdownMenu>
                         </Dropdown>
-                        <Button className='bg-foreground text-background' endContent={<PlusIcon />} size='md'>
+                        {/* <Button className='bg-foreground text-background' endContent={<PlusIcon />} size='md'>
                             Dodaj nowy
-                        </Button>
+                        </Button> */}
                     </div>
                 </div>
                 <div className='flex justify-between items-center'>
@@ -409,17 +347,14 @@ export default function AdminProductsTable({ items }) {
         [],
     )
 
-    const saveProduct = async () => {
-        try {
-            const response = await updateProduct(selectedProduct.id, selectedProduct)
+    // Handle refreshing the data after a successful update
+    const handleUpdateSuccess = updatedProduct => {
+        // You could trigger a refresh of your data here
+        // If you're fetching from an API, you could call that function again
+        setResponse('Product saved successfully')
 
-            setResponse(response?.message)
-        } catch (e) {
-            setError(e.message)
-        }
-
-        // const response = await updateProduct(selectedProduct.id, selectedProduct)
-        // onOpenChange()
+        // Optionally close the modal
+        // onOpenChange(false);
     }
 
     return (
@@ -480,210 +415,312 @@ export default function AdminProductsTable({ items }) {
                 </TableBody>
             </Table>
 
-            {/* Modal */}
-            <Modal
-                ref={targetRef}
-                size='5xl'
-                isOpen={isOpen}
-                placement='top-center'
-                onOpenChange={onOpenChange}
-                backdrop={backdrop}
-                scrollBehavior={scrollBehavior}
-                classNames={{
-                    backdrop: 'bg-black bg-opacity-40 blur-lg backdrop-opacity-20',
-                }}
-            >
-                <ModalContent>
-                    {onClose => (
-                        <>
-                            <ModalHeader {...moveProps} className='flex flex-col gap-1'>
-                                Edytuj produkt
-                            </ModalHeader>
-                            <ModalBody>
-                                <Tabs aria-label='Language Options' selectedKey={activeLanguage} onSelectionChange={setActiveLanguage} className='mb-4'>
-                                    <Tab key='pl' title='Polski' />
-                                    <Tab key='en' title='English' />
-                                    <Tab key='de' title='Deutsch' />
-                                    <Tab key='fr' title='Français' />
-                                    <Tab key='es' title='Español' />
-                                </Tabs>
-
-                                {/* Multilingual fields section */}
-                                <div className='border-1 p-4 rounded-lg mb-4'>
-                                    <h3 className='font-semibold mb-2'>Dane wielojęzyczne ({activeLanguage.toUpperCase()})</h3>
-                                    <Input
-                                        label='Nazwa'
-                                        placeholder='Nazwa produktu'
-                                        value={selectedProduct?.name?.[activeLanguage] || ''}
-                                        onChange={e => handleMultilingualChange('name', e.target.value)}
-                                        className='mb-2'
-                                    />
-                                    <Input
-                                        label='Skrócona nazwa'
-                                        placeholder='np: DPP050-070'
-                                        value={selectedProduct?.short_name?.[activeLanguage] || ''}
-                                        onChange={e => handleMultilingualChange('short_name', e.target.value)}
-                                        className='mb-2'
-                                    />
-                                    <Textarea
-                                        label='Opis'
-                                        placeholder='Opis produktu'
-                                        value={selectedProduct?.description?.[activeLanguage] || ''}
-                                        onChange={e => handleMultilingualChange('description', e.target.value)}
-                                        rows={3}
-                                    />
-                                </div>
-
-                                {/* Basic product information */}
-                                <div className='border-1 p-4 rounded-lg mb-4'>
-                                    <h3 className='font-semibold mb-2'>Podstawowe informacje</h3>
-                                    <div className='flex gap-4 mb-2'>
-                                        <Input label='ID' placeholder='ID' value={selectedProduct?.id || ''} disabled className='w-1/3' />
-                                        <Select
-                                            className='w-2/3'
-                                            label='Typ'
-                                            selectedKeys={selectedProduct?.type ? [selectedProduct.type] : []}
-                                            onChange={e => handleInputChange('type', e.target.value)}
-                                        >
-                                            <SelectItem key='wood'>Drewno</SelectItem>
-                                            <SelectItem key='slab'>Płyty</SelectItem>
-                                        </Select>
-                                    </div>
-                                    <div className='flex gap-4 mb-2'>
-                                        <Select
-                                            className='w-full'
-                                            label='Seria'
-                                            selectedKeys={selectedProduct?.series ? [selectedProduct.series] : []}
-                                            onChange={e => handleInputChange('series', e.target.value)}
-                                        >
-                                            <SelectItem key='spiral'>Spiral</SelectItem>
-                                            <SelectItem key='standard'>Standard</SelectItem>
-                                            <SelectItem key='max'>Max</SelectItem>
-                                        </Select>
-                                        <Input
-                                            label='Grupa produktów'
-                                            placeholder='np: spiral'
-                                            value={selectedProduct?.product_group || ''}
-                                            onChange={e => handleInputChange('product_group', e.target.value)}
-                                        />
-                                    </div>
-                                    <div className='flex gap-4'>
-                                        <Input
-                                            label='Kod produktu (distance_code)'
-                                            placeholder='np: 10889'
-                                            value={selectedProduct?.distance_code || ''}
-                                            onChange={e => handleInputChange('distance_code', e.target.value)}
-                                        />
-                                        <Input
-                                            label='Kod (code)'
-                                            placeholder='np: 10889'
-                                            value={selectedProduct?.code || ''}
-                                            onChange={e => handleInputChange('code', e.target.value)}
-                                        />
-                                    </div>
-                                </div>
-
-                                {/* Product specifications */}
-                                <div className='border-1 p-4 rounded-lg mb-4'>
-                                    <h3 className='font-semibold mb-2'>Specyfikacja</h3>
-                                    <div className='flex gap-4 mb-2'>
-                                        <Input
-                                            label='Wysokość (mm)'
-                                            placeholder='np: 40'
-                                            value={selectedProduct?.height_mm || ''}
-                                            onChange={e => handleInputChange('height_mm', e.target.value)}
-                                        />
-                                        <Input
-                                            label='Wysokość (inch)'
-                                            placeholder='wysokośc w calach'
-                                            value={selectedProduct?.height_inch || ''}
-                                            onChange={e => handleInputChange('height_inch', e.target.value)}
-                                        />
-                                    </div>
-                                    <div className='flex gap-4'>
-                                        <Input
-                                            label='Opakowanie (szt)'
-                                            placeholder='np: 70'
-                                            type='number'
-                                            value={selectedProduct?.packaging || ''}
-                                            onChange={e => handleInputChange('packaging', e.target.value)}
-                                        />
-                                        <Input
-                                            label='Europaleta (szt)'
-                                            placeholder='np: 1400'
-                                            type='number'
-                                            value={selectedProduct?.euro_palet || ''}
-                                            onChange={e => handleInputChange('euro_palet', e.target.value)}
-                                        />
-                                    </div>
-                                </div>
-
-                                {/* Pricing information */}
-                                <div className='border-1 p-4 rounded-lg mb-4'>
-                                    <h3 className='font-semibold mb-2'>Cennik</h3>
-                                    <div className='grid grid-cols-2 gap-4 mb-2'>
-                                        <Input
-                                            label='Cena (PLN)'
-                                            placeholder='np: 120.00'
-                                            type='number'
-                                            step='0.01'
-                                            value={selectedProduct?.price?.PLN || selectedProduct?.price_net || ''}
-                                            onChange={e => handleInputChange('price_PLN', e.target.value)}
-                                        />
-                                        <Input
-                                            label='Cena (EUR)'
-                                            placeholder='np: 25.00'
-                                            type='number'
-                                            step='0.01'
-                                            value={selectedProduct?.price?.EUR || ''}
-                                            onChange={e => handleInputChange('price_EUR', e.target.value)}
-                                        />
-                                        <Input
-                                            label='Cena (USD)'
-                                            placeholder='np: 30.00'
-                                            type='number'
-                                            step='0.01'
-                                            value={selectedProduct?.price?.USD || ''}
-                                            onChange={e => handleInputChange('price_USD', e.target.value)}
-                                        />
-                                        <Input
-                                            label='Cena (GBP)'
-                                            placeholder='np: 22.00'
-                                            type='number'
-                                            step='0.01'
-                                            value={selectedProduct?.price?.GBP || ''}
-                                            onChange={e => handleInputChange('price_GBP', e.target.value)}
-                                        />
-                                    </div>
-                                </div>
-
-                                {/* Dates */}
-                                <div className='flex justify-between text-sm text-gray-500'>
-                                    <div>Utworzono: {selectedProduct?.created_at ? new Date(selectedProduct.created_at).toLocaleString() : 'N/A'}</div>
-                                    <div>
-                                        Ostatnia aktualizacja: {selectedProduct?.updated_at ? new Date(selectedProduct.updated_at).toLocaleString() : 'N/A'}
-                                    </div>
-                                </div>
-                            </ModalBody>
-                            <ModalFooter className='flex flex-row-reverse gap-4 items-center justify-between'>
-                                <div className='flex items-center justify-end gap-4'>
-                                    <Button color='danger' variant='flat' onPress={onClose}>
-                                        Anuluj
-                                    </Button>
-                                    <Button color='primary' onPress={saveProduct}>
-                                        Zapisz
-                                    </Button>
-                                </div>
-                                <div className='flex items-center justify-end gap-4'>
-                                    <div className='error text-danger-600'>{error && <p>{error}</p>}</div>
-                                    <div className='response'>{respnose && <p>{respnose}</p>}</div>
-                                </div>
-                            </ModalFooter>
-                        </>
-                    )}
-                </ModalContent>
-            </Modal>
-            {/* Modal END */}
+            {/* ProductEditForm Component */}
+            <ProductEditForm isOpen={isOpen} onOpenChange={onOpenChange} productToEdit={targetProduct} onSaveSuccess={handleUpdateSuccess} onError={setError} />
         </>
+    )
+}
+
+// Separate form component with its own state management
+const ProductEditForm = ({ isOpen, onOpenChange, productToEdit, onSaveSuccess, onError }) => {
+    const targetRef = React.useRef(null)
+    const { moveProps } = useDraggable({ targetRef, isDisabled: !isOpen })
+    const [scrollBehavior] = React.useState('inside')
+    const [backdrop] = React.useState('opaque')
+
+    // Local form state
+    const [formValues, setFormValues] = React.useState(null)
+    const [activeLanguage, setActiveLanguage] = React.useState('pl')
+    const [error, setError] = React.useState(null)
+    const [response, setResponse] = React.useState(null)
+
+    // Initialize form values when product changes
+    React.useEffect(() => {
+        if (productToEdit) {
+            setFormValues(JSON.parse(JSON.stringify(productToEdit)))
+        }
+    }, [productToEdit?.id]) // Only update when product ID changes
+
+    // Handle input changes
+    const handleInputChange = (field, value, language = null) => {
+        setFormValues(prev => {
+            if (!prev) return null
+
+            // Create a new copy
+            const updated = { ...prev }
+
+            // Handle multilingual fields
+            if (['name', 'short_name', 'description'].includes(field) && language) {
+                if (!updated[field]) {
+                    updated[field] = {}
+                }
+                updated[field] = {
+                    ...updated[field],
+                    [language]: value,
+                }
+            }
+            // Handle price fields
+            else if (field.startsWith('price_')) {
+                const currency = field.replace('price_', '')
+                const numValue = value === '' ? '' : parseFloat(value) || 0
+
+                if (!updated.price) {
+                    updated.price = {}
+                }
+                updated.price = {
+                    ...updated.price,
+                    [currency]: numValue,
+                }
+
+                // Update price_net for PLN for backwards compatibility
+                if (currency === 'PLN') {
+                    updated.price_net = numValue
+                }
+            }
+            // Handle numeric fields
+            else if (['packaging', 'euro_palet', 'height_mm'].includes(field)) {
+                updated[field] = value === '' ? '' : parseInt(value) || 0
+            }
+            // Handle standard fields
+            else {
+                updated[field] = value
+            }
+
+            return updated
+        })
+    }
+
+    // Handle multilingual field changes
+    const handleMultilingualChange = (field, value) => {
+        handleInputChange(field, value, activeLanguage)
+    }
+
+    // Save product
+    const saveProduct = async () => {
+        if (!formValues) return
+
+        try {
+            // Send directly to API
+            const response = await updateProduct(formValues.id, formValues)
+            setResponse(response?.message)
+            setError(null)
+
+            // Notify parent of successful update
+            if (onSaveSuccess) {
+                onSaveSuccess(formValues)
+            }
+        } catch (e) {
+            setError(e.message)
+            if (onError) {
+                onError(e.message)
+            }
+            setResponse(null)
+        }
+    }
+
+    // If no form values yet, don't render
+    if (!formValues) return null
+
+    return (
+        <Modal
+            ref={targetRef}
+            size='5xl'
+            isOpen={isOpen}
+            placement='top-center'
+            onOpenChange={onOpenChange}
+            backdrop={backdrop}
+            scrollBehavior={scrollBehavior}
+            classNames={{
+                backdrop: 'bg-black bg-opacity-40 blur-lg backdrop-opacity-20',
+            }}
+        >
+            <ModalContent>
+                {onClose => (
+                    <>
+                        <ModalHeader {...moveProps} className='flex flex-col gap-1'>
+                            Edytuj produkt
+                        </ModalHeader>
+                        <ModalBody>
+                            <Tabs aria-label='Language Options' selectedKey={activeLanguage} onSelectionChange={setActiveLanguage} className='mb-4'>
+                                <Tab key='pl' title='Polski' />
+                                <Tab key='en' title='English' />
+                                <Tab key='de' title='Deutsch' />
+                                <Tab key='fr' title='Français' />
+                                <Tab key='es' title='Español' />
+                            </Tabs>
+
+                            {/* Multilingual fields section */}
+                            <div className='border-1 p-4 rounded-lg mb-4'>
+                                <h3 className='font-semibold mb-2'>Dane wielojęzyczne ({activeLanguage.toUpperCase()})</h3>
+                                <Input
+                                    label='Nazwa'
+                                    placeholder='Nazwa produktu'
+                                    value={formValues?.name?.[activeLanguage] || ''}
+                                    onChange={e => handleMultilingualChange('name', e.target.value)}
+                                    className='mb-2'
+                                />
+                                <Input
+                                    label='Skrócona nazwa'
+                                    placeholder='np: DPP050-070'
+                                    value={formValues?.short_name?.[activeLanguage] || ''}
+                                    onChange={e => handleMultilingualChange('short_name', e.target.value)}
+                                    className='mb-2'
+                                />
+                                <Textarea
+                                    label='Opis'
+                                    placeholder='Opis produktu'
+                                    value={formValues?.description?.[activeLanguage] || ''}
+                                    onChange={e => handleMultilingualChange('description', e.target.value)}
+                                    rows={3}
+                                />
+                            </div>
+
+                            {/* Basic product information */}
+                            <div className='border-1 p-4 rounded-lg mb-4'>
+                                <h3 className='font-semibold mb-2'>Podstawowe informacje</h3>
+                                <div className='flex gap-4 mb-2'>
+                                    <Input label='ID' placeholder='ID' value={formValues?.id || ''} disabled className='w-1/3' />
+                                    <Select
+                                        className='w-2/3'
+                                        label='Typ'
+                                        selectedKeys={formValues?.type ? [formValues.type] : []}
+                                        onChange={e => handleInputChange('type', e.target.value)}
+                                    >
+                                        <SelectItem key='wood'>Drewno</SelectItem>
+                                        <SelectItem key='slab'>Płyty</SelectItem>
+                                    </Select>
+                                </div>
+                                <div className='flex gap-4 mb-2'>
+                                    <Select
+                                        className='w-full'
+                                        label='Seria'
+                                        selectedKeys={formValues?.series ? [formValues.series] : []}
+                                        onChange={e => handleInputChange('series', e.target.value)}
+                                    >
+                                        <SelectItem key='spiral'>Spiral</SelectItem>
+                                        <SelectItem key='standard'>Standard</SelectItem>
+                                        <SelectItem key='max'>Max</SelectItem>
+                                    </Select>
+                                    <Input
+                                        label='Grupa produktów'
+                                        placeholder='np: spiral'
+                                        value={formValues?.product_group || ''}
+                                        onChange={e => handleInputChange('product_group', e.target.value)}
+                                    />
+                                </div>
+                                <div className='flex gap-4'>
+                                    <Input
+                                        label='Kod produktu (distance_code)'
+                                        placeholder='np: 10889'
+                                        value={formValues?.distance_code || ''}
+                                        onChange={e => handleInputChange('distance_code', e.target.value)}
+                                    />
+                                    <Input
+                                        label='Kod (code)'
+                                        placeholder='np: 10889'
+                                        value={formValues?.code || ''}
+                                        onChange={e => handleInputChange('code', e.target.value)}
+                                    />
+                                </div>
+                            </div>
+
+                            {/* Product specifications */}
+                            <div className='border-1 p-4 rounded-lg mb-4'>
+                                <h3 className='font-semibold mb-2'>Specyfikacja</h3>
+                                <div className='flex gap-4 mb-2'>
+                                    <Input
+                                        label='Wysokość (mm)'
+                                        placeholder='np: 40'
+                                        value={formValues?.height_mm || ''}
+                                        onChange={e => handleInputChange('height_mm', e.target.value)}
+                                    />
+                                    <Input
+                                        label='Wysokość (inch)'
+                                        placeholder='wysokośc w calach'
+                                        value={formValues?.height_inch || ''}
+                                        onChange={e => handleInputChange('height_inch', e.target.value)}
+                                    />
+                                </div>
+                                <div className='flex gap-4'>
+                                    <Input
+                                        label='Opakowanie (szt)'
+                                        placeholder='np: 70'
+                                        type='number'
+                                        value={formValues?.packaging || ''}
+                                        onChange={e => handleInputChange('packaging', e.target.value)}
+                                    />
+                                    <Input
+                                        label='Europaleta (szt)'
+                                        placeholder='np: 1400'
+                                        type='number'
+                                        value={formValues?.euro_palet || ''}
+                                        onChange={e => handleInputChange('euro_palet', e.target.value)}
+                                    />
+                                </div>
+                            </div>
+
+                            {/* Pricing information */}
+                            <div className='border-1 p-4 rounded-lg mb-4'>
+                                <h3 className='font-semibold mb-2'>Cennik</h3>
+                                <div className='grid grid-cols-2 gap-4 mb-2'>
+                                    <Input
+                                        label='Cena (PLN)'
+                                        placeholder='np: 120.00'
+                                        type='number'
+                                        step='0.01'
+                                        value={formValues?.price?.PLN || formValues?.price_net || ''}
+                                        onChange={e => handleInputChange('price_PLN', e.target.value)}
+                                    />
+                                    <Input
+                                        label='Cena (EUR)'
+                                        placeholder='np: 25.00'
+                                        type='number'
+                                        step='0.01'
+                                        value={formValues?.price?.EUR || ''}
+                                        onChange={e => handleInputChange('price_EUR', e.target.value)}
+                                    />
+                                    <Input
+                                        label='Cena (USD)'
+                                        placeholder='np: 30.00'
+                                        type='number'
+                                        step='0.01'
+                                        value={formValues?.price?.USD || ''}
+                                        onChange={e => handleInputChange('price_USD', e.target.value)}
+                                    />
+                                    <Input
+                                        label='Cena (GBP)'
+                                        placeholder='np: 22.00'
+                                        type='number'
+                                        step='0.01'
+                                        value={formValues?.price?.GBP || ''}
+                                        onChange={e => handleInputChange('price_GBP', e.target.value)}
+                                    />
+                                </div>
+                            </div>
+
+                            {/* Dates */}
+                            <div className='flex justify-between text-sm text-gray-500'>
+                                <div>Utworzono: {formValues?.created_at ? new Date(formValues.created_at).toLocaleString() : 'N/A'}</div>
+                                <div>Ostatnia aktualizacja: {formValues?.updated_at ? new Date(formValues.updated_at).toLocaleString() : 'N/A'}</div>
+                            </div>
+                        </ModalBody>
+                        <ModalFooter className='flex flex-row-reverse gap-4 items-center justify-between'>
+                            <div className='flex items-center justify-end gap-4'>
+                                <Button color='danger' variant='flat' onPress={onClose}>
+                                    Anuluj
+                                </Button>
+                                <Button color='primary' onPress={saveProduct}>
+                                    Zapisz
+                                </Button>
+                            </div>
+                            <div className='flex items-center justify-end gap-4'>
+                                <div className='error text-danger-600'>{error && <p>{error}</p>}</div>
+                                <div className='response'>{response && <p>{response}</p>}</div>
+                            </div>
+                        </ModalFooter>
+                    </>
+                )}
+            </ModalContent>
+        </Modal>
     )
 }

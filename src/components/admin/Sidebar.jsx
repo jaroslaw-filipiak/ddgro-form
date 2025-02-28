@@ -1,24 +1,43 @@
+'use client'
+
 import Link from 'next/link'
+import { useState } from 'react'
+import { IconList } from '@tabler/icons-react'
 
 export default function Sidebar() {
+    const [isExpanded, setIsExpanded] = useState(false)
+
     return (
-        <div className='bg-white py-10 px-6'>
-            <ul className='space-y-1'>
+        <div
+            className={`bg-white py-10 transition-all duration-300 h-full flex ${isExpanded ? 'w-40' : 'w-[44px]'}`}
+            onMouseEnter={() => setIsExpanded(true)}
+            onMouseLeave={() => setIsExpanded(false)}
+        >
+            <ul className='space-y-6 '>
                 <li>
-                    <Link prefetch={true} href='/admin/products'>
-                        Produkty
+                    <Link prefetch={true} href='/admin/products' className='flex items-center text-gray-700 hover:text-blue-600 '>
+                        <div className='flex justify-center w-10'>
+                            <IconList size={24} />
+                        </div>
+                        <span className={`transition-opacity duration-300 ${isExpanded ? 'opacity-100' : 'opacity-0'}`}>Produkty</span>
                     </Link>
                 </li>
-                <li className='hidden'>
-                    <Link prefetch={true} href='/admin/accesories'>
-                        Akcesoria
+                {/* <li>
+                    <Link prefetch={true} href='/admin/accesories' className='flex items-center text-gray-700 hover:text-blue-600 transition-colors'>
+                        <div className='flex justify-center w-20'>
+                            <IconList size={24} />
+                        </div>
+                        <span className={`transition-opacity duration-300 ${isExpanded ? 'opacity-100' : 'opacity-0'}`}>Akcesoria</span>
                     </Link>
                 </li>
-                <li className='hidden'>
-                    <Link prefetch={true} href='/admin/applications'>
-                        Zgłoszenia
+                <li>
+                    <Link prefetch={true} href='/admin/applications' className='flex items-center text-gray-700 hover:text-blue-600 transition-colors'>
+                        <div className='flex justify-center w-20'>
+                            <IconList size={24} />
+                        </div>
+                        <span className={`transition-opacity duration-300 ${isExpanded ? 'opacity-100' : 'opacity-0'}`}>Zgłoszenia</span>
                     </Link>
-                </li>
+                </li> */}
             </ul>
         </div>
     )
