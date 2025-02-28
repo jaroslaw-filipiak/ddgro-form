@@ -9,12 +9,12 @@ export default function Sidebar() {
                         Produkty
                     </Link>
                 </li>
-                <li>
+                <li className='hidden'>
                     <Link prefetch={true} href='/admin/accesories'>
                         Akcesoria
                     </Link>
                 </li>
-                <li>
+                <li className='hidden'>
                     <Link prefetch={true} href='/admin/applications'>
                         Zgłoszenia
                     </Link>

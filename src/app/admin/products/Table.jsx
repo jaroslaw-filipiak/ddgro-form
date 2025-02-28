@@ -110,6 +110,7 @@ export default function AdminProductsTable({ items }) {
     const [filterValue, setFilterValue] = React.useState('')
     const [selectedKeys, setSelectedKeys] = React.useState(new Set([]))
     const [visibleColumns, setVisibleColumns] = React.useState(new Set(INITIAL_VISIBLE_COLUMNS))
+    const [error, setError] = React.useState(null)
 
     const [rowsPerPage, setRowsPerPage] = React.useState(20)
     const [sortDescriptor, setSortDescriptor] = React.useState({
@@ -190,10 +191,13 @@ export default function AdminProductsTable({ items }) {
                             </DropdownTrigger>
                             <DropdownMenu>
                                 {/* <DropdownItem key='view'>Szczegóły</DropdownItem> */}
-                                <DropdownItem key='edit' onPress={() => {
-                                    setSelectedProduct(user)
-                                    onOpen()
-                                }}>
+                                <DropdownItem
+                                    key='edit'
+                                    onPress={() => {
+                                        setSelectedProduct(user)
+                                        onOpen()
+                                    }}
+                                >
                                     Edytuj
                                 </DropdownItem>
                                 <DropdownItem key='delete'>Usuń</DropdownItem>
@@ -334,6 +338,26 @@ export default function AdminProductsTable({ items }) {
         [],
     )
 
+    const saveProduct = async () => {
+        console.log('saveProduct', selectedProduct)
+
+        try {
+            const response = await fetch(`http://localhost:3000/api/products/${selectedProduct.id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(selectedProduct),
+            })
+            const data = await response.json()
+            console.log('data', data)
+            onOpenChange()
+        } catch (error) {
+            console.error('error', error)
+            setError('Nie udało się zakutalizować produktu.. Spróbuj ponownie później.')
+        }
+    }
+
     return (
         <>
             <Table
@@ -410,69 +434,40 @@ export default function AdminProductsTable({ items }) {
                                 Edytuj produkt
                             </ModalHeader>
                             <ModalBody>
-                                <Input 
-                                    label='Nazwa' 
-                                    placeholder='Nazwa'
-                                    value={selectedProduct?.name || ''}
-                                />
+                                <Input label='Nazwa' placeholder='Nazwa' value={selectedProduct?.name || ''} />
                                 <div className='flex gap-4'>
-                                    <Select 
-                                        className='w-full' 
-                                        label='Typ'
-                                        selectedKeys={selectedProduct?.type ? [selectedProduct.type] : []}
-                                    >
+                                    <Select className='w-full' label='Typ' selectedKeys={selectedProduct?.type ? [selectedProduct.type] : []}>
                                         <SelectItem key='wood'>Drewno</SelectItem>
                                         <SelectItem key='slab'>Płyty</SelectItem>
                                     </Select>
-                                    <Select 
-                                        className='w-full' 
-                                        label='Seria'
-                                        selectedKeys={selectedProduct?.series ? [selectedProduct.series] : []}
-                                    >
+                                    <Select className='w-full' label='Seria' selectedKeys={selectedProduct?.series ? [selectedProduct.series] : []}>
                                         <SelectItem key='spiral'>Spiral</SelectItem>
                                         <SelectItem key='standard'>Standard</SelectItem>
                                         <SelectItem key='max'>Max</SelectItem>
                                     </Select>
                                 </div>
                                 <div className='flex gap-4'>
-                                    <Input 
-                                        label='Kod' 
-                                        placeholder='np: 230043'
-                                        value={selectedProduct?.distance_code || ''}
-                                    />
-                                    <Input 
-                                        label='Skrócona nazwa' 
-                                        placeholder='np: DPP050-070'
-                                        value={selectedProduct?.short_name || ''}
-                                    />
+                                    <Input label='Kod' placeholder='np: 230043' value={selectedProduct?.distance_code || ''} />
+                                    <Input label='Skrócona nazwa' placeholder='np: DPP050-070' value={selectedProduct?.short_name || ''} />
                                 </div>
                                 <div className='flex gap-4'>
-                                    <Input 
-                                        label='Wysokość (mm)' 
-                                        placeholder='np: 40'
-                                        value={selectedProduct?.height_mm || ''}
-                                    />
-                                    <Input 
-                                        label='Wysokość (inch)' 
-                                        placeholder='wysokośc w calach'
-                                        value={selectedProduct?.height_inch || ''}
-                                    />
+                                    <Input label='Wysokość (mm)' placeholder='np: 40' value={selectedProduct?.height_mm || ''} />
+                                    <Input label='Wysokość (inch)' placeholder='wysokośc w calach' value={selectedProduct?.height_inch || ''} />
                                 </div>
                                 <div className='flex gap-4'>
-                                    <Input 
-                                        label='Cena netto (PLN)' 
-                                        placeholder='np: 120.00'
-                                        value={selectedProduct?.price_net || ''}
-                                    />
+                                    <Input label='Cena netto (PLN)' placeholder='np: 120.00' value={selectedProduct?.price_net || ''} />
                                 </div>
                             </ModalBody>
-                            <ModalFooter>
-                                <Button color='danger' variant='flat' onPress={onClose}>
-                                    Anulut
-                                </Button>
-                                <Button color='primary' onPress={onClose}>
-                                    Zapisz
-                                </Button>
+                            <ModalFooter className='flex flex-col gap-4'>
+                                <div className='flex items-center justify-end gap-4'>
+                                    <Button color='danger' variant='flat' onPress={onClose}>
+                                        Anuluj
+                                    </Button>
+                                    <Button color='primary' onPress={saveProduct}>
+                                        Zapisz
+                                    </Button>
+                                </div>
+                                <div className='error text-danger-600'>{error && <p>{error}</p>}</div>
                             </ModalFooter>
                         </>
                     )}

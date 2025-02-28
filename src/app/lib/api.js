@@ -17,3 +17,9 @@ export async function updateProduct(id, productData) {
     if (!response.ok) throw new Error('Failed to update product')
     return response.json()
 }
+
+export async function fetchAccesories() {
+    const response = await fetch(`${API_BASE_URL}/api/accesories`)
+    if (!response.ok) throw new Error('wystąpił problem z pobraniem akcesoriów')
+    return response.json()
+}
