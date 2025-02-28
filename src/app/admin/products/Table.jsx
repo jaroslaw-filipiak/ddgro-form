@@ -34,6 +34,8 @@ import {
     Textarea,
 } from '@heroui/react'
 
+import { updateProduct } from '@/app/lib/api'
+
 export const columns = [
     { name: 'ID', uid: 'id', sortable: true },
     { name: 'NAME', uid: 'name', sortable: true },
@@ -115,6 +117,7 @@ export default function AdminProductsTable({ items }) {
     const [selectedKeys, setSelectedKeys] = React.useState(new Set([]))
     const [visibleColumns, setVisibleColumns] = React.useState(new Set(INITIAL_VISIBLE_COLUMNS))
     const [error, setError] = React.useState(null)
+    const [respnose, setResponse] = React.useState(null)
 
     const [rowsPerPage, setRowsPerPage] = React.useState(20)
     const [sortDescriptor, setSortDescriptor] = React.useState({
@@ -203,12 +206,14 @@ export default function AdminProductsTable({ items }) {
                                     key='edit'
                                     onPress={() => {
                                         setSelectedProduct(item)
+                                        setResponse(null)
+                                        setError(null)
                                         onOpen()
                                     }}
                                 >
                                     Edytuj
                                 </DropdownItem>
-                                <DropdownItem key='delete'>Usuń</DropdownItem>
+                                {/* <DropdownItem key='delete'>Usuń</DropdownItem> */}
                             </DropdownMenu>
                         </Dropdown>
                     </div>
@@ -253,16 +258,20 @@ export default function AdminProductsTable({ items }) {
                     },
                 }
             }
-            // Handle price field
-            else if (field === 'price_net' || field === 'price') {
+            // Handle price fields for specific currencies
+            else if (field.startsWith('price_')) {
+                const currency = field.replace('price_', '')
                 const numValue = parseFloat(value) || 0
+
+                // Update the specific currency in the price object
                 return {
                     ...prev,
-                    price_net: numValue,
                     price: {
                         ...(prev.price || {}),
-                        PLN: numValue,
+                        [currency]: numValue,
                     },
+                    // Also update price_net if it's PLN for backwards compatibility
+                    ...(currency === 'PLN' ? { price_net: numValue } : {}),
                 }
             }
             // Handle numeric fields
@@ -401,23 +410,16 @@ export default function AdminProductsTable({ items }) {
     )
 
     const saveProduct = async () => {
-        console.log('saveProduct', selectedProduct)
-
         try {
-            const response = await fetch(`http://localhost:3000/api/products/${selectedProduct.id}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(selectedProduct),
-            })
-            const data = await response.json()
-            console.log('data', data)
-            onOpenChange()
-        } catch (error) {
-            console.error('error', error)
-            setError('Nie udało się zakutalizować produktu.. Spróbuj ponownie później.')
+            const response = await updateProduct(selectedProduct.id, selectedProduct)
+
+            setResponse(response?.message)
+        } catch (e) {
+            setError(e.message)
         }
+
+        // const response = await updateProduct(selectedProduct.id, selectedProduct)
+        // onOpenChange()
     }
 
     return (
@@ -478,6 +480,7 @@ export default function AdminProductsTable({ items }) {
                 </TableBody>
             </Table>
 
+            {/* Modal */}
             <Modal
                 ref={targetRef}
                 size='5xl'
@@ -618,17 +621,40 @@ export default function AdminProductsTable({ items }) {
                                 {/* Pricing information */}
                                 <div className='border-1 p-4 rounded-lg mb-4'>
                                     <h3 className='font-semibold mb-2'>Cennik</h3>
-                                    <div className='flex gap-4 mb-2'>
+                                    <div className='grid grid-cols-2 gap-4 mb-2'>
                                         <Input
-                                            label='Cena netto (PLN)'
+                                            label='Cena (PLN)'
                                             placeholder='np: 120.00'
                                             type='number'
                                             step='0.01'
                                             value={selectedProduct?.price?.PLN || selectedProduct?.price_net || ''}
-                                            onChange={e => handleInputChange('price_net', e.target.value)}
+                                            onChange={e => handleInputChange('price_PLN', e.target.value)}
+                                        />
+                                        <Input
+                                            label='Cena (EUR)'
+                                            placeholder='np: 25.00'
+                                            type='number'
+                                            step='0.01'
+                                            value={selectedProduct?.price?.EUR || ''}
+                                            onChange={e => handleInputChange('price_EUR', e.target.value)}
+                                        />
+                                        <Input
+                                            label='Cena (USD)'
+                                            placeholder='np: 30.00'
+                                            type='number'
+                                            step='0.01'
+                                            value={selectedProduct?.price?.USD || ''}
+                                            onChange={e => handleInputChange('price_USD', e.target.value)}
+                                        />
+                                        <Input
+                                            label='Cena (GBP)'
+                                            placeholder='np: 22.00'
+                                            type='number'
+                                            step='0.01'
+                                            value={selectedProduct?.price?.GBP || ''}
+                                            onChange={e => handleInputChange('price_GBP', e.target.value)}
                                         />
                                     </div>
-                                    <div className='text-xs text-gray-500 mt-1'>Pozostałe waluty są przeliczane automatycznie</div>
                                 </div>
 
                                 {/* Dates */}
@@ -639,7 +665,7 @@ export default function AdminProductsTable({ items }) {
                                     </div>
                                 </div>
                             </ModalBody>
-                            <ModalFooter className='flex flex-col gap-4'>
+                            <ModalFooter className='flex flex-row-reverse gap-4 items-center justify-between'>
                                 <div className='flex items-center justify-end gap-4'>
                                     <Button color='danger' variant='flat' onPress={onClose}>
                                         Anuluj
@@ -648,12 +674,16 @@ export default function AdminProductsTable({ items }) {
                                         Zapisz
                                     </Button>
                                 </div>
-                                <div className='error text-danger-600'>{error && <p>{error}</p>}</div>
+                                <div className='flex items-center justify-end gap-4'>
+                                    <div className='error text-danger-600'>{error && <p>{error}</p>}</div>
+                                    <div className='response'>{respnose && <p>{respnose}</p>}</div>
+                                </div>
                             </ModalFooter>
                         </>
                     )}
                 </ModalContent>
             </Modal>
+            {/* Modal END */}
         </>
     )
 }
