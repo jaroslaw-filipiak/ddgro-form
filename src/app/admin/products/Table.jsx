@@ -29,6 +29,9 @@ import {
     Select,
     SelectSection,
     SelectItem,
+    Tabs,
+    Tab,
+    Textarea,
 } from '@heroui/react'
 
 export const columns = [
@@ -104,6 +107,7 @@ const INITIAL_VISIBLE_COLUMNS = ['id', 'name', 'series', 'type', 'distance_code'
 export default function AdminProductsTable({ items }) {
     const { isOpen, onOpen, onOpenChange } = useDisclosure()
     const targetRef = React.useRef(null)
+    const [scrollBehavior, setScrollBehavior] = React.useState('inside')
     const { moveProps } = useDraggable({ targetRef, isDisabled: !isOpen })
     const [backdrop, setBackdrop] = React.useState('opaque')
     const [selectedProduct, setSelectedProduct] = React.useState(null)
@@ -133,7 +137,13 @@ export default function AdminProductsTable({ items }) {
         let filteredItems = [...items]
 
         if (hasSearchFilter) {
-            filteredItems = filteredItems.filter(user => user.name.toLowerCase().includes(filterValue.toLowerCase()))
+            filteredItems = filteredItems.filter(item => {
+                // Check if name exists and has a pl property
+                if (item.name && item.name.pl) {
+                    return item.name.pl.toLowerCase().includes(filterValue.toLowerCase())
+                }
+                return false
+            })
         }
 
         return filteredItems
@@ -148,38 +158,37 @@ export default function AdminProductsTable({ items }) {
 
     const sortedItems = React.useMemo(() => {
         return [...paginatedItems].sort((a, b) => {
-            const first = a[sortDescriptor.column]
-            const second = b[sortDescriptor.column]
-            const cmp = first < second ? -1 : first > second ? 1 : 0
+            let first, second
 
+            // Special handling for nested properties
+            if (sortDescriptor.column === 'name') {
+                first = a.name?.pl || ''
+                second = b.name?.pl || ''
+            } else if (sortDescriptor.column === 'short_name') {
+                first = a.short_name?.pl || ''
+                second = b.short_name?.pl || ''
+            } else if (sortDescriptor.column === 'price_net') {
+                first = a.price?.PLN || a.price_net || 0
+                second = b.price?.PLN || b.price_net || 0
+            } else {
+                first = a[sortDescriptor.column]
+                second = b[sortDescriptor.column]
+            }
+
+            const cmp = first < second ? -1 : first > second ? 1 : 0
             return sortDescriptor.direction === 'descending' ? -cmp : cmp
         })
     }, [sortDescriptor, paginatedItems])
 
-    const renderCell = React.useCallback((user, columnKey) => {
-        const cellValue = user[columnKey]
-
+    const renderCell = React.useCallback((item, columnKey) => {
+        // Handle the special cases for the new data structure
         switch (columnKey) {
             case 'name':
-                return (
-                    <User
-                        avatarProps={{ radius: 'full', size: 'sm', src: user.avatar }}
-                        classNames={{
-                            description: 'text-default-500',
-                        }}
-                        description={user.email}
-                        name={cellValue}
-                    >
-                        {user.email}
-                    </User>
-                )
-            case 'role':
-                return (
-                    <div className='flex flex-col'>
-                        <p className='text-bold text-small capitalize'>{cellValue}</p>
-                        <p className='text-bold text-tiny capitalize text-default-500'>{user.team}</p>
-                    </div>
-                )
+                return item.name?.pl || ''
+            case 'short_name':
+                return item.short_name?.pl || ''
+            case 'price_net':
+                return item.price?.PLN || item.price_net || 0
             case 'actions':
                 return (
                     <div className='relative flex justify-end items-center gap-2'>
@@ -190,11 +199,10 @@ export default function AdminProductsTable({ items }) {
                                 </Button>
                             </DropdownTrigger>
                             <DropdownMenu>
-                                {/* <DropdownItem key='view'>Szczegóły</DropdownItem> */}
                                 <DropdownItem
                                     key='edit'
                                     onPress={() => {
-                                        setSelectedProduct(user)
+                                        setSelectedProduct(item)
                                         onOpen()
                                     }}
                                 >
@@ -206,7 +214,7 @@ export default function AdminProductsTable({ items }) {
                     </div>
                 )
             default:
-                return cellValue
+                return item[columnKey]
         }
     }, [])
 
@@ -223,6 +231,60 @@ export default function AdminProductsTable({ items }) {
             setFilterValue('')
         }
     }, [])
+
+    // Languages supported in the system
+    const supportedLanguages = ['pl', 'en', 'de', 'fr', 'es']
+    const defaultLanguage = 'pl'
+
+    // Current active language in the editor
+    const [activeLanguage, setActiveLanguage] = React.useState(defaultLanguage)
+
+    const handleInputChange = (field, value, language = null) => {
+        setSelectedProduct(prev => {
+            if (!prev) return null
+
+            // Handle multilingual fields
+            if (['name', 'short_name', 'description'].includes(field) && language) {
+                return {
+                    ...prev,
+                    [field]: {
+                        ...(prev[field] || {}),
+                        [language]: value,
+                    },
+                }
+            }
+            // Handle price field
+            else if (field === 'price_net' || field === 'price') {
+                const numValue = parseFloat(value) || 0
+                return {
+                    ...prev,
+                    price_net: numValue,
+                    price: {
+                        ...(prev.price || {}),
+                        PLN: numValue,
+                    },
+                }
+            }
+            // Handle numeric fields
+            else if (['packaging', 'euro_palet'].includes(field)) {
+                return {
+                    ...prev,
+                    [field]: parseInt(value) || 0,
+                }
+            }
+            // Handle standard fields
+            else {
+                return {
+                    ...prev,
+                    [field]: value,
+                }
+            }
+        })
+    }
+
+    const handleMultilingualChange = (field, value) => {
+        handleInputChange(field, value, activeLanguage)
+    }
 
     const topContent = React.useMemo(() => {
         return (
@@ -418,11 +480,12 @@ export default function AdminProductsTable({ items }) {
 
             <Modal
                 ref={targetRef}
-                size='3xl'
+                size='5xl'
                 isOpen={isOpen}
                 placement='top-center'
                 onOpenChange={onOpenChange}
                 backdrop={backdrop}
+                scrollBehavior={scrollBehavior}
                 classNames={{
                     backdrop: 'bg-black bg-opacity-40 blur-lg backdrop-opacity-20',
                 }}
@@ -434,28 +497,146 @@ export default function AdminProductsTable({ items }) {
                                 Edytuj produkt
                             </ModalHeader>
                             <ModalBody>
-                                <Input label='Nazwa' placeholder='Nazwa' value={selectedProduct?.name || ''} />
-                                <div className='flex gap-4'>
-                                    <Select className='w-full' label='Typ' selectedKeys={selectedProduct?.type ? [selectedProduct.type] : []}>
-                                        <SelectItem key='wood'>Drewno</SelectItem>
-                                        <SelectItem key='slab'>Płyty</SelectItem>
-                                    </Select>
-                                    <Select className='w-full' label='Seria' selectedKeys={selectedProduct?.series ? [selectedProduct.series] : []}>
-                                        <SelectItem key='spiral'>Spiral</SelectItem>
-                                        <SelectItem key='standard'>Standard</SelectItem>
-                                        <SelectItem key='max'>Max</SelectItem>
-                                    </Select>
+                                <Tabs aria-label='Language Options' selectedKey={activeLanguage} onSelectionChange={setActiveLanguage} className='mb-4'>
+                                    <Tab key='pl' title='Polski' />
+                                    <Tab key='en' title='English' />
+                                    <Tab key='de' title='Deutsch' />
+                                    <Tab key='fr' title='Français' />
+                                    <Tab key='es' title='Español' />
+                                </Tabs>
+
+                                {/* Multilingual fields section */}
+                                <div className='border-1 p-4 rounded-lg mb-4'>
+                                    <h3 className='font-semibold mb-2'>Dane wielojęzyczne ({activeLanguage.toUpperCase()})</h3>
+                                    <Input
+                                        label='Nazwa'
+                                        placeholder='Nazwa produktu'
+                                        value={selectedProduct?.name?.[activeLanguage] || ''}
+                                        onChange={e => handleMultilingualChange('name', e.target.value)}
+                                        className='mb-2'
+                                    />
+                                    <Input
+                                        label='Skrócona nazwa'
+                                        placeholder='np: DPP050-070'
+                                        value={selectedProduct?.short_name?.[activeLanguage] || ''}
+                                        onChange={e => handleMultilingualChange('short_name', e.target.value)}
+                                        className='mb-2'
+                                    />
+                                    <Textarea
+                                        label='Opis'
+                                        placeholder='Opis produktu'
+                                        value={selectedProduct?.description?.[activeLanguage] || ''}
+                                        onChange={e => handleMultilingualChange('description', e.target.value)}
+                                        rows={3}
+                                    />
                                 </div>
-                                <div className='flex gap-4'>
-                                    <Input label='Kod' placeholder='np: 230043' value={selectedProduct?.distance_code || ''} />
-                                    <Input label='Skrócona nazwa' placeholder='np: DPP050-070' value={selectedProduct?.short_name || ''} />
+
+                                {/* Basic product information */}
+                                <div className='border-1 p-4 rounded-lg mb-4'>
+                                    <h3 className='font-semibold mb-2'>Podstawowe informacje</h3>
+                                    <div className='flex gap-4 mb-2'>
+                                        <Input label='ID' placeholder='ID' value={selectedProduct?.id || ''} disabled className='w-1/3' />
+                                        <Select
+                                            className='w-2/3'
+                                            label='Typ'
+                                            selectedKeys={selectedProduct?.type ? [selectedProduct.type] : []}
+                                            onChange={e => handleInputChange('type', e.target.value)}
+                                        >
+                                            <SelectItem key='wood'>Drewno</SelectItem>
+                                            <SelectItem key='slab'>Płyty</SelectItem>
+                                        </Select>
+                                    </div>
+                                    <div className='flex gap-4 mb-2'>
+                                        <Select
+                                            className='w-full'
+                                            label='Seria'
+                                            selectedKeys={selectedProduct?.series ? [selectedProduct.series] : []}
+                                            onChange={e => handleInputChange('series', e.target.value)}
+                                        >
+                                            <SelectItem key='spiral'>Spiral</SelectItem>
+                                            <SelectItem key='standard'>Standard</SelectItem>
+                                            <SelectItem key='max'>Max</SelectItem>
+                                        </Select>
+                                        <Input
+                                            label='Grupa produktów'
+                                            placeholder='np: spiral'
+                                            value={selectedProduct?.product_group || ''}
+                                            onChange={e => handleInputChange('product_group', e.target.value)}
+                                        />
+                                    </div>
+                                    <div className='flex gap-4'>
+                                        <Input
+                                            label='Kod produktu (distance_code)'
+                                            placeholder='np: 10889'
+                                            value={selectedProduct?.distance_code || ''}
+                                            onChange={e => handleInputChange('distance_code', e.target.value)}
+                                        />
+                                        <Input
+                                            label='Kod (code)'
+                                            placeholder='np: 10889'
+                                            value={selectedProduct?.code || ''}
+                                            onChange={e => handleInputChange('code', e.target.value)}
+                                        />
+                                    </div>
                                 </div>
-                                <div className='flex gap-4'>
-                                    <Input label='Wysokość (mm)' placeholder='np: 40' value={selectedProduct?.height_mm || ''} />
-                                    <Input label='Wysokość (inch)' placeholder='wysokośc w calach' value={selectedProduct?.height_inch || ''} />
+
+                                {/* Product specifications */}
+                                <div className='border-1 p-4 rounded-lg mb-4'>
+                                    <h3 className='font-semibold mb-2'>Specyfikacja</h3>
+                                    <div className='flex gap-4 mb-2'>
+                                        <Input
+                                            label='Wysokość (mm)'
+                                            placeholder='np: 40'
+                                            value={selectedProduct?.height_mm || ''}
+                                            onChange={e => handleInputChange('height_mm', e.target.value)}
+                                        />
+                                        <Input
+                                            label='Wysokość (inch)'
+                                            placeholder='wysokośc w calach'
+                                            value={selectedProduct?.height_inch || ''}
+                                            onChange={e => handleInputChange('height_inch', e.target.value)}
+                                        />
+                                    </div>
+                                    <div className='flex gap-4'>
+                                        <Input
+                                            label='Opakowanie (szt)'
+                                            placeholder='np: 70'
+                                            type='number'
+                                            value={selectedProduct?.packaging || ''}
+                                            onChange={e => handleInputChange('packaging', e.target.value)}
+                                        />
+                                        <Input
+                                            label='Europaleta (szt)'
+                                            placeholder='np: 1400'
+                                            type='number'
+                                            value={selectedProduct?.euro_palet || ''}
+                                            onChange={e => handleInputChange('euro_palet', e.target.value)}
+                                        />
+                                    </div>
                                 </div>
-                                <div className='flex gap-4'>
-                                    <Input label='Cena netto (PLN)' placeholder='np: 120.00' value={selectedProduct?.price_net || ''} />
+
+                                {/* Pricing information */}
+                                <div className='border-1 p-4 rounded-lg mb-4'>
+                                    <h3 className='font-semibold mb-2'>Cennik</h3>
+                                    <div className='flex gap-4 mb-2'>
+                                        <Input
+                                            label='Cena netto (PLN)'
+                                            placeholder='np: 120.00'
+                                            type='number'
+                                            step='0.01'
+                                            value={selectedProduct?.price?.PLN || selectedProduct?.price_net || ''}
+                                            onChange={e => handleInputChange('price_net', e.target.value)}
+                                        />
+                                    </div>
+                                    <div className='text-xs text-gray-500 mt-1'>Pozostałe waluty są przeliczane automatycznie</div>
+                                </div>
+
+                                {/* Dates */}
+                                <div className='flex justify-between text-sm text-gray-500'>
+                                    <div>Utworzono: {selectedProduct?.created_at ? new Date(selectedProduct.created_at).toLocaleString() : 'N/A'}</div>
+                                    <div>
+                                        Ostatnia aktualizacja: {selectedProduct?.updated_at ? new Date(selectedProduct.updated_at).toLocaleString() : 'N/A'}
+                                    </div>
                                 </div>
                             </ModalBody>
                             <ModalFooter className='flex flex-col gap-4'>

@@ -1,5 +1,11 @@
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
+/*
+ *
+ * PRODUKTY
+ *
+ */
+
 export async function fetchProducts() {
     const response = await fetch(`${API_BASE_URL}/api/products`)
     if (!response.ok) throw new Error('wystąpił problem z pobraniem produktów')
@@ -17,6 +23,12 @@ export async function updateProduct(id, productData) {
     if (!response.ok) throw new Error('Failed to update product')
     return response.json()
 }
+
+/*
+ *
+ * AKCESORIA
+ *
+ */
 
 export async function fetchAccesories() {
     const response = await fetch(`${API_BASE_URL}/api/accesories`)
