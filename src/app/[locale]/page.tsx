@@ -1,11 +1,12 @@
+// This is a server component (no 'use client' directive)
 import Form from '@/components/form/Form'
 
-// Define the generateStaticParams function to support static export
+// This must be a server component to properly generate static params
 export function generateStaticParams() {
     return ['en', 'fr', 'pl'].map(locale => ({ locale }))
 }
 
-export default function Page() {
+export default function HomePage() {
     return (
         <main className='container min-h-screen'>
             <Form />
