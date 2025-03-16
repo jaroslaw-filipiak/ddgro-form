@@ -1,0 +1,12 @@
+{
+    "Header": {
+        "home": "Home",
+        "about": "About"
+    },
+    "HomePage": {
+        "helloWorld": "Hello World!"
+    },
+    "AboutPage": {
+        "aboutText": "About Us"
+    }
+}

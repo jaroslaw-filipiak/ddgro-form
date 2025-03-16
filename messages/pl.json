@@ -1,0 +1,12 @@
+{
+    "Header": {
+        "home": "Strona główna",
+        "about": "O nas"
+    },
+    "HomePage": {
+        "helloWorld": "Witaj świecie!"
+    },
+    "AboutPage": {
+        "aboutText": "O naszej firmie"
+    }
+}
