@@ -20,7 +20,7 @@ export default function Header() {
     const pathnameWithoutLocale = getPathWithoutLocale()
 
     return (
-        <div className='bg-gray-200 w-screen shadow'>
+        <div className='bg-gray-200 w-screen shadow hidden'>
             <nav className='container flex px-2 py-2 gap-5'>
                 <Link href={`/${locale}`}>{t('home')}</Link>
                 <Link href={`/${locale}/about`}>{t('about')}</Link>

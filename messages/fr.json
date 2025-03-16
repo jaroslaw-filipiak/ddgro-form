@@ -8,5 +8,40 @@
     },
     "AboutPage": {
         "aboutText": "À propos de nous"
+    },
+    "Form": {
+        "title": "Configurateur de terrasse"
+    },
+    "FormNav": {
+        "step1": "Choix du revêtement de terrasse",
+        "step2": "Paramètres de la terrasse",
+        "step3": "Type de support",
+        "step4": "Système",
+        "step5": "Accessoires",
+        "step6": "Configuration supplémentaire",
+        "step7": "Résumé"
+    },
+    "Step1": {
+        "title": "Choix du revêtement de terrasse",
+        "question": "Qu'y aura-t-il sur la terrasse?",
+        "slabs": "Dalles",
+        "slabsAlt": "Image de dalles",
+        "planks": "Planches",
+        "planksAlt": "Image de planches",
+        "nextButton": "Étape suivante",
+        "nextArrow": "Flèche suivante"
+    },
+    "FormAside": {
+        "title": "Recevez un PDF avec une offre personnalisée",
+        "nameLabel": "Nom et prénom",
+        "namePlaceholder": "Nom, prénom",
+        "emailLabel": "Adresse e-mail",
+        "emailPlaceholder": "Entrez l'adresse e-mail",
+        "phoneLabel": "Téléphone",
+        "phonePlaceholder": "Téléphone",
+        "roleLabel": "Je suis",
+        "submitButton": "Envoyer",
+        "sending": "Envoi en cours...",
+        "privacyPolicy": "Nous traiterons vos données personnelles afin de répondre à votre question. L'administrateur de vos données personnelles est \"DECK-DRY\" Sp. z o.o. Vous avez le droit de vous opposer, le droit d'accéder aux données, le droit de demander leur rectification, leur suppression ou la limitation de leur traitement, ainsi que leur transfert. Des informations détaillées peuvent être trouvées dans notre politique de confidentialité."
     }
 }

@@ -8,5 +8,40 @@
     },
     "AboutPage": {
         "aboutText": "O naszej firmie"
+    },
+    "Form": {
+        "title": "Konfigurator tarasu"
+    },
+    "FormNav": {
+        "step1": "Wybór nawierzchni tarasu",
+        "step2": "Parametry tarasu",
+        "step3": "Rodzaj podparcia",
+        "step4": "System",
+        "step5": "Akcesoria",
+        "step6": "Dodatkowa konfiguracja",
+        "step7": "Podsumowanie"
+    },
+    "Step1": {
+        "title": "Wybór nawierzchni tarasu",
+        "question": "Co będzie na tarasie?",
+        "slabs": "Płyty",
+        "slabsAlt": "Zdjęcie płyt",
+        "planks": "Deski",
+        "planksAlt": "Zdjęcie desek",
+        "nextButton": "Następny krok",
+        "nextArrow": "Strzałka do przodu"
+    },
+    "FormAside": {
+        "title": "Odbierz PDF z indywidualną ofertą",
+        "nameLabel": "Imię i nazwisko",
+        "namePlaceholder": "Imię, nazwisko",
+        "emailLabel": "Adres email",
+        "emailPlaceholder": "Wpisz adres email",
+        "phoneLabel": "Telefon",
+        "phonePlaceholder": "Telefon",
+        "roleLabel": "Jestem",
+        "submitButton": "Wyślij",
+        "sending": "Wysyłanie...",
+        "privacyPolicy": "Będziemy przetwarzać Twoje dane osobowe, aby udzielić odpowiedzi na Twoje pytanie. Administratorem Twoich danych osobowych jest \"DECK-DRY\" Sp. z o.o. Przysługuje Ci prawo wniesienia sprzeciwu, prawo dostępu do danych, prawo żądania ich sprostowania, ich usunięcia lub ograniczenia ich przetwarzania, a także ich przenoszenia. Szczegółowe informacje znajdziesz w naszej Polityce Prywatności."
     }
 }

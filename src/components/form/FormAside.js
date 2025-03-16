@@ -1,7 +1,10 @@
+'use client'
+
 // Now we can use the React-Redux hooks to let React components interact with the Redux store. We can read data from the store with useSelector, and dispatch actions using useDispatch
 
 import { useSelector, useDispatch } from 'react-redux'
 import { useState, useEffect } from 'react'
+import { useTranslations } from 'next-intl'
 import { changeEmail, changePhone, changeNameSurname, changeProffesion } from '@/store/slices/formSlice'
 // import { Select, SelectItem, Input, CircularProgress } from '@heroui-org/react'
 import { Select, SelectSection, SelectItem } from '@heroui/select'
@@ -11,6 +14,7 @@ import Image from 'next/image'
 
 export default function FormAside({ setFormAsideVisibility }) {
     const dispatch = useDispatch()
+    const t = useTranslations('FormAside')
     const [response, setResponse] = useState()
     const [value, setValue] = useState(null)
     const [loading, setLoading] = useState(false)
@@ -109,16 +113,6 @@ export default function FormAside({ setFormAsideVisibility }) {
             count_in_each_section_max: state.count_in_each_section_raptor,
             m_raptor: state.M_RAPTOR,
             m_raptor_order: state.M_RAPTOR_ORDER,
-
-            // =============================
-            /*
-             * Trzeba wysłać całą matryce w zależności do wyboru głównego systemu
-             * np: M_STANDARD jako cały obiekt + wyliczone wartości
-             * count_in_each_section + sections
-             * dodatkowe akcesoria = additional_accesories = tablica z ID
-             * accesories = tablica z accesories = idk why i send this
-             */
-            // =============================
         }
 
         try {
@@ -177,23 +171,21 @@ export default function FormAside({ setFormAsideVisibility }) {
                     </button>
                     <div className='flex flex-col lg:flex-row lg:min-h-screen '>
                         <div className='w-full p-10 pt-28 lg:pt-10 flex items-start flex-col justify-center lg:w-7/12 2xl:w-6/12'>
-                            <p className='font-bold text-2xl xl:text-3xl 2xl:text-2xl lg:text-4xl text-white mb-4 2xl:mb-12'>
-                                Odbierz PDF <br className='hidden xl:block' />z indywidualną ofertą
-                            </p>
+                            <p className='font-bold text-2xl xl:text-3xl 2xl:text-2xl lg:text-4xl text-white mb-4 2xl:mb-12'>{t('title')}</p>
 
                             <form action={handleForm}>
                                 <div className='flex items-start gap-3'>
                                     {/* imię nazwisko */}
                                     <div className='flex w-full lg:w-6/12 flex-col'>
                                         <label className='text-lg text-white font-medium mb-2 ' htmlFor='name'>
-                                            Imię i nazwisko
+                                            {t('nameLabel')}
                                         </label>
 
                                         <Input
                                             onChange={e => dispatch(changeNameSurname(e.target.value))}
-                                            className='text-base  text-center font-medium rounded-md w-full'
+                                            className='text-base text-center font-medium rounded-md w-full'
                                             type='text'
-                                            placeholder='Imię, nazwisko'
+                                            placeholder={t('namePlaceholder')}
                                             size='lg'
                                         />
                                     </div>
@@ -201,13 +193,13 @@ export default function FormAside({ setFormAsideVisibility }) {
                                     {/* email */}
                                     <div className='flex w-full lg:w-6/12 flex-col'>
                                         <label className='text-lg text-white font-medium mb-2 ' htmlFor='name'>
-                                            Adres email
+                                            {t('emailLabel')}
                                         </label>
                                         <Input
                                             onChange={e => dispatch(changeEmail(e.target.value))}
-                                            className='text-base  text-center font-medium rounded-md w-full'
+                                            className='text-base text-center font-medium rounded-md w-full'
                                             type='email'
-                                            placeholder='Wpisz adres email'
+                                            placeholder={t('emailPlaceholder')}
                                             size='lg'
                                         />
                                     </div>
@@ -215,14 +207,14 @@ export default function FormAside({ setFormAsideVisibility }) {
                                     {/* telefon */}
                                     <div className='flex w-full lg:w-6/12 flex-col'>
                                         <label className='text-lg text-white font-medium mb-2 ' htmlFor='phone'>
-                                            telefon
+                                            {t('phoneLabel')}
                                         </label>
 
                                         <Input
                                             onChange={e => dispatch(changePhone(e.target.value))}
-                                            className='text-base  text-center font-medium rounded-md w-full'
+                                            className='text-base text-center font-medium rounded-md w-full'
                                             type='text'
-                                            placeholder='telefon'
+                                            placeholder={t('phonePlaceholder')}
                                             size='lg'
                                         />
                                     </div>
@@ -231,22 +223,14 @@ export default function FormAside({ setFormAsideVisibility }) {
                                 {/* select input */}
                                 <div className='flex flex-col mt-3 2xl:mt-6'>
                                     <label className='text-lg text-white font-medium mb-2 ' htmlFor='selectInput'>
-                                        Jestem {value}
+                                        {t('roleLabel')} {value}
                                     </label>
                                     <Select onSelectionChange={handleSelectionChange} label='Wybierz' className='w-full' items={items}>
                                         {item => <SelectItem key={item.value}>{item.label}</SelectItem>}
                                     </Select>
                                 </div>
 
-                                <p className='text-white text-sm mt-6'>
-                                    {`Będziemy przetwarzać Twoje dane osobowe, aby udzielić odpowiedzi na
-            Twoje pytanie. Administratorem Twoich danych osobowych jest
-            "DECK-DRY" Sp. z o.o. Przysługuje Ci prawo wniesienia sprzeciwu,
-            prawo dostępu do danych, prawo żądania ich sprostowania, ich
-            usunięcia lub ograniczenia ich przetwarzania, a także ich
-            przenoszenia. Szczegółowe informacje znajdziesz w naszej Polityce
-            Prywatności.`}
-                                </p>
+                                <p className='text-white text-sm mt-6'>{t('privacyPolicy')}</p>
 
                                 <div className='w-full flex flex-col items-end justify-start mt-6 2xl:mt-20 mb-6 2xl:mb-16 gap-6'>
                                     <button
@@ -255,9 +239,9 @@ export default function FormAside({ setFormAsideVisibility }) {
                                             setFormAsideVisibility(true)
                                             setLoading(true)
                                         }}
-                                        className='xl:min-w-[350px] btn btn--main btn--main__small max-w-[230px]  border-[2px] border-white btn--rounded pl-10 pr-10'
+                                        className='xl:min-w-[350px] btn btn--main btn--main__small max-w-[230px] border-[2px] border-white btn--rounded pl-10 pr-10'
                                     >
-                                        {loading ? 'Wysyłanie...' : 'Wyślij'}
+                                        {loading ? t('sending') : t('submitButton')}
                                         {loading && (
                                             <CircularProgress
                                                 classNames={{
@@ -312,15 +296,6 @@ export default function FormAside({ setFormAsideVisibility }) {
                                     </div>
                                 </div>
                             )}
-                            {/* {response?.message && (
-                <div className='mt-4 text-white bg-main pt-12 pb-12 pl-6 pr-6 w-full rounded-lg flex items-center justify-center gap-3'>
-                  <div>
-                    <p className='text-3xl text-center font-medium'>
-                      {response?.message}
-                    </p>
-                  </div>
-                </div>
-              )} */}
                         </div>
                     </div>
                 </div>
