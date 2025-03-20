@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { useTranslations } from 'next-intl'
 import {
     calculateHowManyTitlesCanFillTheSquare,
     calculateSupportsCount,
@@ -32,6 +33,7 @@ function capitalizeFirstLetter(string) {
 }
 
 export default function Step7({ setFormAsideVisibility }) {
+    const t = useTranslations()
     const initialized = useRef(false)
     const state = useSelector(state => state.form)
     const additional_accessories = useSelector(state => state.form.additional_accessories)
@@ -631,72 +633,76 @@ export default function Step7({ setFormAsideVisibility }) {
                 <div className='step--wrapper step-7 bg-[#f7f5f5]  relative'>
                     {/* label absolute */}
                     <div className='absolue inline-flex left-0 top-0  text-white font-bold text-bas flex-col gap-1 items-start justify-center'>
-                        <p className='bg-main pt-3 pb-3 pl-8 pr-8'>Podsumowanie</p>
+                        <p className='bg-main pt-3 pb-3 pl-8 pr-8'>{t('Step7.title')}</p>
                     </div>
                     {/* content + padding */}
                     <div className='step--inner pt-20 pb-20 lg:pl-10 lg:pr-10 lg:w-10/12 mx-auto'>
                         <div>
-                            <p className='text-2xl font-bold text-black text-opacity-70 pb-9'>Wprowadzone parametry</p>
+                            <p className='text-2xl font-bold text-black text-opacity-70 pb-9'>{t('Step7.parameters')}</p>
                             <ul className='flex flex-wrap items-center justify-start gap-6'>
                                 {state?.type && (
                                     <li className='flex items-center justify-start gap-2'>
-                                        <p className=' text-lg text-black text-opacity-50 font-normal'>Rodzaj nawierzchni:</p>
-                                        <p className='text-lg text-black text-opacity-70 font-bold'>{state.type === 'wood' ? 'Deski' : 'Płyty'}</p>
+                                        <p className=' text-lg text-black text-opacity-50 font-normal'>{t('Step7.surfaceType')}</p>
+                                        <p className='text-lg text-black text-opacity-70 font-bold'>
+                                            {state.type === 'wood' ? t('Step7.planks') : t('Step7.slabs')}
+                                        </p>
                                     </li>
                                 )}
 
                                 {state?.main_system && (
                                     <li className='flex items-center justify-start gap-2'>
-                                        <p className=' text-lg text-black text-opacity-50 font-normal'>Wybrany główny system:</p>
+                                        <p className=' text-lg text-black text-opacity-50 font-normal'>{t('Step7.mainSystem')}</p>
                                         <p className='text-lg text-black text-opacity-70 font-bold'>{capitalizeFirstLetter(state?.main_system)}</p>
                                     </li>
                                 )}
 
                                 {state?.total_area && (
                                     <li className='flex items-center justify-start gap-2'>
-                                        <p className=' text-lg text-black text-opacity-50 font-normal'>Łączna powierzchnia:</p>
+                                        <p className=' text-lg text-black text-opacity-50 font-normal'>{t('Step7.totalArea')}</p>
                                         <p className='text-lg text-black text-opacity-70 font-bold'>{state?.total_area} m2</p>
                                     </li>
                                 )}
 
                                 {state.count && (
                                     <li className='flex items-center justify-start gap-2'>
-                                        <p className=' text-lg text-black text-opacity-50 font-normal'>Ilość tarasów:</p>
+                                        <p className=' text-lg text-black text-opacity-50 font-normal'>{t('Step7.terraceCount')}</p>
                                         <p className='text-lg text-black text-opacity-70 font-bold'>{state?.count}</p>
                                     </li>
                                 )}
 
                                 {state?.lowest && (
                                     <li className='flex items-center justify-start gap-2'>
-                                        <p className=' text-lg text-black text-opacity-50 font-normal'>Najniższy punkt wysokości tarasu:</p>
+                                        <p className=' text-lg text-black text-opacity-50 font-normal'>{t('Step7.lowestPoint')}</p>
                                         <p className='text-lg text-black text-opacity-70 font-bold'>{state?.lowest} mm</p>
                                     </li>
                                 )}
 
                                 {state?.highest && (
                                     <li className='flex items-center justify-start gap-2'>
-                                        <p className=' text-lg text-black text-opacity-50 font-normal'>Najwyższy punkt wysokości tarasu:</p>
+                                        <p className=' text-lg text-black text-opacity-50 font-normal'>{t('Step7.highestPoint')}</p>
                                         <p className='text-lg text-black text-opacity-70 font-bold'>{state?.highest} mm</p>
                                     </li>
                                 )}
 
                                 {state?.additional_accessories && (
                                     <li className='flex items-center justify-start gap-2'>
-                                        <p className=' text-lg text-black text-opacity-50 font-normal'>Czy wybrano dodatkowe akcesoria:</p>
-                                        <p className='text-lg text-black text-opacity-70 font-bold'>{state?.additional_accessories ? 'Tak' : 'Nie'}</p>
+                                        <p className=' text-lg text-black text-opacity-50 font-normal'>{t('Step7.additionalAccessories')}</p>
+                                        <p className='text-lg text-black text-opacity-70 font-bold'>
+                                            {state?.additional_accessories ? t('Step7.yes') : t('Step7.no')}
+                                        </p>
                                     </li>
                                 )}
                             </ul>
                         </div>
 
                         <div className='summary mt-20 pb-9'>
-                            <p className='text-2xl font-bold text-black text-opacity-70 '>Wynik:</p>
+                            <p className='text-2xl font-bold text-black text-opacity-70 '>{t('Step7.result')}</p>
 
                             <div className='square--wrapper'></div>
 
                             <ul>
                                 <li className='flex items-center justify-between border-b border-black border-opacity-50 p-6'>
-                                    <p className='text-xl text-black text-opacity-50 font-normal'>Wsporników:</p>
+                                    <p className='text-xl text-black text-opacity-50 font-normal'>{t('Step7.supports')}</p>
                                     <div className='flex items-center'>
                                         <p className='text-black text-opacity-50 text-base pl-4'>{state?.supports_count ? state?.supports_count : '-'}</p>
                                     </div>
@@ -707,7 +713,9 @@ export default function Step7({ setFormAsideVisibility }) {
                                         state.type === 'wood' ? 'hidden' : ''
                                     }`}
                                 >
-                                    <p className={`text-xl text-black text-opacity-50 font-normal ${state.type === 'wood' ? 'hidden' : ''}`}>Liczba płyt:</p>
+                                    <p className={`text-xl text-black text-opacity-50 font-normal ${state.type === 'wood' ? 'hidden' : ''}`}>
+                                        {t('Step7.slabCount')}
+                                    </p>
                                     <div className={`flex items-center ${state.type === 'wood' ? 'hidden' : ''}`}>
                                         <p className='text-black text-opacity-50 text-base pl-4'>{state?.slabs_count ? state?.slabs_count : '-'}</p>
                                     </div>
@@ -717,7 +725,7 @@ export default function Step7({ setFormAsideVisibility }) {
 
                         {/* Dodatkowe akcesoria */}
                         <div className='summary pb-9'>
-                            <p className='text-2xl font-bold text-black text-opacity-70'>Wybrane akcesoria:</p>
+                            <p className='text-2xl font-bold text-black text-opacity-70'>{t('Step7.selectedAccessories')}</p>
 
                             <div className='square--wrapper'></div>
 
@@ -742,8 +750,8 @@ export default function Step7({ setFormAsideVisibility }) {
                                 }}
                                 className='btn btn--main btn--rounded'
                             >
-                                Odbierz PDF
-                                <Image width={42} height={42} className='ml-5' src='/assets/arrow-next.svg' alt='arrow next' />
+                                {t('Step7.receivePDF')}
+                                <Image width={42} height={42} className='ml-5' src='/assets/arrow-next.svg' alt={t('Step1.nextArrow')} />
                             </button>
                         </div>
                     </div>

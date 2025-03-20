@@ -31,6 +31,102 @@
         "nextButton": "Next step",
         "nextArrow": "Next arrow"
     },
+    "Step2": {
+        "dimensionsInfo": "Enter dimensions in millimeters (1cm = 10 millimeters)",
+        "totalArea": "Total area (m²)",
+        "totalAreaPlaceholder": "number of m²",
+        "terraceCount": "Number of terraces/balconies (pcs.)",
+        "terraceCountPlaceholder": "pcs.",
+        "gapBetweenSlabs": "Gap between slabs (mm.)",
+        "gapBetweenSlabsPlaceholder": "mm",
+        "lowestSupport": "Lowest support (mm.)",
+        "lowestSupportPlaceholder": "min. 10mm",
+        "highestSupport": "Highest support (mm.)",
+        "highestSupportPlaceholder": "max. 950mm",
+        "distanceBetweenJoists": "Distance between joists (mm.)",
+        "distanceBetweenJoistsPlaceholder": "mm",
+        "distanceBetweenSupports": "Distance between supports under the joist (mm.)",
+        "distanceBetweenSupportsPlaceholder": "mm",
+        "slabWidth": "Slab width (mm.)",
+        "slabWidthPlaceholder": "mm",
+        "slabLength": "Slab length (mm.)",
+        "slabLengthPlaceholder": "mm",
+        "errorLowestGreater": "Value for: \"Lowest support (mm.)\" cannot be greater than value for: \"Highest support (mm.)\"",
+        "errorLowestLess": "Value for: \"Lowest support (mm.)\" cannot be less than 10mm",
+        "errorHighestLess": "Value for: \"Highest support (mm.)\" cannot be less than value for: \"Lowest support (mm.)\"",
+        "errorHighestGreater": "Value for: \"Highest support (mm.)\" cannot be greater than 950mm",
+        "backToStep1": "Back to step 1"
+    },
+    "Step3": {
+        "title": "Support Type",
+        "type1": "Type 1",
+        "type2": "Type 2",
+        "type3": "Type 3",
+        "type4": "Type 4"
+    },
+    "Step4": {
+        "title": "System",
+        "warning": "Warning - select the main support system to be used. If the height ranges will exceed the ranges of a given type, the program will select the missing heights from another type.",
+        "seriesSpiral": "Spiral Series",
+        "seriesStandard": "Standard Series",
+        "seriesMax": "Max Series",
+        "seriesRaptor": "Raptor Series",
+        "selectSurfaceFirst": "Select the type of terrace surface (point 1), without this data we will not be able to display the support system"
+    },
+    "Step5": {
+        "title": "Additional accessories for supports",
+        "selectSurfaceFirst": "Select the type of terrace surface (point 1), without this data we will not be able to display the list of accessories",
+        "loading": "Loading data...",
+        "selectedSystem": "Select additional accessories, selected system:",
+        "backToStep1": "Back to step 1",
+        "modal": {
+            "title": "Next step",
+            "description": "In the next step, you have the option to manually add products from the entire ddgro range. This is an additional step that allows you to add additional products to the order. If you don't want to add additional products, click the \"Go to summary\" button in the bottom right corner.",
+            "addProducts": "Yes, I want to add additional products manually",
+            "goToSummary": "No, I'm going to the summary"
+        }
+    },
+    "Step6": {
+        "title": "Add additional product quantities manually",
+        "warning": "Note: additional step allowing manual addition of products, can be skipped without selecting any option",
+        "skipInfo": "If you don't want to add products manually",
+        "browseAssortment": "Browse the entire DDGRO assortment",
+        "search": "Search by name...",
+        "series": "Series",
+        "table": {
+            "id": "ID",
+            "name": "Name",
+            "shortName": "Short name",
+            "series": "Series",
+            "actions": "Actions"
+        },
+        "pagination": {
+            "selected": "of selected",
+            "previous": "Previous",
+            "next": "Next"
+        },
+        "noProducts": "No products found"
+    },
+    "Step7": {
+        "title": "Summary",
+        "parameters": "Parameters entered",
+        "surfaceType": "Surface type:",
+        "slabs": "Slabs",
+        "planks": "Planks",
+        "mainSystem": "Selected main system:",
+        "totalArea": "Total area:",
+        "terraceCount": "Number of terraces:",
+        "lowestPoint": "Lowest point of terrace height:",
+        "highestPoint": "Highest point of terrace height:",
+        "additionalAccessories": "Additional accessories selected:",
+        "yes": "Yes",
+        "no": "No",
+        "result": "Result:",
+        "supports": "Supports:",
+        "slabCount": "Number of slabs:",
+        "selectedAccessories": "Selected accessories:",
+        "receivePDF": "Get PDF"
+    },
     "FormAside": {
         "title": "Get PDF with individual offer",
         "nameLabel": "Name and surname",

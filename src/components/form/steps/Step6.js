@@ -1,19 +1,5 @@
-import { React, useState, useMemo, useCallback, useEffect, use } from 'react'
-// import {
-//     Table,
-//     TableHeader,
-//     TableColumn,
-//     TableBody,
-//     TableRow,
-//     TableCell,
-//     Input,
-//     Button,
-//     DropdownTrigger,
-//     Dropdown,
-//     DropdownMenu,
-//     DropdownItem,
-//     Pagination,
-// } from '@heroui-org/react'
+import { React, useState, useMemo, useCallback, useEffect } from 'react'
+import { useTranslations } from 'next-intl'
 
 import { Input } from '@heroui/input'
 import { Table, TableHeader, TableBody, TableColumn, TableRow, TableCell } from '@heroui/table'
@@ -33,15 +19,20 @@ function capitalizeFirstLetter(string) {
 }
 
 export default function Step6({ activeStep, setActiveStep }) {
+    const t = useTranslations()
     const dispatch = useDispatch()
     const products = useSelector(state => state.form.products)
 
+    // Instead of using router, just default to a language
+    // You can also get this from Redux state or a context if already available
+    const currentLocale = 'pl' // Default to Polish
+
     const columns = [
-        { name: 'id', uid: 'id', sortable: true },
-        { name: 'Nazwa', uid: 'name', sortable: true },
-        { name: 'Nazwa skrócona', uid: 'short_name', sortable: true },
-        { name: 'Seria', uid: 'series', sortable: true },
-        { name: 'Akcje', uid: 'actions', sortable: false },
+        { name: t('Step6.table.id'), uid: 'id', sortable: true },
+        { name: t('Step6.table.name'), uid: 'name', sortable: true },
+        { name: t('Step6.table.shortName'), uid: 'short_name', sortable: true },
+        { name: t('Step6.table.series'), uid: 'series', sortable: true },
+        { name: t('Step6.table.actions'), uid: 'actions', sortable: false },
     ]
 
     const statusOptions = [
@@ -68,24 +59,42 @@ export default function Step6({ activeStep, setActiveStep }) {
 
     const hasSearchFilter = Boolean(filterValue)
 
+    // Helper function to get localized value
+    const getLocalizedValue = useCallback(
+        field => {
+            if (typeof field === 'object' && field !== null && !Array.isArray(field)) {
+                // Try current locale, then fallback to Polish, then any value
+                return field[currentLocale] || field.pl || Object.values(field)[0] || ''
+            }
+            return field
+        },
+        [currentLocale],
+    )
+
     const headerColumns = useMemo(() => {
         if (visibleColumns === 'all') return columns
 
         return columns.filter(column => Array.from(visibleColumns).includes(column.uid))
-    }, [visibleColumns])
+    }, [visibleColumns, columns])
 
     const filteredItems = useMemo(() => {
+        if (!products || !Array.isArray(products)) return []
+
         let filteredproducts = [...products]
 
         if (hasSearchFilter) {
-            filteredproducts = filteredproducts.filter(product => product.name.toLowerCase().includes(filterValue.toLowerCase()))
+            filteredproducts = filteredproducts.filter(product => {
+                const productName = getLocalizedValue(product.name)
+                return productName.toLowerCase().includes(filterValue.toLowerCase())
+            })
         }
+
         if (statusFilter !== 'all' && Array.from(statusFilter).length !== statusOptions.length) {
             filteredproducts = filteredproducts.filter(product => Array.from(statusFilter).includes(product.series))
         }
 
         return filteredproducts
-    }, [products, filterValue, statusFilter])
+    }, [products, filterValue, statusFilter, hasSearchFilter, getLocalizedValue, statusOptions.length])
 
     const pages = Math.ceil(filteredItems.length / rowsPerPage)
 
@@ -97,43 +106,68 @@ export default function Step6({ activeStep, setActiveStep }) {
     }, [page, filteredItems, rowsPerPage])
 
     const sortedItems = useMemo(() => {
+        if (!items.length) return []
+
         return [...items].sort((a, b) => {
-            const first = a[sortDescriptor.column]
-            const second = b[sortDescriptor.column]
+            const columnKey = sortDescriptor.column
+
+            // Handle special cases for localized fields
+            if (columnKey === 'name' || columnKey === 'short_name') {
+                const aValue = getLocalizedValue(a[columnKey]).toLowerCase()
+                const bValue = getLocalizedValue(b[columnKey]).toLowerCase()
+
+                const cmp = aValue < bValue ? -1 : aValue > bValue ? 1 : 0
+                return sortDescriptor.direction === 'descending' ? -cmp : cmp
+            }
+
+            // Default sorting for other columns
+            const first = a[columnKey]
+            const second = b[columnKey]
             const cmp = first < second ? -1 : first > second ? 1 : 0
 
             return sortDescriptor.direction === 'descending' ? -cmp : cmp
         })
-    }, [sortDescriptor, items])
+    }, [sortDescriptor, items, getLocalizedValue])
 
-    const renderCell = useCallback((product, columnKey) => {
-        const cellValue = product[columnKey]
+    const renderCell = useCallback(
+        (product, columnKey) => {
+            if (!product) return null
 
-        switch (columnKey) {
-            case 'id':
-                return <div>{product.id}</div>
-            case 'name':
-                return (
-                    <div>
-                        {product.name}
-                        <strong> ({product.short_name})</strong>
-                    </div>
-                )
-            case 'series':
-                let words = product.series.split('-')
-                let capitalizedWords = words.map(word => capitalizeFirstLetter(word))
-                let finalString = capitalizedWords.join(' ')
-                return <div>{finalString}</div>
-            case 'actions':
-                return (
-                    <div className='relative flex justify-end items-center gap-2'>
-                        <ItemCounter key={product.id} item={product} />
-                    </div>
-                )
-            default:
-                return cellValue
-        }
-    }, [])
+            const cellValue = product[columnKey]
+
+            switch (columnKey) {
+                case 'id':
+                    return <div>{product.id}</div>
+                case 'name':
+                    const productName = getLocalizedValue(product.name)
+                    const shortName = getLocalizedValue(product.short_name)
+
+                    return (
+                        <div>
+                            {productName}
+                            <strong> ({shortName})</strong>
+                        </div>
+                    )
+                case 'short_name':
+                    return <div>{getLocalizedValue(product.short_name)}</div>
+                case 'series':
+                    if (!product.series) return null
+                    let words = product.series.split('-')
+                    let capitalizedWords = words.map(word => capitalizeFirstLetter(word))
+                    let finalString = capitalizedWords.join(' ')
+                    return <div>{finalString}</div>
+                case 'actions':
+                    return (
+                        <div className='relative flex justify-end items-center gap-2'>
+                            <ItemCounter key={product.id} item={product} />
+                        </div>
+                    )
+                default:
+                    return getLocalizedValue(cellValue)
+            }
+        },
+        [getLocalizedValue],
+    )
 
     const onNextPage = useCallback(() => {
         if (page < pages) {
@@ -173,7 +207,7 @@ export default function Step6({ activeStep, setActiveStep }) {
                     <Input
                         isClearable
                         className='w-full sm:max-w-[44%]'
-                        placeholder='Szukaj po nazwie...'
+                        placeholder={t('Step6.search')}
                         startContent={<SearchIcon />}
                         value={filterValue}
                         onClear={() => onClear()}
@@ -183,7 +217,7 @@ export default function Step6({ activeStep, setActiveStep }) {
                         <Dropdown>
                             <DropdownTrigger className='hidden sm:flex'>
                                 <Button endContent={<ChevronDownIcon className='text-small' />} variant='flat'>
-                                    Seria
+                                    {t('Step6.series')}
                                 </Button>
                             </DropdownTrigger>
                             <DropdownMenu
@@ -205,35 +239,35 @@ export default function Step6({ activeStep, setActiveStep }) {
                 </div>
             </div>
         )
-    }, [filterValue, statusFilter, visibleColumns, onRowsPerPageChange, products.length, onSearchChange, hasSearchFilter])
+    }, [filterValue, statusFilter, onRowsPerPageChange, onSearchChange, onClear, t, statusOptions])
 
     const bottomContent = useMemo(() => {
         return (
             <div className='py-2 px-2 flex justify-between items-center'>
                 <span className='w-[30%] text-small text-default-400'>
-                    {selectedKeys === 'all' ? 'All items selected' : `${selectedKeys.size} of ${filteredItems.length} selected`}
+                    {selectedKeys === 'all' ? 'All items selected' : `${selectedKeys.size} ${t('Step6.pagination.selected')} ${filteredItems.length}`}
                 </span>
                 <Pagination isCompact showControls showShadow color='primary' page={page} total={pages} onChange={setPage} />
                 <div className='hidden sm:flex w-[30%] justify-end gap-2'>
                     <Button isDisabled={pages === 1} size='sm' variant='flat' onPress={onPreviousPage}>
-                        Wstecz
+                        {t('Step6.pagination.previous')}
                     </Button>
                     <Button isDisabled={pages === 1} size='sm' variant='flat' onPress={onNextPage}>
-                        Dalej
+                        {t('Step6.pagination.next')}
                     </Button>
                 </div>
             </div>
         )
-    }, [selectedKeys, items.length, page, pages, hasSearchFilter])
+    }, [selectedKeys, filteredItems.length, page, pages, onPreviousPage, onNextPage, t])
 
     return (
         <>
             <section>
-                <div className='step--wrapper step-6 bg-[#f7f5f5]  relative'>
+                <div className='step--wrapper step-6 bg-[#f7f5f5] relative'>
                     {/* label absolute */}
-                    <div className='absolute left-0 top-0  text-white font-bold text-base flex flex-col gap-1 items-start justify-center'>
-                        <div className='bg-main pt-3 pb-3 pl-8 pr-8'>Dodaj ręcznie dodatkowe ilości produktów</div>
-                        <div className=' bg-red-500 pt-3 pb-3 pl-8 pr-8 flex items-center gap-3 w-full'>
+                    <div className='absolute left-0 top-0 text-white font-bold text-base flex flex-col gap-1 items-start justify-center'>
+                        <div className='bg-main pt-3 pb-3 pl-8 pr-8'>{t('Step6.title')}</div>
+                        <div className='bg-red-500 pt-3 pb-3 pl-8 pr-8 flex items-center gap-3 w-full'>
                             <div>
                                 <svg
                                     className='icon icon-tabler icon-tabler-alert-circle-filled'
@@ -254,7 +288,7 @@ export default function Step6({ activeStep, setActiveStep }) {
                                     />
                                 </svg>
                             </div>
-                            <span>Uwaga: krok dodatkowy umożliwiający ręczne dodanie produktów, można pominąć bez zaznaczania jakiejkolwiek opcji</span>
+                            <span>{t('Step6.warning')}</span>
                         </div>
                     </div>
                     {/* content + padding */}
@@ -263,14 +297,14 @@ export default function Step6({ activeStep, setActiveStep }) {
                         <div className='series--info'>
                             <header className='flex items-center justify-start gap-10'>
                                 <div>
-                                    <div className='text-2xl lg:text-2xl font-bold text-black text-opacity-70 mb-10 flex flex-col lg:flex-row gap-10  items-center justify-center'>
-                                        Jeśli nie chcesz dodawać ręcznie produktów
-                                        <button onClick={() => setActiveStep(activeStep + 1)} className='btn btn--main btn--rounded '>
-                                            Następny krok
-                                            <Image width={42} height={42} className='ml-5' src='/assets/arrow-next.svg' alt='' />
+                                    <div className='text-2xl lg:text-2xl font-bold text-black text-opacity-70 mb-10 flex flex-col lg:flex-row gap-10 items-center justify-center'>
+                                        {t('Step6.skipInfo')}
+                                        <button onClick={() => setActiveStep(activeStep + 1)} className='btn btn--main btn--rounded'>
+                                            {t('Step1.nextButton')}
+                                            <Image width={42} height={42} className='ml-5' src='/assets/arrow-next.svg' alt={t('Step1.nextArrow')} />
                                         </button>
                                     </div>
-                                    <p className='text-2xl lg:text-4xl font-bold text-black text-opacity-70'>Przeglądaj cały asortyment DDGRO</p>
+                                    <p className='text-2xl lg:text-4xl font-bold text-black text-opacity-70'>{t('Step6.browseAssortment')}</p>
                                 </div>
                             </header>
 
@@ -281,11 +315,6 @@ export default function Step6({ activeStep, setActiveStep }) {
                                     aria-label='products--ddgro-table'
                                     bottomContent={bottomContent}
                                     bottomContentPlacement='outside'
-                                    // classNames={{
-                                    //   wrapper: 'max-h-[382px]',
-                                    // }}
-                                    // selectedKeys={selectedKeys}
-                                    // selectionMode='multiple'
                                     sortDescriptor={sortDescriptor}
                                     topContent={topContent}
                                     topContentPlacement='outside'
@@ -299,7 +328,7 @@ export default function Step6({ activeStep, setActiveStep }) {
                                             </TableColumn>
                                         )}
                                     </TableHeader>
-                                    <TableBody emptyContent={'No products found'} items={sortedItems}>
+                                    <TableBody emptyContent={t('Step6.noProducts')} items={sortedItems}>
                                         {item => <TableRow key={item.id}>{columnKey => <TableCell>{renderCell(item, columnKey)}</TableCell>}</TableRow>}
                                     </TableBody>
                                 </Table>
@@ -308,14 +337,14 @@ export default function Step6({ activeStep, setActiveStep }) {
                         {/* mobile btn */}
                         <div className='w-full flex items-center justify-center mt-20 mb-16'>
                             <button onClick={() => setActiveStep(activeStep + 1)} className='btn btn--main btn--rounded'>
-                                Następny krok
-                                <Image width={42} height={42} className='ml-5' src='/assets/arrow-next.svg' alt='' />
+                                {t('Step1.nextButton')}
+                                <Image width={42} height={42} className='ml-5' src='/assets/arrow-next.svg' alt={t('Step1.nextArrow')} />
                             </button>
                             <button
                                 onClick={() => setActiveStep(activeStep + 1)}
                                 className='btn btn--circle pointer-none disabled:opacity-50 disabled:cursor-not-allowed fixed hidden right-10 xl:flex items-center justify-center top-[50%] translate-y-[-50%]'
                             >
-                                <Image className='min-w-[42px]' src='/assets/arrow-next.svg' alt='' width={42} height={42} />
+                                <Image className='min-w-[42px]' src='/assets/arrow-next.svg' alt={t('Step1.nextArrow')} width={42} height={42} />
                             </button>
                         </div>
                     </div>
