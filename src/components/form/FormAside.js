@@ -23,11 +23,11 @@ export default function FormAside({ setFormAsideVisibility }) {
     const NODE_ENV = process.env.NODE_ENV
 
     const items = [
-        { value: 'klient-indywidualny', label: 'Klientem indywidualnym' },
-        { value: 'Wykowawca', label: 'Wykonawcą' },
-        { value: 'Dystrybutor', label: 'Dystrybutorem' },
-        { value: 'Architekt', label: 'Architektem' },
-        { value: 'GW/Deweloper', label: 'GW/Deweloper' },
+        { value: 'klient-indywidualny', label: t('roles.klient-indywidualny') },
+        { value: 'Wykowawca', label: t('roles.Wykowawca') },
+        { value: 'Dystrybutor', label: t('roles.Dystrybutor') },
+        { value: 'Architekt', label: t('roles.Architekt') },
+        { value: 'GW/Deweloper', label: t('roles.GW/Deweloper') },
     ]
 
     const handleSelectionChange = item => {
@@ -73,6 +73,7 @@ export default function FormAside({ setFormAsideVisibility }) {
             proffesion: state.proffesion,
             terms_accepted: 1,
             slabs_count: state.slabs_count,
+            // products === additional_products / wybrane przez usera dodatkowe
             products: additional_products,
             // accesories: state.accesories,
             additional_accessories: additional_accesories_with_count,
@@ -225,7 +226,7 @@ export default function FormAside({ setFormAsideVisibility }) {
                                     <label className='text-lg text-white font-medium mb-2 ' htmlFor='selectInput'>
                                         {t('roleLabel')} {value}
                                     </label>
-                                    <Select onSelectionChange={handleSelectionChange} label='Wybierz' className='w-full' items={items}>
+                                    <Select onSelectionChange={handleSelectionChange} label={t('rolesLabel')} className='w-full' items={items}>
                                         {item => <SelectItem key={item.value}>{item.label}</SelectItem>}
                                     </Select>
                                 </div>

@@ -138,6 +138,14 @@
         "roleLabel": "Jestem",
         "submitButton": "Wyślij",
         "sending": "Wysyłanie...",
-        "privacyPolicy": "Będziemy przetwarzać Twoje dane osobowe, aby udzielić odpowiedzi na Twoje pytanie. Administratorem Twoich danych osobowych jest \"DECK-DRY\" Sp. z o.o. Przysługuje Ci prawo wniesienia sprzeciwu, prawo dostępu do danych, prawo żądania ich sprostowania, ich usunięcia lub ograniczenia ich przetwarzania, a także ich przenoszenia. Szczegółowe informacje znajdziesz w naszej Polityce Prywatności."
+        "privacyPolicy": "Będziemy przetwarzać Twoje dane osobowe, aby udzielić odpowiedzi na Twoje pytanie. Administratorem Twoich danych osobowych jest \"DECK-DRY\" Sp. z o.o. Przysługuje Ci prawo wniesienia sprzeciwu, prawo dostępu do danych, prawo żądania ich sprostowania, ich usunięcia lub ograniczenia ich przetwarzania, a także ich przenoszenia. Szczegółowe informacje znajdziesz w naszej Polityce Prywatności.",
+        "rolesLabel": "Wybierz",
+        "roles": {
+            "klient-indywidualny": "Klientem indywidualnym",
+            "Wykowawca": "Wykonawcą",
+            "Dystrybutor": "Dystrybutorem",
+            "Architekt": "Architektem",
+            "GW/Deweloper": "GW/Deweloper"
+        }
     }
 }
