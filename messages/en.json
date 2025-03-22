@@ -138,8 +138,12 @@
         "roleLabel": "I am",
         "submitButton": "Send",
         "sending": "Sending...",
+        "preparing": "Preparing Form to send",
         "privacyPolicy": "We will process your personal data to answer your question. The administrator of your personal data is \"DECK-DRY\" Sp. z o.o. You have the right to object, right of access to data, right to request rectification, deletion or limitation of their processing, as well as their transfer. Detailed information can be found in our Privacy Policy.",
         "rolesLabel": "Select",
+        "applicationCreatedMessage": "Application created successfully!",
+        "successMessage": "Form submitted successfully!",
+        "genericErrorMessage": "An error occurred while sending the form. Please try again later.",
         "roles": {
             "klient-indywidualny": "As an Individual Client",
             "Wykowawca": "As a Contractor",

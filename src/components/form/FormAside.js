@@ -4,7 +4,7 @@
 
 import { useSelector, useDispatch } from 'react-redux'
 import { useState, useEffect } from 'react'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 import { changeEmail, changePhone, changeNameSurname, changeProffesion } from '@/store/slices/formSlice'
 // import { Select, SelectItem, Input, CircularProgress } from '@heroui-org/react'
 import { Select, SelectSection, SelectItem } from '@heroui/select'
@@ -15,6 +15,7 @@ import Image from 'next/image'
 export default function FormAside({ setFormAsideVisibility }) {
     const dispatch = useDispatch()
     const t = useTranslations('FormAside')
+    const locale = useLocale()
     const [response, setResponse] = useState()
     const [value, setValue] = useState(null)
     const [loading, setLoading] = useState(false)
@@ -38,7 +39,7 @@ export default function FormAside({ setFormAsideVisibility }) {
     const additional_products = state.products.filter(product => product.count > 0)
 
     const handleForm = async e => {
-        setResponse(null)
+        setResponse({ message: t('sending') })
         setLoading(true)
 
         const additional_accesories_with_count = state.additional_accessories.map(item => {
@@ -47,6 +48,8 @@ export default function FormAside({ setFormAsideVisibility }) {
                 count: state.supports_count,
             }
         })
+
+        setResponse({ message: t('preparing') })
 
         const form = {
             type: state.type,
@@ -73,7 +76,6 @@ export default function FormAside({ setFormAsideVisibility }) {
             proffesion: state.proffesion,
             terms_accepted: 1,
             slabs_count: state.slabs_count,
-            // products === additional_products / wybrane przez usera dodatkowe
             products: additional_products,
             // accesories: state.accesories,
             additional_accessories: additional_accesories_with_count,
@@ -114,6 +116,11 @@ export default function FormAside({ setFormAsideVisibility }) {
             count_in_each_section_max: state.count_in_each_section_raptor,
             m_raptor: state.M_RAPTOR,
             m_raptor_order: state.M_RAPTOR_ORDER,
+
+            // =============================
+            // USER LANGUAGE
+            // =============================
+            lang: locale,
         }
 
         try {
@@ -127,39 +134,37 @@ export default function FormAside({ setFormAsideVisibility }) {
             })
 
             const data = await response.json()
+
+            console.log(form)
             console.log(data)
+            response.ok ? setResponse({ message: t('applicationCreatedMessage') }) : setResponse({ message: t('genericErrorMessage') })
+
+            // TODO: test scenario with fails / error in first request
 
             const sendOrderData = {
                 to: form.email,
             }
 
-            window.setTimeout(async () => {
-                const sendOrder = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/application/send-order-summary/${data.id}`, {
-                    method: 'POST',
-                    headers: {
-                        Accept: 'application/json',
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(sendOrderData),
-                })
+            const sendOrder = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/application/send-order-summary/${data.id}`, {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(sendOrderData),
+            })
 
-                const resFromSendOrder = await sendOrder.json()
-
-                setResponse(resFromSendOrder)
-                setLoading(false)
-            }, 4000)
-
-            setResponse(data)
+            sendOrder.ok ? setResponse({ message: t('successMessage') }) : setResponse({ message: t('genericErrorMessage') })
+            console.log(sendOrder)
         } catch (e) {
-            console.log('error===========')
-            console.log(e)
-            console.log('error===========')
-
-            setResponse(e)
-            console.log('form===========')
-            console.log(JSON.stringify(form))
-            console.log('form===========')
+            setResponse({ message: t('genericErrorMessage') })
             setLoading(false)
+            console.log(e)
+        } finally {
+            setLoading(false)
+            setTimeout(() => {
+                setResponse(null)
+            }, 25000)
         }
     }
 

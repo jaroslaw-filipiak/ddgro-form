@@ -138,8 +138,12 @@
         "roleLabel": "Je suis",
         "submitButton": "Envoyer",
         "sending": "Envoi en cours...",
+        "preparing": "Préparation du formulaire pour l'envoi",
         "privacyPolicy": "Nous traiterons vos données personnelles afin de répondre à votre question. L'administrateur de vos données personnelles est \"DECK-DRY\" Sp. z o.o. Vous avez le droit de vous opposer, le droit d'accéder aux données, le droit de demander leur rectification, leur suppression ou la limitation de leur traitement, ainsi que leur transfert. Des informations détaillées peuvent être trouvées dans notre politique de confidentialité.",
         "rolesLabel": "choisir",
+        "applicationCreatedMessage": "Nous avons reçu le formulaire... nous préparons à envoyer le PDF",
+        "successMessage": "Formulaire envoyé avec succès!",
+        "genericErrorMessage": "Une erreur s'est produite lors de l'envoi du formulaire. Veuillez réessayer plus tard.",
         "roles": {
             "klient-indywidualny": "En tant que client individuel",
             "Wykowawca": "En tant qu'entrepreneur",
