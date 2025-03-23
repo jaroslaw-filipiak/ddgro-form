@@ -9,6 +9,7 @@ module.exports = {
         './src/app/**/*.{js,ts,jsx,tsx,mdx}',
         './node_modules/@heroui-org/theme/dist/**/*.{js,ts,jsx,tsx}',
         './node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}',
+        './node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}',
     ],
     theme: {
         container: {
@@ -30,40 +31,39 @@ module.exports = {
     darkMode: 'class',
 
     plugins: [
-        heroui(),
-        // nextui({
-        //     themes: {
-        //         dark: {
-        //             colors: {
-        //                 primary: {
-        //                     DEFAULT: '#F39325',
-        //                     foreground: '#fff',
-        //                 },
-        //                 focus: '#F39325',
-        //             },
-        //         },
-        //         light: {
-        //             colors: {
-        //                 primary: {
-        //                     DEFAULT: '#F39325',
-        //                     foreground: '#fff',
-        //                 },
-        //                 focus: '#F39325',
-        //             },
-        //         },
-        //     },
-        //     layout: {
-        //         radius: {
-        //             small: '2px', // rounded-small
-        //             medium: '4px', // rounded-medium
-        //             large: '6px', // rounded-large
-        //         },
-        //         borderWidth: {
-        //             small: '1px', // border-small
-        //             medium: '1px', // border-medium
-        //             large: '2px', // border-large
-        //         },
-        //     },
-        // }),
+        heroui({
+            themes: {
+                dark: {
+                    colors: {
+                        primary: {
+                            DEFAULT: '#F39325',
+                            foreground: '#fff',
+                        },
+                        focus: '#F39325',
+                    },
+                },
+                light: {
+                    colors: {
+                        primary: {
+                            DEFAULT: '#F39325',
+                            foreground: '#fff',
+                        },
+                        focus: '#F39325',
+                    },
+                },
+            },
+            layout: {
+                radius: {
+                    small: '2px', // rounded-small
+                    medium: '4px', // rounded-medium
+                    large: '6px', // rounded-large
+                },
+                borderWidth: {
+                    small: '1px', // border-small
+                    medium: '1px', // border-medium
+                    large: '2px', // border-large
+                },
+            },
+        }),
     ],
 }

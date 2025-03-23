@@ -588,16 +588,16 @@ export default function Step7({ setFormAsideVisibility }) {
 
     const matrixCalculate = () => {
         try {
-            console.log('creating matrix M_STANDARD MATRIX')
+            //console.log('creating matrix M_STANDARD MATRIX')
             M_STANDARD()
-            console.log('creating matrix M_SPIRAL MATRIX')
+            //console.log('creating matrix M_SPIRAL MATRIX')
             M_SPIRAL()
-            console.log('creating matrix M_MAX')
+            //console.log('creating matrix M_MAX')
             M_MAX()
-            console.log('creating matrix M_RAPTOR')
+            //console.log('creating matrix M_RAPTOR')
             M_RAPTOR()
         } catch (error) {
-            console.log('problem with creating matrix...')
+            //console.log('problem with creating matrix...')
             console.log(error)
         }
     }
@@ -625,6 +625,7 @@ export default function Step7({ setFormAsideVisibility }) {
 
         // !!!! IMPORTANT <====
         matrixCalculate()
+        // !!!! IMPORTANT <====
     }
 
     return (

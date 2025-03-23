@@ -1,16 +1,14 @@
-// import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure } from '@heroui-org/react'
-
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter } from '@heroui/modal'
 import { Button, ButtonGroup } from '@heroui/button'
 
 import { useSelector, useDispatch } from 'react-redux'
-import { changeTotalArea } from '@/store/slices/formSlice'
 import { useDisclosure } from '@heroui/use-disclosure'
+import { useTranslations } from 'next-intl'
 
 export default function InputRow({ forType, title, onChange, value, minValue, placeholder, modalContent, inputType, inputID, hasIndicator = false }) {
-    const dispatch = useDispatch()
     const { isOpen, onOpen, onOpenChange } = useDisclosure()
     const type = useSelector(state => state.form.type)
+    const t = useTranslations()
     return (
         <>
             {forType === type || forType === 'all' ? (
@@ -50,7 +48,7 @@ export default function InputRow({ forType, title, onChange, value, minValue, pl
                             </ModalBody>
                             <ModalFooter>
                                 <Button radius='lg' color='primary' onPress={onClose}>
-                                    Zamknij
+                                    {t('Common.close')}
                                 </Button>
                             </ModalFooter>
                         </>

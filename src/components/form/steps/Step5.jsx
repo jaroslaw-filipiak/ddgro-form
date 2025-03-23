@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux'
 import { setAccesories, setAdditionalAccessories } from '@/store/slices/formSlice'
 import { useTranslations } from 'next-intl'
 
-// import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure } from '@heroui-org/react'
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter } from '@heroui/modal'
 import { Button, ButtonGroup } from '@heroui/button'
 import { useDisclosure } from '@heroui/use-disclosure'
@@ -381,14 +380,11 @@ export default function Step5({ activeStep, setActiveStep }) {
                     </div>
                     {/* content + padding */}
                     <div className='step--inner pt-20 pb-20 lg:pl-10 lg:pr-10 lg:w-10/12 mx-auto'>
-                        {/* one serie db info */}
-
                         {!type && <div className='text-2xl lg:text-4xl text-center'>{t('Step5.selectSurfaceFirst')}</div>}
-
                         {type && (
                             <div className='series--info'>
                                 <p className='text-2xl font-bold textaccesories-black text-opacity-70 pt-16 pb-9'>
-                                    {loading ? t('Step5.loading') : `${t('Step5.selectedSystem')} ${main_system}`}
+                                    {loading ? t('Step5.loading') : `${t('Step5.selectedSystem')} ${main_system.toUpperCase()}`}
                                 </p>
 
                                 {loading ? (
@@ -434,7 +430,6 @@ export default function Step5({ activeStep, setActiveStep }) {
                                 )}
                             </div>
                         )}
-
                         {/* mobile btn */}
                         <div className='w-full flex items-center justify-center mt-20 mb-16'>
                             {!type && (

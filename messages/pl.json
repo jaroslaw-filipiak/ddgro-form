@@ -1,4 +1,7 @@
 {
+    "Common": {
+        "close": "Zamknij"
+    },
     "Header": {
         "home": "Strona główna",
         "about": "O nas"
@@ -20,6 +23,9 @@
         "step5": "Akcesoria",
         "step6": "Dodatkowa konfiguracja",
         "step7": "Podsumowanie"
+    },
+    "ItemCounter": {
+        "label": "Podaj dodatkową ilość"
     },
     "Step1": {
         "title": "Wybór nawierzchni tarasu",
@@ -45,9 +51,11 @@
         "highestSupportPlaceholder": "max. 950mm",
         "distanceBetweenJoists": "Odległość pomiędzy legarami (mm.)",
         "distanceBetweenJoistsPlaceholder": "mm",
+        "distanceBetweenJoistsInfo": "Odległość pomiędzy legarami pod płytą",
         "distanceBetweenSupports": "Odległość pomiędzy wspornikami pod legarem (mm.)",
         "distanceBetweenSupportsPlaceholder": "mm",
         "slabWidth": "Szerokość płyty (mm.)",
+        "distanceBetweenSupportsPlaceholderInfo": "Odległość pomiędzy wspornikami pod legarem",
         "slabWidthPlaceholder": "mm",
         "slabLength": "Długość płyty (mm.)",
         "slabLengthPlaceholder": "mm",

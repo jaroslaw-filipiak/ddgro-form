@@ -23,9 +23,7 @@ export default function Step6({ activeStep, setActiveStep }) {
     const dispatch = useDispatch()
     const products = useSelector(state => state.form.products)
 
-    // Instead of using router, just default to a language
-    // You can also get this from Redux state or a context if already available
-    const currentLocale = 'pl' // Default to Polish
+    const currentLocale = 'pl'
 
     const columns = [
         { name: t('Step6.table.id'), uid: 'id', sortable: true },
@@ -63,7 +61,6 @@ export default function Step6({ activeStep, setActiveStep }) {
     const getLocalizedValue = useCallback(
         field => {
             if (typeof field === 'object' && field !== null && !Array.isArray(field)) {
-                // Try current locale, then fallback to Polish, then any value
                 return field[currentLocale] || field.pl || Object.values(field)[0] || ''
             }
             return field
@@ -247,7 +244,7 @@ export default function Step6({ activeStep, setActiveStep }) {
                 <span className='w-[30%] text-small text-default-400'>
                     {selectedKeys === 'all' ? 'All items selected' : `${selectedKeys.size} ${t('Step6.pagination.selected')} ${filteredItems.length}`}
                 </span>
-                <Pagination isCompact showControls showShadow color='primary' page={page} total={pages} onChange={setPage} />
+                <Pagination isCompact showControls showShadow color='default' page={page} total={pages} onChange={setPage} />
                 <div className='hidden sm:flex w-[30%] justify-end gap-2'>
                     <Button isDisabled={pages === 1} size='sm' variant='flat' onPress={onPreviousPage}>
                         {t('Step6.pagination.previous')}

@@ -3,9 +3,10 @@
 import { ReactNode, useEffect, useState } from 'react'
 import { NextIntlClientProvider } from 'next-intl'
 import Header from '@/components/Header'
+import { Spinner } from '@heroui/react'
 
 // Define the locales you support
-const locales = ['en', 'pl', 'fr']
+const locales = ['en', 'fr', 'pl', 'de', 'es']
 
 export default function LocaleLayout({ children, params: { locale } }: { children: ReactNode; params: { locale: string } }) {
     const [messages, setMessages] = useState(null)
@@ -18,9 +19,9 @@ export default function LocaleLayout({ children, params: { locale } }: { childre
             })
             .catch(() => {
                 console.error(`Failed to load messages for locale: ${locale}`)
-                // Fallback to English
-                if (locale !== 'en') {
-                    import('../../../messages/en.json').then(messages => {
+                // Fallback to PL
+                if (locale !== 'pl') {
+                    import('../../../messages/pl.json').then(messages => {
                         setMessages(messages.default)
                     })
                 }
@@ -29,7 +30,11 @@ export default function LocaleLayout({ children, params: { locale } }: { childre
 
     // Show loading state until messages are loaded
     if (!messages) {
-        return <div>Loading...</div>
+        return (
+            <div className='h-screen w-screen flex items-center justify-center'>
+                <Spinner color='warning' size='lg' />
+            </div>
+        )
     }
 
     return (

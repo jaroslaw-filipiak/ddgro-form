@@ -31,7 +31,7 @@ const greo = localFont({
 
 export default function RootLayout({ children }: { children: ReactNode }) {
     return (
-        <html lang='en'>
+        <html lang='pl'>
             <body className={greo.className}>{children}</body>
         </html>
     )

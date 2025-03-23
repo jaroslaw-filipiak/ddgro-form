@@ -1,4 +1,7 @@
 {
+    "Common": {
+        "close": "Fermer"
+    },
     "Header": {
         "home": "Accueil",
         "about": "À propos"
@@ -20,6 +23,9 @@
         "step5": "Accessoires",
         "step6": "Configuration supplémentaire",
         "step7": "Résumé"
+    },
+    "ItemCounter": {
+        "label": "Entrez une quantité supplémentaire"
     },
     "Step1": {
         "title": "Choix du revêtement de terrasse",
@@ -45,8 +51,10 @@
         "highestSupportPlaceholder": "max. 950mm",
         "distanceBetweenJoists": "Distance entre les solives (mm.)",
         "distanceBetweenJoistsPlaceholder": "mm",
+        "distanceBetweenJoistsInfo": "Distance entre les solives sous la dalle",
         "distanceBetweenSupports": "Distance entre les supports sous la solive (mm.)",
         "distanceBetweenSupportsPlaceholder": "mm",
+        "distanceBetweenSupportsPlaceholderInfo": "Distance entre les supports sous la solive",
         "slabWidth": "Largeur de dalle (mm.)",
         "slabWidthPlaceholder": "mm",
         "slabLength": "Longueur de dalle (mm.)",

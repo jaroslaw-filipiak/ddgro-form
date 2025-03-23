@@ -80,11 +80,6 @@ export default function Step2({ activeStep, setActiveStep }) {
     }
 
     const validateHighest = value => {
-        console.log('validateHighest', value)
-        console.log('lowest', lowest)
-        console.log('highest', highest)
-        console.log(value)
-
         if (value < lowest) {
             setvalidateHighestMessage(t('Step2.errorHighestLess'))
             setValidated(0)
@@ -101,7 +96,6 @@ export default function Step2({ activeStep, setActiveStep }) {
     }
 
     const handleValidated = () => {
-        console.log(lowest, highest)
         if (type === 'slab') {
             if (
                 total_area &&
@@ -278,7 +272,9 @@ export default function Step2({ activeStep, setActiveStep }) {
                                     title={t('Step2.distanceBetweenJoists')}
                                     placeholder={t('Step2.distanceBetweenJoistsPlaceholder')}
                                     hasIndicator={true}
-                                    modalContent={`<img class="rounded-lg" src="${imageBaseUrl}/assets/odleglosc-legary-1.png" /><img class="rounded-lg" src="${imageBaseUrl}/assets/odleglosc-legary-2.png" /><img class="rounded-lg" src="${imageBaseUrl}/assets/odleglosc-legary-3.png" /> <p style="margin-top: 20px"> Jaki jest rozstaw pomiędzy legarami pod deską tarasową?</p>`}
+                                    modalContent={`<img class="rounded-lg" src="${imageBaseUrl}/assets/odleglosc-legary-1.png" /><img class="rounded-lg" src="${imageBaseUrl}/assets/odleglosc-legary-2.png" /><img class="rounded-lg" src="${imageBaseUrl}/assets/odleglosc-legary-3.png" /> <p style="margin-top: 20px"> ${t(
+                                        'Step2.distanceBetweenJoistsInfo',
+                                    )}</p>`}
                                 />
                                 {/* changeSlabWidth */}
 
@@ -290,7 +286,9 @@ export default function Step2({ activeStep, setActiveStep }) {
                                     title={t('Step2.distanceBetweenSupports')}
                                     placeholder={t('Step2.distanceBetweenSupportsPlaceholder')}
                                     hasIndicator={true}
-                                    modalContent={`<img class="rounded-lg" src="${imageBaseUrl}/assets/odleglosc-wsporniki-1.png" /><img class="rounded-lg" src="${imageBaseUrl}/assets/odleglosc-wsporniki-2.png" /><p style="margin-top: 20px">Jaka ma być odległość pomiędzy wspornikami podpierającymi legar?</p>`}
+                                    modalContent={`<img class="rounded-lg" src="${imageBaseUrl}/assets/odleglosc-wsporniki-1.png" /><img class="rounded-lg" src="${imageBaseUrl}/assets/odleglosc-wsporniki-2.png" /><p style="margin-top: 20px">${t(
+                                        'Step2.distanceBetweenSupportsPlaceholderInfo',
+                                    )}</p>`}
                                 />
 
                                 {/* changeJoistHeight */}

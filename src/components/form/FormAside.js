@@ -1,12 +1,9 @@
 'use client'
 
-// Now we can use the React-Redux hooks to let React components interact with the Redux store. We can read data from the store with useSelector, and dispatch actions using useDispatch
-
 import { useSelector, useDispatch } from 'react-redux'
 import { useState, useEffect } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
 import { changeEmail, changePhone, changeNameSurname, changeProffesion } from '@/store/slices/formSlice'
-// import { Select, SelectItem, Input, CircularProgress } from '@heroui-org/react'
 import { Select, SelectSection, SelectItem } from '@heroui/select'
 import { Input } from '@heroui/input'
 import { CircularProgress } from '@heroui/progress'

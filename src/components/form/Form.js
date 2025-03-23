@@ -1,8 +1,5 @@
 'use client'
 
-// use client means that this code will be executed on browser, so i can use Provider for
-// redux
-
 import { store } from '@/store/index'
 import { Provider } from 'react-redux'
 import { useState, useEffect } from 'react'
@@ -22,9 +19,6 @@ import Step6 from './steps/Step6'
 import Step7 from './steps/Step7'
 
 export default function Form() {
-    // Get translations for the form
-    const t = useTranslations('Form')
-
     const [activeStep, setActiveStep] = useState(1)
     const [isFormAsideOpen, setFormAsideVisibility] = useState(false)
 

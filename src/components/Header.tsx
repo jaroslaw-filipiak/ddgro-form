@@ -13,7 +13,7 @@ export default function Header() {
     const getPathWithoutLocale = () => {
         if (!pathname) return '/'
         const segments = pathname.split('/')
-        segments.splice(1, 1) // Remove the locale segment
+        segments.splice(1, 1)
         return segments.join('/') || '/'
     }
 
@@ -31,6 +31,12 @@ export default function Header() {
                     </Link>
                     <Link href={`/fr${pathnameWithoutLocale === '/' ? '' : pathnameWithoutLocale}`} className={locale === 'fr' ? 'font-bold' : ''}>
                         FR
+                    </Link>
+                    <Link href={`/de${pathnameWithoutLocale === '/' ? '' : pathnameWithoutLocale}`} className={locale === 'de' ? 'font-bold' : ''}>
+                        DE
+                    </Link>
+                    <Link href={`/es${pathnameWithoutLocale === '/' ? '' : pathnameWithoutLocale}`} className={locale === 'es' ? 'font-bold' : ''}>
+                        ES
                     </Link>
                 </div>
             </nav>
