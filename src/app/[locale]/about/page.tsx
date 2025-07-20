@@ -3,7 +3,7 @@ import ClientAboutPage from './client'
 
 // This must be a server component to properly generate static params
 export function generateStaticParams() {
-    return ['en', 'fr', 'pl'].map(locale => ({ locale }))
+    return ['en', 'fr', 'pl', 'de', 'es'].map(locale => ({ locale }))
 }
 
 export default function AboutPage() {
