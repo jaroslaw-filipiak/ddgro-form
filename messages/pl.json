@@ -6,6 +6,18 @@
         "home": "Strona główna",
         "about": "O nas"
     },
+    "LoginForm": {
+        "title": "Zaloguj się do panelu administracyjnego",
+        "emailLabel": "Adres email",
+        "emailPlaceholder": "Wpisz adres email",
+        "passwordLabel": "Hasło",
+        "passwordPlaceholder": "Wpisz hasło",
+        "submitButton": "Zaloguj się",
+        "emailValueMissing": "Podaj adres email",
+        "emailPatternMismatch": "Podaj poprawny adres email",
+        "passwordValueMissing": "Podaj hasło",
+        "passwordPatternMismatch": "Podaj poprawne hasło"
+    },
     "HomePage": {
         "helloWorld": "Witaj świecie!"
     },

@@ -6,6 +6,18 @@
         "home": "Accueil",
         "about": "À propos"
     },
+    "LoginForm": {
+        "title": "Connectez-vous au panneau d'administration",
+        "emailLabel": "Adresse e-mail",
+        "emailPlaceholder": "Entrez l'adresse e-mail",
+        "passwordLabel": "Mot de passe",
+        "passwordPlaceholder": "Entrez le mot de passe",
+        "submitButton": "Se connecter",
+        "emailValueMissing": "Entrez l'adresse e-mail",
+        "emailPatternMismatch": "Entrez une adresse e-mail valide",
+        "passwordValueMissing": "Entrez le mot de passe",
+        "passwordPatternMismatch": "Entrez un mot de passe valide"
+    },
     "HomePage": {
         "helloWorld": "Bonjour le monde!"
     },

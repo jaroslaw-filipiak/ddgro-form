@@ -40,7 +40,7 @@ export default function LocaleLayout({ children, params: { locale } }: { childre
     return (
         <NextIntlClientProvider locale={locale} messages={messages}>
             <Header />
-            <div className='p-5'>{children}</div>
+            <div>{children}</div>
         </NextIntlClientProvider>
     )
 }

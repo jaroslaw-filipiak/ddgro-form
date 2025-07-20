@@ -6,6 +6,18 @@
         "home": "Startseite",
         "about": "Über uns"
     },
+    "LoginForm": {
+        "title": "Anmeldung zum Administrationspanel",
+        "emailLabel": "E-Mail-Adresse",
+        "emailPlaceholder": "Geben Sie die E-Mail-Adresse ein",
+        "passwordLabel": "Passwort",
+        "passwordPlaceholder": "Geben Sie das Passwort ein",
+        "submitButton": "Anmelden",
+        "emailValueMissing": "Geben Sie die E-Mail-Adresse ein",
+        "emailPatternMismatch": "Geben Sie eine gültige E-Mail-Adresse ein",
+        "passwordValueMissing": "Geben Sie das Passwort ein",
+        "passwordPatternMismatch": "Geben Sie ein gültiges Passwort ein"
+    },
     "HomePage": {
         "helloWorld": "Hallo Welt!"
     },

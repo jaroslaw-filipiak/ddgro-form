@@ -6,6 +6,18 @@
         "home": "Home",
         "about": "About"
     },
+    "LoginForm": {
+        "title": "Log in to the admin panel",
+        "emailLabel": "Email address",
+        "emailPlaceholder": "Enter email address",
+        "passwordLabel": "Password",
+        "passwordPlaceholder": "Enter password",
+        "submitButton": "Log in",
+        "emailValueMissing": "Enter email address",
+        "emailPatternMismatch": "Enter a valid email address",
+        "passwordValueMissing": "Enter password",
+        "passwordPatternMismatch": "Enter a valid password"
+    },
     "HomePage": {
         "helloWorld": "Hello World!"
     },

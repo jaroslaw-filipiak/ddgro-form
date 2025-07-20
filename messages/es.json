@@ -6,6 +6,18 @@
         "home": "Inicio",
         "about": "Sobre nosotros"
     },
+    "LoginForm": {
+        "title": "Inicie sesión en el panel de administración",
+        "emailLabel": "Dirección de correo electrónico",
+        "emailPlaceholder": "Introduzca la dirección de correo electrónico",
+        "passwordLabel": "Contraseña",
+        "passwordPlaceholder": "Introduzca la contraseña",
+        "submitButton": "Iniciar sesión",
+        "emailValueMissing": "Introduzca la dirección de correo electrónico",
+        "emailPatternMismatch": "Introduzca una dirección de correo electrónico válida",
+        "passwordValueMissing": "Introduzca la contraseña",
+        "passwordPatternMismatch": "Introduzca una contraseña válida"
+    },
     "HomePage": {
         "helloWorld": "¡Hola mundo!"
     },
