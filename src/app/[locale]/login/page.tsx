@@ -5,16 +5,6 @@ import { Form, Input, Select, SelectItem, Checkbox, Button } from '@heroui/react
 import Image from 'next/image'
 import { useTranslations } from 'next-intl'
 
-export async function generateStaticParams() {
-    return [
-        { locale: 'en' },
-        { locale: 'pl' },
-        { locale: 'de' },
-        { locale: 'es' },
-        { locale: 'fr' }
-    ]
-}
-
 export default function LoginPage() {
     const [password, setPassword] = React.useState('')
     const [submitted, setSubmitted] = React.useState(null)
