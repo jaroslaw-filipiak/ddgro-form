@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import {
     changeType,
@@ -61,6 +61,8 @@ export default function Step2({ activeStep, setActiveStep }) {
         distance_between_joists,
         distance_between_supports_under_the_joist,
         joist_height,
+        type,
+        handleValidated
     ])
 
     const validateLowest = value => {
@@ -95,7 +97,7 @@ export default function Step2({ activeStep, setActiveStep }) {
         }
     }
 
-    const handleValidated = () => {
+    const handleValidated = useCallback(() => {
         if (type === 'slab') {
             if (
                 total_area &&
@@ -132,7 +134,18 @@ export default function Step2({ activeStep, setActiveStep }) {
                 setValidated(0)
             }
         }
-    }
+    }, [
+        type,
+        total_area,
+        count,
+        gap_between_slabs,
+        lowest,
+        highest,
+        slab_width,
+        slab_height,
+        distance_between_joists,
+        dispatch,
+    ])
 
     return (
         <>
