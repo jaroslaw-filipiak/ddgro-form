@@ -28,7 +28,7 @@ export default function Step5({ activeStep, setActiveStep }) {
     /**
      *
      *  TODO:
-     *  To powinno być pobierane z bazy danych
+     *  To powinno być pobierane z bazy danych , teraz po migracji zmiany 
      *
      *
      */
