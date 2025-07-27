@@ -1,175 +1,177 @@
 {
-    "Common": {
-        "close": "Cerrar"
-    },
-    "Header": {
-        "home": "Inicio",
-        "about": "Sobre nosotros"
-    },
-    "LoginForm": {
-        "title": "Inicie sesión en el panel de administración",
-        "emailLabel": "Dirección de correo electrónico",
-        "emailPlaceholder": "Introduzca la dirección de correo electrónico",
-        "passwordLabel": "Contraseña",
-        "passwordPlaceholder": "Introduzca la contraseña",
-        "submitButton": "Iniciar sesión",
-        "emailValueMissing": "Introduzca la dirección de correo electrónico",
-        "emailPatternMismatch": "Introduzca una dirección de correo electrónico válida",
-        "passwordValueMissing": "Introduzca la contraseña",
-        "passwordPatternMismatch": "Introduzca una contraseña válida"
-    },
-    "HomePage": {
-        "helloWorld": "¡Hola mundo!"
-    },
-    "AboutPage": {
-        "aboutText": "Sobre nuestra empresa"
-    },
-    "Form": {
-        "title": "Configurador de terrazas"
-    },
-    "FormNav": {
-        "step1": "Selección de superficie de terraza",
-        "step2": "Parámetros de terraza",
-        "step3": "Tipo de soporte",
-        "step4": "Sistema",
-        "step5": "Accesorios",
-        "step6": "Configuración adicional",
-        "step7": "Resumen"
-    },
-    "ItemCounter": {
-        "label": "Indicar cantidad adicional"
-    },
-    "Step1": {
-        "title": "Selección de superficie de terraza",
-        "question": "¿Qué habrá en la terraza?",
-        "slabs": "Losas",
-        "slabsAlt": "Imagen de losas",
-        "planks": "Tablas",
-        "planksAlt": "Imagen de tablas",
-        "nextButton": "Siguiente paso",
-        "nextArrow": "Flecha hacia adelante"
-    },
-    "Step2": {
-        "dimensionsInfo": "Indique las dimensiones en milímetros (1cm = 10 milímetros)",
-        "totalArea": "Superficie total (m²)",
-        "totalAreaPlaceholder": "cantidad m²",
-        "terraceCount": "Cantidad de terrazas/balcones (uds.)",
-        "terraceCountPlaceholder": "uds.",
-        "gapBetweenSlabs": "Espacio entre losas (mm)",
-        "gapBetweenSlabsPlaceholder": "mm",
-        "lowestSupport": "Soporte más bajo (mm)",
-        "lowestSupportPlaceholder": "mín. 10mm",
-        "highestSupport": "Soporte más alto (mm)",
-        "highestSupportPlaceholder": "máx. 950mm",
-        "distanceBetweenJoists": "Distancia entre viguetas (mm)",
-        "distanceBetweenJoistsPlaceholder": "mm",
-        "distanceBetweenJoistsInfo": "Distancia entre viguetas bajo la losa",
-        "distanceBetweenSupports": "Distancia entre soportes bajo la vigueta (mm)",
-        "distanceBetweenSupportsPlaceholder": "mm",
-        "slabWidth": "Ancho de losa (mm)",
-        "distanceBetweenSupportsPlaceholderInfo": "Distancia entre soportes bajo la vigueta",
-        "slabWidthPlaceholder": "mm",
-        "slabLength": "Longitud de losa (mm)",
-        "slabLengthPlaceholder": "mm",
-        "errorLowestGreater": "El valor para: \"Soporte más bajo (mm)\" no puede ser mayor que el valor para: \"Soporte más alto (mm)\"",
-        "errorLowestLess": "El valor para: \"Soporte más bajo (mm)\" no puede ser menor de 10mm",
-        "errorHighestLess": "El valor para: \"Soporte más alto (mm)\" no puede ser menor que el valor para: \"Soporte más bajo (mm)\"",
-        "errorHighestGreater": "El valor para: \"Soporte más alto (mm)\" no puede ser mayor de 950mm",
-        "backToStep1": "Volver al paso 1"
-    },
-    "Step3": {
-        "title": "Tipo de soporte",
-        "type1": "Tipo 1",
-        "type2": "Tipo 2",
-        "type3": "Tipo 3",
-        "type4": "Tipo 4"
-    },
-    "Step4": {
-        "title": "Sistema",
-        "warning": "Atención - seleccione el sistema principal de soportes que se utilizará. Si los rangos de altura exceden los rangos de este tipo, el programa seleccionará las alturas faltantes de otro tipo.",
-        "seriesSpiral": "Serie Spiral",
-        "seriesStandard": "Serie Standard",
-        "seriesMax": "Serie Max",
-        "seriesRaptor": "Serie Raptor",
-        "selectSurfaceFirst": "Seleccione primero el tipo de superficie de terraza (punto 1), sin estos datos no podremos mostrar el sistema de soportes"
-    },
-    "Step5": {
-        "title": "Accesorios adicionales para soportes",
-        "selectSurfaceFirst": "Seleccione primero el tipo de superficie de terraza (punto 1), sin estos datos no podremos mostrar la lista de accesorios",
-        "loading": "Cargando datos...",
-        "selectedSystem": "Seleccione accesorios adicionales, sistema seleccionado:",
-        "backToStep1": "Volver al paso 1",
-        "modal": {
-            "title": "Siguiente paso",
-            "description": "En el siguiente paso tiene la posibilidad de añadir manualmente productos de todo el surtido ddgro. Este es un paso adicional que permite añadir una cantidad adicional de productos al pedido. Si no desea añadir productos adicionales, haga clic en el botón Ir al resumen en la esquina inferior derecha.",
-            "addProducts": "Sí, quiero añadir productos adicionales manualmente",
-            "goToSummary": "No, ir al resumen"
-        }
-    },
-    "Step6": {
-        "title": "Añadir manualmente cantidades adicionales de productos",
-        "warning": "Nota: paso adicional que permite añadir productos manualmente, se puede omitir sin marcar ninguna opción",
-        "skipInfo": "Si no desea añadir productos manualmente",
-        "browseAssortment": "Explorar todo el surtido DDGRO",
-        "search": "Buscar por nombre...",
-        "series": "Serie",
-        "table": {
-            "id": "ID",
-            "name": "Nombre",
-            "shortName": "Nombre corto",
-            "series": "Serie",
-            "actions": "Acciones"
-        },
-        "pagination": {
-            "selected": "de seleccionados",
-            "previous": "Anterior",
-            "next": "Siguiente"
-        },
-        "noProducts": "No se encontraron productos"
-    },
-    "Step7": {
-        "title": "Resumen",
-        "parameters": "Parámetros introducidos",
-        "surfaceType": "Tipo de superficie:",
-        "slabs": "Losas",
-        "planks": "Tablas",
-        "mainSystem": "Sistema principal seleccionado:",
-        "totalArea": "Superficie total:",
-        "terraceCount": "Cantidad de terrazas:",
-        "lowestPoint": "Punto más bajo de altura de terraza:",
-        "highestPoint": "Punto más alto de altura de terraza:",
-        "additionalAccessories": "¿Se seleccionaron accesorios adicionales?:",
-        "yes": "Sí",
-        "no": "No",
-        "result": "Resultado:",
-        "supports": "Soportes:",
-        "slabCount": "Número de losas:",
-        "selectedAccessories": "Accesorios seleccionados:",
-        "receivePDF": "Recibir PDF"
-    },
-    "FormAside": {
-        "title": "Reciba un PDF con una oferta personalizada",
-        "nameLabel": "Nombre y apellidos",
-        "namePlaceholder": "Nombre, apellidos",
-        "emailLabel": "Dirección de correo electrónico",
-        "emailPlaceholder": "Introduzca dirección de correo electrónico",
-        "phoneLabel": "Teléfono",
-        "phonePlaceholder": "Teléfono",
-        "roleLabel": "Soy",
-        "submitButton": "Enviar",
-        "sending": "Enviando...",
-        "preparing": "Preparando formulario para envío",
-        "privacyPolicy": "Procesaremos sus datos personales para responder a su consulta. El responsable de sus datos personales es \"DECK-DRY\" Sp. z o.o. Tiene derecho a oponerse, acceder a sus datos, solicitar su rectificación, eliminación o limitación de su procesamiento, así como su portabilidad. Encontrará información detallada en nuestra Política de Privacidad.",
-        "rolesLabel": "Seleccionar",
-        "applicationCreatedMessage": "Hemos recibido su formulario. Preparando para enviar oferta en PDF",
-        "successMessage": "¡Formulario enviado con éxito!",
-        "genericErrorMessage": "Se ha producido un error al enviar el formulario. Por favor, inténtelo de nuevo más tarde.",
-        "roles": {
-            "klient-indywidualny": "Cliente individual",
-            "Wykowawca": "Contratista",
-            "Dystrybutor": "Distribuidor",
-            "Architekt": "Arquitecto",
-            "GW/Deweloper": "Contratista general/Promotor"
-        }
+  "Common": {
+    "close": "Cerrar"
+  },
+  "Header": {
+    "home": "Inicio",
+    "about": "Sobre nosotros"
+  },
+  "LoginForm": {
+    "title": "Inicie sesión en el panel de administración",
+    "emailLabel": "Dirección de correo electrónico",
+    "emailPlaceholder": "Introduzca la dirección de correo electrónico",
+    "passwordLabel": "Contraseña",
+    "passwordPlaceholder": "Introduzca la contraseña",
+    "submitButton": "Iniciar sesión",
+    "emailValueMissing": "Introduzca la dirección de correo electrónico",
+    "emailPatternMismatch": "Introduzca una dirección de correo electrónico válida",
+    "passwordValueMissing": "Introduzca la contraseña",
+    "passwordPatternMismatch": "Introduzca una contraseña válida"
+  },
+  "HomePage": {
+    "helloWorld": "¡Hola mundo!"
+  },
+  "AboutPage": {
+    "aboutText": "Sobre nuestra empresa"
+  },
+  "Form": {
+    "title": "Configurador de terrazas"
+  },
+  "FormNav": {
+    "step1": "Selección de superficie de terraza",
+    "step2": "Parámetros de terraza",
+    "step3": "Tipo de soporte",
+    "step4": "Sistema",
+    "step5": "Accesorios",
+    "step6": "Configuración adicional",
+    "step7": "Resumen"
+  },
+  "ItemCounter": {
+    "label": "Indicar cantidad adicional"
+  },
+  "Step1": {
+    "title": "Selección de superficie de terraza",
+    "question": "¿Qué habrá en la terraza?",
+    "slabs": "Losas",
+    "slabsAlt": "Imagen de losas",
+    "planks": "Tablas",
+    "planksAlt": "Imagen de tablas",
+    "nextButton": "Siguiente paso",
+    "nextArrow": "Flecha hacia adelante"
+  },
+  "Step2": {
+    "dimensionsInfo": "Indique las dimensiones en milímetros (1cm = 10 milímetros)",
+    "totalArea": "Superficie total (m²)",
+    "totalAreaPlaceholder": "cantidad m²",
+    "terraceCount": "Cantidad de terrazas/balcones (uds.)",
+    "terraceCountPlaceholder": "uds.",
+    "gapBetweenSlabs": "Espacio entre losas (mm)",
+    "gapBetweenSlabsPlaceholder": "mm",
+    "lowestSupport": "Soporte más bajo (mm)",
+    "lowestSupportPlaceholder": "mín. 10mm",
+    "highestSupport": "Soporte más alto (mm)",
+    "highestSupportPlaceholder": "máx. 950mm",
+    "distanceBetweenJoists": "Distancia entre viguetas (mm)",
+    "distanceBetweenJoistsPlaceholder": "mm",
+    "distanceBetweenJoistsInfo": "Distancia entre viguetas bajo la losa",
+    "distanceBetweenSupports": "Distancia entre soportes bajo la vigueta (mm)",
+    "distanceBetweenSupportsPlaceholder": "mm",
+    "slabWidth": "Ancho de losa (mm)",
+    "distanceBetweenSupportsPlaceholderInfo": "Distancia entre soportes bajo la vigueta",
+    "slabWidthPlaceholder": "mm",
+    "slabLength": "Longitud de losa (mm)",
+    "slabLengthPlaceholder": "mm",
+    "errorLowestGreater": "El valor para: \"Soporte más bajo (mm)\" no puede ser mayor que el valor para: \"Soporte más alto (mm)\"",
+    "errorLowestLess": "El valor para: \"Soporte más bajo (mm)\" no puede ser menor de 10mm",
+    "errorHighestLess": "El valor para: \"Soporte más alto (mm)\" no puede ser menor que el valor para: \"Soporte más bajo (mm)\"",
+    "errorHighestGreater": "El valor para: \"Soporte más alto (mm)\" no puede ser mayor de 950mm",
+    "backToStep1": "Volver al paso 1"
+  },
+  "Step3": {
+    "title": "Tipo de soporte",
+    "type1": "Tipo 1",
+    "type2": "Tipo 2",
+    "type3": "Tipo 3",
+    "type4": "Tipo 4",
+    "nextButton": "Siguiente paso",
+    "nextArrow": "Flecha hacia adelante"
+  },
+  "Step4": {
+    "title": "Sistema",
+    "warning": "Atención - seleccione el sistema principal de soportes que se utilizará. Si los rangos de altura exceden los rangos de este tipo, el programa seleccionará las alturas faltantes de otro tipo.",
+    "seriesSpiral": "Serie Spiral",
+    "seriesStandard": "Serie Standard",
+    "seriesMax": "Serie Max",
+    "seriesRaptor": "Serie Raptor",
+    "selectSurfaceFirst": "Seleccione primero el tipo de superficie de terraza (punto 1), sin estos datos no podremos mostrar el sistema de soportes"
+  },
+  "Step5": {
+    "title": "Accesorios adicionales para soportes",
+    "selectSurfaceFirst": "Seleccione primero el tipo de superficie de terraza (punto 1), sin estos datos no podremos mostrar la lista de accesorios",
+    "loading": "Cargando datos...",
+    "selectedSystem": "Seleccione accesorios adicionales, sistema seleccionado:",
+    "backToStep1": "Volver al paso 1",
+    "modal": {
+      "title": "Siguiente paso",
+      "description": "En el siguiente paso tiene la posibilidad de añadir manualmente productos de todo el surtido ddgro. Este es un paso adicional que permite añadir una cantidad adicional de productos al pedido. Si no desea añadir productos adicionales, haga clic en el botón Ir al resumen en la esquina inferior derecha.",
+      "addProducts": "Sí, quiero añadir productos adicionales manualmente",
+      "goToSummary": "No, ir al resumen"
     }
+  },
+  "Step6": {
+    "title": "Añadir manualmente cantidades adicionales de productos",
+    "warning": "Nota: paso adicional que permite añadir productos manualmente, se puede omitir sin marcar ninguna opción",
+    "skipInfo": "Si no desea añadir productos manualmente",
+    "browseAssortment": "Explorar todo el surtido DDGRO",
+    "search": "Buscar por nombre...",
+    "series": "Serie",
+    "table": {
+      "id": "ID",
+      "name": "Nombre",
+      "shortName": "Nombre corto",
+      "series": "Serie",
+      "actions": "Acciones"
+    },
+    "pagination": {
+      "selected": "de seleccionados",
+      "previous": "Anterior",
+      "next": "Siguiente"
+    },
+    "noProducts": "No se encontraron productos"
+  },
+  "Step7": {
+    "title": "Resumen",
+    "parameters": "Parámetros introducidos",
+    "surfaceType": "Tipo de superficie:",
+    "slabs": "Losas",
+    "planks": "Tablas",
+    "mainSystem": "Sistema principal seleccionado:",
+    "totalArea": "Superficie total:",
+    "terraceCount": "Cantidad de terrazas:",
+    "lowestPoint": "Punto más bajo de altura de terraza:",
+    "highestPoint": "Punto más alto de altura de terraza:",
+    "additionalAccessories": "¿Se seleccionaron accesorios adicionales?:",
+    "yes": "Sí",
+    "no": "No",
+    "result": "Resultado:",
+    "supports": "Soportes:",
+    "slabCount": "Número de losas:",
+    "selectedAccessories": "Accesorios seleccionados:",
+    "receivePDF": "Recibir PDF"
+  },
+  "FormAside": {
+    "title": "Reciba un PDF con una oferta personalizada",
+    "nameLabel": "Nombre y apellidos",
+    "namePlaceholder": "Nombre, apellidos",
+    "emailLabel": "Dirección de correo electrónico",
+    "emailPlaceholder": "Introduzca dirección de correo electrónico",
+    "phoneLabel": "Teléfono",
+    "phonePlaceholder": "Teléfono",
+    "roleLabel": "Soy",
+    "submitButton": "Enviar",
+    "sending": "Enviando...",
+    "preparing": "Preparando formulario para envío",
+    "privacyPolicy": "Procesaremos sus datos personales para responder a su consulta. El responsable de sus datos personales es \"DECK-DRY\" Sp. z o.o. Tiene derecho a oponerse, acceder a sus datos, solicitar su rectificación, eliminación o limitación de su procesamiento, así como su portabilidad. Encontrará información detallada en nuestra Política de Privacidad.",
+    "rolesLabel": "Seleccionar",
+    "applicationCreatedMessage": "Hemos recibido su formulario. Preparando para enviar oferta en PDF",
+    "successMessage": "¡Formulario enviado con éxito!",
+    "genericErrorMessage": "Se ha producido un error al enviar el formulario. Por favor, inténtelo de nuevo más tarde.",
+    "roles": {
+      "klient-indywidualny": "Cliente individual",
+      "Wykowawca": "Contratista",
+      "Dystrybutor": "Distribuidor",
+      "Architekt": "Arquitecto",
+      "GW/Deweloper": "Contratista general/Promotor"
+    }
+  }
 }
