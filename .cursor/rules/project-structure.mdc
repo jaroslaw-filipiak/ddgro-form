@@ -1,0 +1,42 @@
+# DDGRO Project Structure Guide
+
+## Frontend (ddgro-form/)
+The main Next.js application with internationalization support.
+
+### Key Entry Points
+- Main layout: [src/app/layout.tsx](mdc:src/app/layout.tsx)
+- Home page: [src/app/page.tsx](mdc:src/app/page.tsx)
+- Localized pages: [src/app/[locale]/](mdc:src/app/[locale]/)
+- Form components: [src/components/form/](mdc:src/components/form/)
+
+### State Management
+- Redux store: [src/store/index.js](mdc:src/store/index.js)
+- Form slice: [src/store/slices/formSlice.js](mdc:src/store/slices/formSlice.js)
+
+### Styling
+- Global styles: [src/app/globals.css](mdc:src/app/globals.css)
+- SCSS components: [src/scss/](mdc:src/scss/)
+- Tailwind config: [tailwind.config.js](mdc:tailwind.config.js)
+
+### Internationalization
+- Message files: [messages/](mdc:messages/)
+- Middleware: [middleware.ts](mdc:middleware.ts)
+
+## Backend (ddgro-nowy-backend/)
+Express.js API server with MongoDB integration.
+
+### Key Entry Points
+- Main app: [ddgro-nowy-backend/app.js](mdc:ddgro-nowy-backend/app.js)
+- Server startup: [ddgro-nowy-backend/bin/www](mdc:ddgro-nowy-backend/bin/www)
+
+### API Routes
+- Base routes: [ddgro-nowy-backend/routes/](mdc:ddgro-nowy-backend/routes/)
+- API endpoints: [ddgro-nowy-backend/routes/api/](mdc:ddgro-nowy-backend/routes/api/)
+
+### Models & Data
+- MongoDB models: [ddgro-nowy-backend/models/](mdc:ddgro-nowy-backend/models/)
+- Database migrations: [ddgro-nowy-backend/migrations/](mdc:ddgro-nowy-backend/migrations/)
+
+### Services
+- Email service: [ddgro-nowy-backend/services/sendEmail.js](mdc:ddgro-nowy-backend/services/sendEmail.js)
+- Authentication: [ddgro-nowy-backend/config/passport.js](mdc:ddgro-nowy-backend/config/passport.js)

@@ -1,0 +1,64 @@
+# Backend API Development Standards
+
+## Express.js Route Structure
+Follow the pattern established in [ddgro-nowy-backend/routes/api/](mdc:ddgro-nowy-backend/routes/api/):
+
+```javascript
+const express = require('express');
+const router = express.Router();
+
+// GET route
+router.get('/', async (req, res) => {
+  try {
+    // Logic here
+    res.json({ success: true, data: result });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+module.exports = router;
+```
+
+## Model Patterns
+- Use Mongoose models from [ddgro-nowy-backend/models/](mdc:ddgro-nowy-backend/models/)
+- Follow established schema patterns
+- Include proper validation and indexing
+
+## Authentication
+- Use Passport.js configuration from [ddgro-nowy-backend/config/passport.js](mdc:ddgro-nowy-backend/config/passport.js)
+- Implement proper middleware for protected routes
+- Follow JWT token patterns
+
+## Database Operations
+- Use try-catch blocks for all async operations
+- Implement proper error handling
+- Follow migration patterns from [ddgro-nowy-backend/migrations/](mdc:ddgro-nowy-backend/migrations/)
+
+## Email Services
+- Use email service from [ddgro-nowy-backend/services/sendEmail.js](mdc:ddgro-nowy-backend/services/sendEmail.js)
+- Follow template patterns from [ddgro-nowy-backend/templates/emails/](mdc:ddgro-nowy-backend/templates/emails/)
+- Support multi-language email templates
+
+## Translation Support
+- Use translation files from [ddgro-nowy-backend/translations/](mdc:ddgro-nowy-backend/translations/)
+- Follow the pattern established in [ddgro-nowy-backend/translations/index.js](mdc:ddgro-nowy-backend/translations/index.js)
+- Support all available languages (en, de, es, fr, pl)
+
+## Response Format
+Always use consistent response format:
+```javascript
+// Success response
+res.json({ 
+  success: true, 
+  data: result,
+  message: 'Operation completed successfully'
+});
+
+// Error response  
+res.status(statusCode).json({ 
+  success: false, 
+  error: errorMessage,
+  details: errorDetails // optional
+});
+```

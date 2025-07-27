@@ -1,0 +1,50 @@
+# Form Development Guidelines
+
+## Multi-Step Form Architecture
+This project uses a step-based form system. Follow the pattern established in [src/components/form/steps/](mdc:src/components/form/steps/).
+
+### Step Component Structure
+Each step should follow this pattern (see [src/components/form/steps/Step1.js](mdc:src/components/form/steps/Step1.js)):
+
+```jsx
+import { useSelector, useDispatch } from 'react-redux';
+import { updateFormData } from '@/store/slices/formSlice';
+
+const StepN = () => {
+  const dispatch = useDispatch();
+  const formData = useSelector(state => state.form);
+  
+  const handleChange = (field, value) => {
+    dispatch(updateFormData({ [field]: value }));
+  };
+  
+  return (
+    // Step content
+  );
+};
+```
+
+### Form Controls
+- Use standardized controls from [src/components/form/controls/](mdc:src/components/form/controls/)
+- InputRow component: [src/components/form/controls/InputRow.jsx](mdc:src/components/form/controls/InputRow.jsx)
+- Select component: [src/components/form/controls/InputRowSelect.jsx](mdc:src/components/form/controls/InputRowSelect.jsx)
+
+### State Management
+- All form data goes through Redux store: [src/store/slices/formSlice.js](mdc:src/store/slices/formSlice.js)
+- Use `updateFormData` action for field updates
+- Access form state with `useSelector(state => state.form)`
+
+### Navigation
+- Form navigation logic in [src/components/form/FormNav.js](mdc:src/components/form/FormNav.js)
+- Handle step validation before allowing navigation
+- Use consistent navigation patterns across all steps
+
+### Styling
+- Follow SCSS patterns from [src/scss/components/_form.scss](mdc:src/scss/components/_form.scss)
+- Use form-specific CSS classes for consistent styling
+- Maintain responsive design principles
+
+## Item Counters & Interactive Elements
+- Use ItemCounter component from [src/components/form/steps/ItemCounter.js](mdc:src/components/form/steps/ItemCounter.js)
+- Follow established patterns for plus/minus controls
+- Implement proper validation for numeric inputs

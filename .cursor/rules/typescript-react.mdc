@@ -1,0 +1,43 @@
+# TypeScript & React Coding Standards
+
+## File Naming Conventions
+- Components: PascalCase (e.g., `FormHeader.tsx`, `Step1.js`)
+- Pages: lowercase with extensions (e.g., `page.tsx`, `client.tsx`)
+- Utilities: camelCase (e.g., `utils.js`)
+
+## Component Structure
+Follow the existing pattern seen in [src/components/form/FormHeader.js](mdc:src/components/form/FormHeader.js):
+
+```tsx
+// Imports first
+import React from 'react';
+import { useTranslations } from 'next-intl';
+
+// Component with proper TypeScript types
+const ComponentName = ({ prop1, prop2 }: Props) => {
+  const t = useTranslations();
+  
+  return (
+    <div className="component-class">
+      {/* JSX content */}
+    </div>
+  );
+};
+
+export default ComponentName;
+```
+
+## State Management
+- Use Redux for global form state - see [src/store/slices/formSlice.js](mdc:src/store/slices/formSlice.js)
+- Follow the established pattern for state updates
+- Use local state for component-specific data
+
+## Internationalization
+- Always use `useTranslations()` hook for text content
+- Reference message keys from [messages/](mdc:messages/) files
+- Use descriptive translation keys that match the context
+
+## CSS Classes
+- Prefer Tailwind utility classes for styling
+- Use custom SCSS classes from [src/scss/](mdc:src/scss/) for complex components
+- Follow BEM methodology for custom class naming

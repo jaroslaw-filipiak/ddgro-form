@@ -1,0 +1,79 @@
+# Internationalization Guidelines
+
+## Supported Languages
+This project supports 5 languages:
+- English (en) - [messages/en.json](mdc:messages/en.json)
+- German (de) - [messages/de.json](mdc:messages/de.json)  
+- Spanish (es) - [messages/es.json](mdc:messages/es.json)
+- French (fr) - [messages/fr.json](mdc:messages/fr.json)
+- Polish (pl) - [messages/pl.json](mdc:messages/pl.json)
+
+## Frontend Translation Patterns
+
+### Using Translations in Components
+```tsx
+import { useTranslations } from 'next-intl';
+
+const Component = () => {
+  const t = useTranslations();
+  
+  return (
+    <div>
+      <h1>{t('common.title')}</h1>
+      <p>{t('form.step1.description')}</p>
+    </div>
+  );
+};
+```
+
+### Translation Key Structure
+Use hierarchical keys with descriptive naming:
+```json
+{
+  "common": {
+    "title": "Title",
+    "save": "Save",
+    "cancel": "Cancel"
+  },
+  "form": {
+    "step1": {
+      "title": "First Step",
+      "description": "Description for step 1"
+    }
+  }
+}
+```
+
+### Locale Routing
+- Middleware configuration: [middleware.ts](mdc:middleware.ts)
+- Localized pages in [src/app/[locale]/](mdc:src/app/[locale]/)
+- Use Next.js internationalization routing
+
+## Backend Translation Support
+
+### Email Templates
+- Template files: [ddgro-nowy-backend/templates/emails/](mdc:ddgro-nowy-backend/templates/emails/)
+- Follow naming pattern: `template_[locale].hbs`
+- Use translation objects from [ddgro-nowy-backend/translations/](mdc:ddgro-nowy-backend/translations/)
+
+### API Response Localization
+```javascript
+const translations = require('../translations');
+
+router.post('/endpoint', (req, res) => {
+  const locale = req.headers['accept-language'] || 'en';
+  const t = translations[locale] || translations.en;
+  
+  res.json({
+    success: true,
+    message: t.success.operationCompleted
+  });
+});
+```
+
+## Best Practices
+1. **Always use translation keys** - Never hardcode text strings
+2. **Consistent key naming** - Use descriptive, hierarchical keys
+3. **Fallback to English** - Ensure all keys exist in English as fallback
+4. **Context-aware translations** - Group related translations logically
+5. **Pluralization support** - Use appropriate plural forms for each language
