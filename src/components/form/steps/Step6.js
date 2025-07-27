@@ -23,6 +23,13 @@ import {
   PaginationItem,
   PaginationCursor,
 } from '@heroui/pagination';
+import {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  useDisclosure,
+} from '@heroui/modal';
 
 import { SearchIcon } from './SearchIcon';
 import { ChevronDownIcon } from './ChevronDownIcon';
@@ -64,6 +71,8 @@ export default function Step6({ activeStep, setActiveStep }) {
   ];
 
   const [selected, setSelected] = useState(null);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const INITIAL_VISIBLE_COLUMNS = ['id', 'image', 'name', 'series', 'actions'];
 
   const [filterValue, setFilterValue] = useState('');
@@ -80,6 +89,12 @@ export default function Step6({ activeStep, setActiveStep }) {
   const [page, setPage] = useState(1);
 
   const hasSearchFilter = Boolean(filterValue);
+
+  // Handle image click to open modal
+  const handleImageClick = (product) => {
+    setSelectedProduct(product);
+    onOpen();
+  };
 
   // Helper function to get localized value
   const getLocalizedValue = useCallback(
@@ -186,15 +201,16 @@ export default function Step6({ activeStep, setActiveStep }) {
                 <Image
                   src={`/assets/${product.image_url}`}
                   alt={getLocalizedValue(product.name)}
-                  width={48}
-                  height={48}
-                  className='object-cover rounded-md'
+                  width={64}
+                  height={64}
+                  className='object-cover rounded-md cursor-pointer hover:opacity-80 transition-opacity'
                   onError={(e) => {
                     e.target.src = '/assets/placeholder-96-68.png';
                   }}
+                  onClick={() => handleImageClick(product)}
                 />
               ) : (
-                <div className='w-12 h-12 bg-gray-200 rounded-md flex items-center justify-center'>
+                <div className='w-16 h-16 bg-gray-200 rounded-md flex items-center justify-center'>
                   <span className='text-gray-400 text-xs'>Brak</span>
                 </div>
               )}
@@ -498,6 +514,36 @@ export default function Step6({ activeStep, setActiveStep }) {
           </div>
         </div>
       </section>
+
+      {/* Image Modal */}
+      <Modal
+        isOpen={isOpen}
+        onClose={onClose}
+        size='2xl'
+        backdrop='blur'
+      >
+        <ModalContent>
+          <ModalHeader className='flex flex-col gap-1'>
+            {selectedProduct && getLocalizedValue(selectedProduct.name)}
+          </ModalHeader>
+          <ModalBody className='flex justify-center pb-6'>
+            <div className='flex items-center justify-center p-6'>
+              {selectedProduct && selectedProduct.image_url && (
+                <Image
+                  src={`/assets/${selectedProduct.image_url}`}
+                  alt={getLocalizedValue(selectedProduct.name)}
+                  width={160}
+                  height={400}
+                  className='object-contain rounded-lg'
+                  onError={(e) => {
+                    e.target.src = '/assets/placeholder-96-68.png';
+                  }}
+                />
+              )}
+            </div>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
     </>
   );
 }
