@@ -44,8 +44,8 @@ export default function Step6({ activeStep, setActiveStep }) {
 
   const columns = [
     { name: t('Step6.table.id'), uid: 'id', sortable: true },
+    { name: t('Step6.table.image'), uid: 'image', sortable: false },
     { name: t('Step6.table.name'), uid: 'name', sortable: true },
-    { name: t('Step6.table.shortName'), uid: 'short_name', sortable: true },
     { name: t('Step6.table.series'), uid: 'series', sortable: true },
     { name: t('Step6.table.actions'), uid: 'actions', sortable: false },
   ];
@@ -64,7 +64,7 @@ export default function Step6({ activeStep, setActiveStep }) {
   ];
 
   const [selected, setSelected] = useState(null);
-  const INITIAL_VISIBLE_COLUMNS = ['id', 'name', 'series', 'actions'];
+  const INITIAL_VISIBLE_COLUMNS = ['id', 'image', 'name', 'series', 'actions'];
 
   const [filterValue, setFilterValue] = useState('');
   const [selectedKeys, setSelectedKeys] = useState(new Set([]));
@@ -153,7 +153,7 @@ export default function Step6({ activeStep, setActiveStep }) {
       const columnKey = sortDescriptor.column;
 
       // Handle special cases for localized fields
-      if (columnKey === 'name' || columnKey === 'short_name') {
+      if (columnKey === 'name') {
         const aValue = getLocalizedValue(a[columnKey]).toLowerCase();
         const bValue = getLocalizedValue(b[columnKey]).toLowerCase();
 
@@ -179,18 +179,31 @@ export default function Step6({ activeStep, setActiveStep }) {
       switch (columnKey) {
         case 'id':
           return <div>{product.id}</div>;
-        case 'name':
-          const productName = getLocalizedValue(product.name);
-          const shortName = getLocalizedValue(product.short_name);
-
+        case 'image':
           return (
-            <div>
-              {productName}
-              <strong> ({shortName})</strong>
+            <div className='flex justify-center'>
+              {product.image_url ? (
+                <Image
+                  src={`/assets/${product.image_url}`}
+                  alt={getLocalizedValue(product.name)}
+                  width={48}
+                  height={48}
+                  className='object-cover rounded-md'
+                  onError={(e) => {
+                    e.target.src = '/assets/placeholder-96-68.png';
+                  }}
+                />
+              ) : (
+                <div className='w-12 h-12 bg-gray-200 rounded-md flex items-center justify-center'>
+                  <span className='text-gray-400 text-xs'>Brak</span>
+                </div>
+              )}
             </div>
           );
-        case 'short_name':
-          return <div>{getLocalizedValue(product.short_name)}</div>;
+        case 'name':
+          const productName = getLocalizedValue(product.name);
+
+          return <div>{productName}</div>;
         case 'series':
           if (!product.series) return null;
           let words = product.series.split('-');

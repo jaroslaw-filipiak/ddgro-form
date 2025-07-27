@@ -117,8 +117,8 @@
     "series": "Series",
     "table": {
       "id": "ID",
+      "image": "Image",
       "name": "Name",
-      "shortName": "Short name",
       "series": "Series",
       "actions": "Actions"
     },
