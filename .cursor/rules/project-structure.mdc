@@ -1,42 +1,152 @@
-# DDGRO Project Structure Guide
+---
+alwaysApply: true
+---
 
-## Frontend (ddgro-form/)
-The main Next.js application with internationalization support.
+# Project Structure Guide
 
-### Key Entry Points
-- Main layout: [src/app/layout.tsx](mdc:src/app/layout.tsx)
-- Home page: [src/app/page.tsx](mdc:src/app/page.tsx)
-- Localized pages: [src/app/[locale]/](mdc:src/app/[locale]/)
-- Form components: [src/components/form/](mdc:src/components/form/)
+## Multi-Project Architecture
 
-### State Management
-- Redux store: [src/store/index.js](mdc:src/store/index.js)
-- Form slice: [src/store/slices/formSlice.js](mdc:src/store/slices/formSlice.js)
+This workspace contains two interconnected projects:
 
-### Styling
-- Global styles: [src/app/globals.css](mdc:src/app/globals.css)
-- SCSS components: [src/scss/](mdc:src/scss/)
-- Tailwind config: [tailwind.config.js](mdc:tailwind.config.js)
+### Frontend: ddgro-form
 
-### Internationalization
-- Message files: [messages/](mdc:messages/)
-- Middleware: [middleware.ts](mdc:middleware.ts)
+**Location**: [ddgro-form/](mdc:ddgro-form/)  
+**Type**: Next.js 14 Application  
+**Purpose**: Terrace calculation form with multi-step interface
 
-## Backend (ddgro-nowy-backend/)
-Express.js API server with MongoDB integration.
+#### Key Directories
 
-### Key Entry Points
-- Main app: [ddgro-nowy-backend/app.js](mdc:ddgro-nowy-backend/app.js)
-- Server startup: [ddgro-nowy-backend/bin/www](mdc:ddgro-nowy-backend/bin/www)
+- **[src/app/](mdc:src/app/)** - Next.js App Router pages and layouts
+- **[src/components/](mdc:src/components/)** - Reusable React components
+  - **[src/components/form/steps/](mdc:src/components/form/steps/)** - Multi-step form components
+  - **[src/components/admin/](mdc:src/components/admin/)** - Admin panel components
+- **[src/store/](mdc:src/store/)** - Redux store and slices
+- **[src/scss/](mdc:src/scss/)** - SCSS stylesheets and components
+- **[messages/](mdc:messages/)** - Internationalization files (en, de, es, fr, pl)
+- **[public/assets/](mdc:public/assets/)** - Static assets and images
 
-### API Routes
-- Base routes: [ddgro-nowy-backend/routes/](mdc:ddgro-nowy-backend/routes/)
-- API endpoints: [ddgro-nowy-backend/routes/api/](mdc:ddgro-nowy-backend/routes/api/)
+#### Main Technologies
 
-### Models & Data
-- MongoDB models: [ddgro-nowy-backend/models/](mdc:ddgro-nowy-backend/models/)
-- Database migrations: [ddgro-nowy-backend/migrations/](mdc:ddgro-nowy-backend/migrations/)
+- Next.js 14 with App Router
+- Redux Toolkit for state management
+- HeroUI component library
+- Next-intl for internationalization
+- SCSS + Tailwind CSS for styling
+- TypeScript and JavaScript mixed
 
-### Services
-- Email service: [ddgro-nowy-backend/services/sendEmail.js](mdc:ddgro-nowy-backend/services/sendEmail.js)
-- Authentication: [ddgro-nowy-backend/config/passport.js](mdc:ddgro-nowy-backend/config/passport.js)
+### Backend: ddgro-nowy-backend
+
+**Location**: [ddgro-nowy-backend/](mdc:ddgro-nowy-backend/)  
+**Type**: Express.js API Server  
+**Purpose**: API endpoints, PDF generation, email services
+
+#### Key Directories
+
+- **[routes/api/](mdc:ddgro-nowy-backend/routes/api/)** - API endpoints
+  - **[routes/api/application.js](mdc:ddgro-nowy-backend/routes/api/application.js)** - Form submission and PDF generation
+  - **[routes/api/products.js](mdc:ddgro-nowy-backend/routes/api/products.js)** - Product management
+  - **[routes/api/accesories.js](mdc:ddgro-nowy-backend/routes/api/accesories.js)** - Accessory management
+- **[models/](mdc:ddgro-nowy-backend/models/)** - MongoDB/Mongoose models
+- **[services/](mdc:ddgro-nowy-backend/services/)** - Email and external services
+- **[templates/](mdc:ddgro-nowy-backend/templates/)** - Email and PDF templates
+- **[utils/](mdc:ddgro-nowy-backend/utils/)** - Utility functions and helpers
+
+#### Main Technologies
+
+- Express.js with Node.js
+- MongoDB with Mongoose ODM
+- Puppeteer for PDF generation
+- SendGrid and Nodemailer for emails
+- Handlebars for templating
+
+## Data Flow Architecture
+
+### Form Submission Flow
+
+1. **User Input** → [src/components/form/steps/](mdc:src/components/form/steps/)
+2. **State Management** → [src/store/slices/formSlice.js](mdc:src/store/slices/formSlice.js)
+3. **API Call** → [src/app/lib/api.js](mdc:src/app/lib/api.js)
+4. **Backend Processing** → [ddgro-nowy-backend/routes/api/application.js](mdc:ddgro-nowy-backend/routes/api/application.js)
+5. **Database Storage** → [ddgro-nowy-backend/models/Application.js](mdc:ddgro-nowy-backend/models/Application.js)
+6. **PDF Generation** → [ddgro-nowy-backend/templates/pdf/](mdc:ddgro-nowy-backend/templates/pdf/)
+7. **Email Notification** → [ddgro-nowy-backend/services/sendEmail.js](mdc:ddgro-nowy-backend/services/sendEmail.js)
+
+### Product Data Flow
+
+1. **Data Fetch** → [src/app/lib/api.js](mdc:src/app/lib/api.js)
+2. **Backend API** → [ddgro-nowy-backend/routes/api/products.js](mdc:ddgro-nowy-backend/routes/api/products.js)
+3. **Database Query** → [ddgro-nowy-backend/models/Products.js](mdc:ddgro-nowy-backend/models/Products.js)
+4. **State Update** → [src/store/slices/formSlice.js](mdc:src/store/slices/formSlice.js)
+5. **Component Render** → [src/components/form/steps/](mdc:src/components/form/steps/)
+
+## Configuration Files
+
+### Frontend Configuration
+
+- **[package.json](mdc:package.json)** - Dependencies and scripts
+- **[next.config.js](mdc:next.config.js)** - Next.js configuration
+- **[tailwind.config.js](mdc:tailwind.config.js)** - Tailwind CSS configuration
+- **[tsconfig.json](mdc:tsconfig.json)** - TypeScript configuration
+- **[middleware.ts](mdc:middleware.ts)** - Next.js middleware for i18n
+
+### Backend Configuration
+
+- **[ddgro-nowy-backend/package.json](mdc:ddgro-nowy-backend/package.json)** - Dependencies and scripts
+- **[ddgro-nowy-backend/app.js](mdc:ddgro-nowy-backend/app.js)** - Express app configuration
+
+## Development Workflow
+
+### Starting Development
+
+```bash
+# Frontend (Next.js)
+cd ddgro-form
+npm run dev
+
+# Backend (Express.js)
+cd ddgro-nowy-backend
+npm run dev
+```
+
+### Key Development Files
+
+- **Frontend Entry**: [src/app/page.tsx](mdc:src/app/page.tsx)
+- **Backend Entry**: [ddgro-nowy-backend/app.js](mdc:ddgro-nowy-backend/app.js)
+- **Main Form**: [src/components/form/steps/Step7.js](mdc:src/components/form/steps/Step7.js)
+- **State Management**: [src/store/slices/formSlice.js](mdc:src/store/slices/formSlice.js)
+
+## Internationalization Setup
+
+- **Languages**: English, German, Spanish, French, Polish
+- **Message Files**: [messages/](mdc:messages/) directory
+- **Implementation**: Next-intl with App Router
+- **Locale Routing**: [src/app/[locale]/](mdc:src/app/[locale]/)
+
+## Styling Architecture
+
+- **Global Styles**: [src/app/globals.css](mdc:src/app/globals.css)
+- **SCSS Entry**: [src/scss/main.scss](mdc:src/scss/main.scss)
+- **Component Styles**: [src/scss/components/](mdc:src/scss/components/)
+- **Tailwind Config**: [tailwind.config.js](mdc:tailwind.config.js)
+
+## API Integration Points
+
+- **Frontend API Layer**: [src/app/lib/api.js](mdc:src/app/lib/api.js)
+- **Backend Routes**: [ddgro-nowy-backend/routes/api/](mdc:ddgro-nowy-backend/routes/api/)
+- **Models**: [ddgro-nowy-backend/models/](mdc:ddgro-nowy-backend/models/)
+
+## Build and Deployment
+
+- **Frontend Build**: `npm run build` in [ddgro-form/](mdc:ddgro-form/)
+- **Backend Start**: `npm start` in [ddgro-nowy-backend/](mdc:ddgro-nowy-backend/)
+- **Static Export**: Output in [out/](mdc:out/) directory
+
+For specific development patterns, refer to the dedicated rule files:
+
+- [Frontend Components](.cursor/rules/frontend-components.mdc)
+- [Redux Patterns](.cursor/rules/redux-patterns.mdc)
+- [Styling Guidelines](.cursor/rules/styling-guidelines.mdc)
+- [Form Patterns](.cursor/rules/form-patterns.mdc)
+- [i18n Patterns](.cursor/rules/i18n-patterns.mdc)
+- [API Integration](.cursor/rules/api-integration.mdc)
+- [Backend API Standards](.cursor/rules/api-backend.mdc)
