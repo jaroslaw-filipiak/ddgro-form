@@ -50,6 +50,8 @@ export default function Step5({ activeStep, setActiveStep }) {
   const onChangeValue = (event) => {
     let updatedCheckedItems;
 
+    // TODO: tutaj juz nie ma price
+
     if (event.target.checked) {
       updatedCheckedItems = [
         ...checkedItems,
@@ -62,7 +64,7 @@ export default function Step5({ activeStep, setActiveStep }) {
           code: event.target.dataset.code,
           name: event.target.dataset.name,
           short_name: event.target.dataset.short_name,
-          price_net: event.target.dataset.price_net,
+          prices: event.target.dataset.prices,
         },
       ];
     } else {
@@ -174,6 +176,7 @@ export default function Step5({ activeStep, setActiveStep }) {
                             data-code={item.distance_code}
                             data-name={item.name[locale]}
                             data-count={item.count}
+                            data-prices={item.prices}
                           />
                           <div className='flex items-center justify-between group'>
                             <div className='flex items-center justify-start gap-3 lg:gap-6'>
