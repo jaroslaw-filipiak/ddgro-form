@@ -1,19 +1,35 @@
-import { React, useState, useMemo, useCallback, useEffect, use } from 'react';
+import { React, useState, useMemo, useCallback, useEffect } from 'react';
+import { useTranslations, useLocale } from 'next-intl';
+
+import { Input } from '@heroui/input';
 import {
   Table,
   TableHeader,
-  TableColumn,
   TableBody,
+  TableColumn,
   TableRow,
   TableCell,
-  Input,
-  Button,
-  DropdownTrigger,
+} from '@heroui/table';
+import { Button, ButtonGroup } from '@heroui/button';
+import {
   Dropdown,
+  DropdownTrigger,
   DropdownMenu,
+  DropdownSection,
   DropdownItem,
+} from '@heroui/dropdown';
+import {
   Pagination,
-} from '@nextui-org/react';
+  PaginationItem,
+  PaginationCursor,
+} from '@heroui/pagination';
+import {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  useDisclosure,
+} from '@heroui/modal';
 
 import { SearchIcon } from './SearchIcon';
 import { ChevronDownIcon } from './ChevronDownIcon';
@@ -27,27 +43,37 @@ function capitalizeFirstLetter(string) {
 }
 
 export default function Step6({ activeStep, setActiveStep }) {
+  const t = useTranslations();
   const dispatch = useDispatch();
   const products = useSelector((state) => state.form.products);
 
+  const currentLocale = useLocale();
+
   const columns = [
-    { name: 'id', uid: 'id', sortable: true },
-    { name: 'Nazwa', uid: 'name', sortable: true },
-    { name: 'Nazwa skrócona', uid: 'short_name', sortable: true },
-    { name: 'Seria', uid: 'series', sortable: true },
-    { name: 'Akcje', uid: 'actions', sortable: false },
+    { name: t('Step6.table.id'), uid: 'id', sortable: true },
+    { name: t('Step6.table.image'), uid: 'image', sortable: false },
+    { name: t('Step6.table.name'), uid: 'name', sortable: true },
+    { name: t('Step6.table.series'), uid: 'series', sortable: true },
+    { name: t('Step6.table.actions'), uid: 'actions', sortable: false },
   ];
 
   const statusOptions = [
-    { name: 'Spiral', uid: 'spiral' },
-    { name: 'Podstawki tarasowe', uid: 'podstawki-tarasowe' },
-    { name: 'Standard', uid: 'standard' },
-    { name: 'Max', uid: 'max', sortable: true },
-    { name: 'Raptor', uid: 'raptor', sortable: true },
+    { name: 'Standard', uid: 'Standard' },
+    { name: 'Spiral', uid: 'Spiral' },
+    { name: 'Max', uid: 'Max' },
+    { name: 'Raptor', uid: 'Raptor' },
+    { name: 'Alu', uid: 'Alu' },
+    { name: 'Clever Level', uid: 'Clever Level' },
+    {
+      name: 'Akcesoria wsporniki tarasowe',
+      uid: 'Akcesoria wsporniki tarasowe',
+    },
   ];
 
   const [selected, setSelected] = useState(null);
-  const INITIAL_VISIBLE_COLUMNS = ['id', 'name', 'series', 'actions'];
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const INITIAL_VISIBLE_COLUMNS = ['id', 'image', 'name', 'series', 'actions'];
 
   const [filterValue, setFilterValue] = useState('');
   const [selectedKeys, setSelectedKeys] = useState(new Set([]));
@@ -64,22 +90,49 @@ export default function Step6({ activeStep, setActiveStep }) {
 
   const hasSearchFilter = Boolean(filterValue);
 
+  // Handle image click to open modal
+  const handleImageClick = (product) => {
+    setSelectedProduct(product);
+    onOpen();
+  };
+
+  // Helper function to get localized value
+  const getLocalizedValue = useCallback(
+    (field) => {
+      if (
+        typeof field === 'object' &&
+        field !== null &&
+        !Array.isArray(field)
+      ) {
+        return (
+          field[currentLocale] || field.pl || Object.values(field)[0] || ''
+        );
+      }
+      return field;
+    },
+    [currentLocale]
+  );
+
   const headerColumns = useMemo(() => {
     if (visibleColumns === 'all') return columns;
 
     return columns.filter((column) =>
       Array.from(visibleColumns).includes(column.uid)
     );
-  }, [visibleColumns]);
+  }, [visibleColumns, columns]);
 
   const filteredItems = useMemo(() => {
+    if (!products || !Array.isArray(products)) return [];
+
     let filteredproducts = [...products];
 
     if (hasSearchFilter) {
-      filteredproducts = filteredproducts.filter((product) =>
-        product.name.toLowerCase().includes(filterValue.toLowerCase())
-      );
+      filteredproducts = filteredproducts.filter((product) => {
+        const productName = getLocalizedValue(product.name);
+        return productName.toLowerCase().includes(filterValue.toLowerCase());
+      });
     }
+
     if (
       statusFilter !== 'all' &&
       Array.from(statusFilter).length !== statusOptions.length
@@ -90,7 +143,14 @@ export default function Step6({ activeStep, setActiveStep }) {
     }
 
     return filteredproducts;
-  }, [products, filterValue, statusFilter]);
+  }, [
+    products,
+    filterValue,
+    statusFilter,
+    hasSearchFilter,
+    getLocalizedValue,
+    statusOptions.length,
+  ]);
 
   const pages = Math.ceil(filteredItems.length / rowsPerPage);
 
@@ -102,46 +162,87 @@ export default function Step6({ activeStep, setActiveStep }) {
   }, [page, filteredItems, rowsPerPage]);
 
   const sortedItems = useMemo(() => {
+    if (!items.length) return [];
+
     return [...items].sort((a, b) => {
-      const first = a[sortDescriptor.column];
-      const second = b[sortDescriptor.column];
+      const columnKey = sortDescriptor.column;
+
+      // Handle special cases for localized fields
+      if (columnKey === 'name') {
+        const aValue = getLocalizedValue(a[columnKey]).toLowerCase();
+        const bValue = getLocalizedValue(b[columnKey]).toLowerCase();
+
+        const cmp = aValue < bValue ? -1 : aValue > bValue ? 1 : 0;
+        return sortDescriptor.direction === 'descending' ? -cmp : cmp;
+      }
+
+      // Default sorting for other columns
+      const first = a[columnKey];
+      const second = b[columnKey];
       const cmp = first < second ? -1 : first > second ? 1 : 0;
 
       return sortDescriptor.direction === 'descending' ? -cmp : cmp;
     });
-  }, [sortDescriptor, items]);
+  }, [sortDescriptor, items, getLocalizedValue]);
 
-  const renderCell = useCallback((product, columnKey) => {
-    const cellValue = product[columnKey];
+  const renderCell = useCallback(
+    (product, columnKey) => {
+      if (!product) return null;
 
-    switch (columnKey) {
-      case 'id':
-        return <div>{product.id}</div>;
-      case 'name':
-        return (
-          <div>
-            {product.name}
-            <strong> ({product.short_name})</strong>
-          </div>
-        );
-      case 'series':
-        let words = product.series.split('-');
-        let capitalizedWords = words.map((word) => capitalizeFirstLetter(word));
-        let finalString = capitalizedWords.join(' ');
-        return <div>{finalString}</div>;
-      case 'actions':
-        return (
-          <div className='relative flex justify-end items-center gap-2'>
-            <ItemCounter
-              key={product.id}
-              item={product}
-            />
-          </div>
-        );
-      default:
-        return cellValue;
-    }
-  }, []);
+      const cellValue = product[columnKey];
+
+      switch (columnKey) {
+        case 'id':
+          return <div>{product.id}</div>;
+        case 'image':
+          return (
+            <div className='flex justify-center'>
+              {product.image_url ? (
+                <Image
+                  src={`/assets/${product.image_url}`}
+                  alt={getLocalizedValue(product.name)}
+                  width={64}
+                  height={64}
+                  className='object-cover rounded-md cursor-pointer hover:opacity-80 transition-opacity'
+                  onError={(e) => {
+                    e.target.src = '/assets/placeholder-96-68.png';
+                  }}
+                  onClick={() => handleImageClick(product)}
+                />
+              ) : (
+                <div className='w-16 h-16 bg-gray-200 rounded-md flex items-center justify-center'>
+                  <span className='text-gray-400 text-xs'>Brak</span>
+                </div>
+              )}
+            </div>
+          );
+        case 'name':
+          const productName = getLocalizedValue(product.name);
+
+          return <div>{productName}</div>;
+        case 'series':
+          if (!product.series) return null;
+          let words = product.series.split('-');
+          let capitalizedWords = words.map((word) =>
+            capitalizeFirstLetter(word)
+          );
+          let finalString = capitalizedWords.join(' ');
+          return <div>{finalString}</div>;
+        case 'actions':
+          return (
+            <div className='relative flex justify-end items-center gap-2'>
+              <ItemCounter
+                key={product.id}
+                item={product}
+              />
+            </div>
+          );
+        default:
+          return getLocalizedValue(cellValue);
+      }
+    },
+    [getLocalizedValue]
+  );
 
   const onNextPage = useCallback(() => {
     if (page < pages) {
@@ -181,7 +282,7 @@ export default function Step6({ activeStep, setActiveStep }) {
           <Input
             isClearable
             className='w-full sm:max-w-[44%]'
-            placeholder='Szukaj po nazwie...'
+            placeholder={t('Step6.search')}
             startContent={<SearchIcon />}
             value={filterValue}
             onClear={() => onClear()}
@@ -194,7 +295,7 @@ export default function Step6({ activeStep, setActiveStep }) {
                   endContent={<ChevronDownIcon className='text-small' />}
                   variant='flat'
                 >
-                  Seria
+                  {t('Step6.series')}
                 </Button>
               </DropdownTrigger>
               <DropdownMenu
@@ -222,11 +323,11 @@ export default function Step6({ activeStep, setActiveStep }) {
   }, [
     filterValue,
     statusFilter,
-    visibleColumns,
     onRowsPerPageChange,
-    products.length,
     onSearchChange,
-    hasSearchFilter,
+    onClear,
+    t,
+    statusOptions,
   ]);
 
   const bottomContent = useMemo(() => {
@@ -235,13 +336,15 @@ export default function Step6({ activeStep, setActiveStep }) {
         <span className='w-[30%] text-small text-default-400'>
           {selectedKeys === 'all'
             ? 'All items selected'
-            : `${selectedKeys.size} of ${filteredItems.length} selected`}
+            : `${selectedKeys.size} ${t('Step6.pagination.selected')} ${
+                filteredItems.length
+              }`}
         </span>
         <Pagination
           isCompact
           showControls
           showShadow
-          color='primary'
+          color='default'
           page={page}
           total={pages}
           onChange={setPage}
@@ -253,7 +356,7 @@ export default function Step6({ activeStep, setActiveStep }) {
             variant='flat'
             onPress={onPreviousPage}
           >
-            Wstecz
+            {t('Step6.pagination.previous')}
           </Button>
           <Button
             isDisabled={pages === 1}
@@ -261,23 +364,31 @@ export default function Step6({ activeStep, setActiveStep }) {
             variant='flat'
             onPress={onNextPage}
           >
-            Dalej
+            {t('Step6.pagination.next')}
           </Button>
         </div>
       </div>
     );
-  }, [selectedKeys, items.length, page, pages, hasSearchFilter]);
+  }, [
+    selectedKeys,
+    filteredItems.length,
+    page,
+    pages,
+    onPreviousPage,
+    onNextPage,
+    t,
+  ]);
 
   return (
     <>
       <section>
-        <div className='step--wrapper step-6 bg-[#f7f5f5]  relative'>
+        <div className='step--wrapper step-6 bg-[#f7f5f5] relative'>
           {/* label absolute */}
-          <div className='absolute left-0 top-0  text-white font-bold text-base flex flex-col gap-1 items-start justify-center'>
+          <div className='absolute left-0 top-0 text-white font-bold text-base flex flex-col gap-1 items-start justify-center'>
             <div className='bg-main pt-3 pb-3 pl-8 pr-8'>
-              Dodaj ręcznie dodatkowe ilości produktów
+              {t('Step6.title')}
             </div>
-            <div className=' bg-red-500 pt-3 pb-3 pl-8 pr-8 flex items-center gap-3 w-full'>
+            <div className='bg-red-500 pt-3 pb-3 pl-8 pr-8 flex items-center gap-3 w-full'>
               <div>
                 <svg
                   className='icon icon-tabler icon-tabler-alert-circle-filled'
@@ -302,10 +413,7 @@ export default function Step6({ activeStep, setActiveStep }) {
                   />
                 </svg>
               </div>
-              <span>
-                Uwaga: krok dodatkowy umożliwiający ręczne dodanie produktów,
-                można pominąć bez zaznaczania jakiejkolwiek opcji
-              </span>
+              <span>{t('Step6.warning')}</span>
             </div>
           </div>
           {/* content + padding */}
@@ -314,24 +422,24 @@ export default function Step6({ activeStep, setActiveStep }) {
             <div className='series--info'>
               <header className='flex items-center justify-start gap-10'>
                 <div>
-                  <div className='text-2xl lg:text-2xl font-bold text-black text-opacity-70 mb-10 flex flex-col lg:flex-row gap-10  items-center justify-center'>
-                    Jeśli nie chcesz dodawać ręcznie produktów
+                  <div className='text-2xl lg:text-2xl font-bold text-black text-opacity-70 mb-10 flex flex-col lg:flex-row gap-10 items-center justify-center'>
+                    {t('Step6.skipInfo')}
                     <button
                       onClick={() => setActiveStep(activeStep + 1)}
-                      className='btn btn--main btn--rounded '
+                      className='btn btn--main btn--rounded'
                     >
-                      Następny krok
+                      {t('Step1.nextButton')}
                       <Image
                         width={42}
                         height={42}
                         className='ml-5'
                         src='/assets/arrow-next.svg'
-                        alt=''
+                        alt={t('Step1.nextArrow')}
                       />
                     </button>
                   </div>
                   <p className='text-2xl lg:text-4xl font-bold text-black text-opacity-70'>
-                    Przeglądaj cały asortyment DDGRO
+                    {t('Step6.browseAssortment')}
                   </p>
                 </div>
               </header>
@@ -343,11 +451,6 @@ export default function Step6({ activeStep, setActiveStep }) {
                   aria-label='products--ddgro-table'
                   bottomContent={bottomContent}
                   bottomContentPlacement='outside'
-                  // classNames={{
-                  //   wrapper: 'max-h-[382px]',
-                  // }}
-                  // selectedKeys={selectedKeys}
-                  // selectionMode='multiple'
                   sortDescriptor={sortDescriptor}
                   topContent={topContent}
                   topContentPlacement='outside'
@@ -366,7 +469,7 @@ export default function Step6({ activeStep, setActiveStep }) {
                     )}
                   </TableHeader>
                   <TableBody
-                    emptyContent={'No products found'}
+                    emptyContent={t('Step6.noProducts')}
                     items={sortedItems}
                   >
                     {(item) => (
@@ -386,13 +489,13 @@ export default function Step6({ activeStep, setActiveStep }) {
                 onClick={() => setActiveStep(activeStep + 1)}
                 className='btn btn--main btn--rounded'
               >
-                Następny krok
+                {t('Step1.nextButton')}
                 <Image
                   width={42}
                   height={42}
                   className='ml-5'
                   src='/assets/arrow-next.svg'
-                  alt=''
+                  alt={t('Step1.nextArrow')}
                 />
               </button>
               <button
@@ -402,7 +505,7 @@ export default function Step6({ activeStep, setActiveStep }) {
                 <Image
                   className='min-w-[42px]'
                   src='/assets/arrow-next.svg'
-                  alt=''
+                  alt={t('Step1.nextArrow')}
                   width={42}
                   height={42}
                 />
@@ -411,6 +514,36 @@ export default function Step6({ activeStep, setActiveStep }) {
           </div>
         </div>
       </section>
+
+      {/* Image Modal */}
+      <Modal
+        isOpen={isOpen}
+        onClose={onClose}
+        size='2xl'
+        backdrop='blur'
+      >
+        <ModalContent>
+          <ModalHeader className='flex flex-col gap-1'>
+            {selectedProduct && getLocalizedValue(selectedProduct.name)}
+          </ModalHeader>
+          <ModalBody className='flex justify-center pb-6'>
+            <div className='flex items-center justify-center p-6'>
+              {selectedProduct && selectedProduct.image_url && (
+                <Image
+                  src={`/assets/${selectedProduct.image_url}`}
+                  alt={getLocalizedValue(selectedProduct.name)}
+                  width={160}
+                  height={400}
+                  className='object-contain rounded-lg'
+                  onError={(e) => {
+                    e.target.src = '/assets/placeholder-96-68.png';
+                  }}
+                />
+              )}
+            </div>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
     </>
   );
 }

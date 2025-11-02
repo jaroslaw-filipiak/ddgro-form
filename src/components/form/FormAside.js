@@ -1,19 +1,23 @@
-// Now we can use the React-Redux hooks to let React components interact with the Redux store. We can read data from the store with useSelector, and dispatch actions using useDispatch
+'use client';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { useState, useEffect } from 'react';
+import { useTranslations, useLocale } from 'next-intl';
 import {
   changeEmail,
   changePhone,
   changeNameSurname,
   changeProffesion,
 } from '@/store/slices/formSlice';
-import { Select, SelectItem, Input, CircularProgress } from '@nextui-org/react';
-import {} from '@nextui-org/react';
+import { Select, SelectSection, SelectItem } from '@heroui/select';
+import { Input } from '@heroui/input';
+import { CircularProgress } from '@heroui/progress';
 import Image from 'next/image';
 
 export default function FormAside({ setFormAsideVisibility }) {
   const dispatch = useDispatch();
+  const t = useTranslations('FormAside');
+  const locale = useLocale();
   const [response, setResponse] = useState();
   const [value, setValue] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -22,11 +26,11 @@ export default function FormAside({ setFormAsideVisibility }) {
   const NODE_ENV = process.env.NODE_ENV;
 
   const items = [
-    { value: 'klient-indywidualny', label: 'Klientem indywidualnym' },
-    { value: 'Wykowawca', label: 'Wykonawcą' },
-    { value: 'Dystrybutor', label: 'Dystrybutorem' },
-    { value: 'Architekt', label: 'Architektem' },
-    { value: 'GW/Deweloper', label: 'GW/Deweloper' },
+    { value: 'klient-indywidualny', label: t('roles.klient-indywidualny') },
+    { value: 'Wykowawca', label: t('roles.Wykowawca') },
+    { value: 'Dystrybutor', label: t('roles.Dystrybutor') },
+    { value: 'Architekt', label: t('roles.Architekt') },
+    { value: 'GW/Deweloper', label: t('roles.GW/Deweloper') },
   ];
 
   const handleSelectionChange = (item) => {
@@ -39,7 +43,7 @@ export default function FormAside({ setFormAsideVisibility }) {
   );
 
   const handleForm = async (e) => {
-    setResponse(null);
+    setResponse({ message: t('sending') });
     setLoading(true);
 
     const additional_accesories_with_count = state.additional_accessories.map(
@@ -50,6 +54,8 @@ export default function FormAside({ setFormAsideVisibility }) {
         };
       }
     );
+
+    setResponse({ message: t('preparing') });
 
     const form = {
       type: state.type,
@@ -121,14 +127,9 @@ export default function FormAside({ setFormAsideVisibility }) {
       m_raptor_order: state.M_RAPTOR_ORDER,
 
       // =============================
-      /*
-       * Trzeba wysłać całą matryce w zależności do wyboru głównego systemu
-       * np: M_STANDARD jako cały obiekt + wyliczone wartości
-       * count_in_each_section + sections
-       * dodatkowe akcesoria = additional_accesories = tablica z ID
-       * accesories = tablica z accesories = idk why i send this
-       */
+      // USER LANGUAGE
       // =============================
+      lang: locale,
     };
 
     try {
@@ -145,42 +146,44 @@ export default function FormAside({ setFormAsideVisibility }) {
       );
 
       const data = await response.json();
+
+      console.log(form);
       console.log(data);
+      response.ok
+        ? setResponse({ message: t('applicationCreatedMessage') })
+        : setResponse({ message: t('genericErrorMessage') });
+
+      // TODO: test scenario with fails / error in first request
 
       const sendOrderData = {
         to: form.email,
       };
 
-      window.setTimeout(async () => {
-        const sendOrder = await fetch(
-          `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/application/send-order-summary/${data.id}`,
-          {
-            method: 'POST',
-            headers: {
-              Accept: 'application/json',
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(sendOrderData),
-          }
-        );
+      const sendOrder = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/application/send-order-summary/${data.id}`,
+        {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(sendOrderData),
+        }
+      );
 
-        const resFromSendOrder = await sendOrder.json();
-
-        setResponse(resFromSendOrder);
-        setLoading(false);
-      }, 4000);
-
-      setResponse(data);
+      sendOrder.ok
+        ? setResponse({ message: t('successMessage') })
+        : setResponse({ message: t('genericErrorMessage') });
+      console.log(sendOrder);
     } catch (e) {
-      console.log('error===========');
-      console.log(e);
-      console.log('error===========');
-
-      setResponse(e);
-      console.log('form===========');
-      console.log(JSON.stringify(form));
-      console.log('form===========');
+      setResponse({ message: t('genericErrorMessage') });
       setLoading(false);
+      console.log(e);
+    } finally {
+      setLoading(false);
+      setTimeout(() => {
+        setResponse(null);
+      }, 25000);
     }
   };
 
@@ -200,8 +203,7 @@ export default function FormAside({ setFormAsideVisibility }) {
           <div className='flex flex-col lg:flex-row lg:min-h-screen '>
             <div className='w-full p-10 pt-28 lg:pt-10 flex items-start flex-col justify-center lg:w-7/12 2xl:w-6/12'>
               <p className='font-bold text-2xl xl:text-3xl 2xl:text-2xl lg:text-4xl text-white mb-4 2xl:mb-12'>
-                Odbierz PDF <br className='hidden xl:block' />z indywidualną
-                ofertą
+                {t('title')}
               </p>
 
               <form action={handleForm}>
@@ -212,16 +214,17 @@ export default function FormAside({ setFormAsideVisibility }) {
                       className='text-lg text-white font-medium mb-2 '
                       htmlFor='name'
                     >
-                      Imię i nazwisko
+                      {t('nameLabel')}
                     </label>
 
                     <Input
                       onChange={(e) =>
                         dispatch(changeNameSurname(e.target.value))
                       }
-                      className='text-base  text-center font-medium rounded-md w-full'
+                      className='text-base text-center font-medium rounded-md w-full'
                       type='text'
-                      placeholder='Imię, nazwisko'
+                      placeholder={t('namePlaceholder')}
+                      size='lg'
                     />
                   </div>
 
@@ -231,13 +234,14 @@ export default function FormAside({ setFormAsideVisibility }) {
                       className='text-lg text-white font-medium mb-2 '
                       htmlFor='name'
                     >
-                      Adres email
+                      {t('emailLabel')}
                     </label>
                     <Input
                       onChange={(e) => dispatch(changeEmail(e.target.value))}
-                      className='text-base  text-center font-medium rounded-md w-full'
+                      className='text-base text-center font-medium rounded-md w-full'
                       type='email'
-                      placeholder='Wpisz adres email'
+                      placeholder={t('emailPlaceholder')}
+                      size='lg'
                     />
                   </div>
 
@@ -247,14 +251,15 @@ export default function FormAside({ setFormAsideVisibility }) {
                       className='text-lg text-white font-medium mb-2 '
                       htmlFor='phone'
                     >
-                      telefon
+                      {t('phoneLabel')}
                     </label>
 
                     <Input
                       onChange={(e) => dispatch(changePhone(e.target.value))}
-                      className='text-base  text-center font-medium rounded-md w-full'
+                      className='text-base text-center font-medium rounded-md w-full'
                       type='text'
-                      placeholder='telefon'
+                      placeholder={t('phonePlaceholder')}
+                      size='lg'
                     />
                   </div>
                 </div>
@@ -265,11 +270,11 @@ export default function FormAside({ setFormAsideVisibility }) {
                     className='text-lg text-white font-medium mb-2 '
                     htmlFor='selectInput'
                   >
-                    Jestem {value}
+                    {t('roleLabel')} {value}
                   </label>
                   <Select
                     onSelectionChange={handleSelectionChange}
-                    label='Wybierz'
+                    label={t('rolesLabel')}
                     className='w-full'
                     items={items}
                   >
@@ -279,15 +284,7 @@ export default function FormAside({ setFormAsideVisibility }) {
                   </Select>
                 </div>
 
-                <p className='text-white text-sm mt-6'>
-                  {`Będziemy przetwarzać Twoje dane osobowe, aby udzielić odpowiedzi na
-            Twoje pytanie. Administratorem Twoich danych osobowych jest
-            "DECK-DRY" Sp. z o.o. Przysługuje Ci prawo wniesienia sprzeciwu,
-            prawo dostępu do danych, prawo żądania ich sprostowania, ich
-            usunięcia lub ograniczenia ich przetwarzania, a także ich
-            przenoszenia. Szczegółowe informacje znajdziesz w naszej Polityce
-            Prywatności.`}
-                </p>
+                <p className='text-white text-sm mt-6'>{t('privacyPolicy')}</p>
 
                 <div className='w-full flex flex-col items-end justify-start mt-6 2xl:mt-20 mb-6 2xl:mb-16 gap-6'>
                   <button
@@ -296,9 +293,9 @@ export default function FormAside({ setFormAsideVisibility }) {
                       setFormAsideVisibility(true);
                       setLoading(true);
                     }}
-                    className='xl:min-w-[350px] btn btn--main btn--main__small max-w-[230px]  border-[2px] border-white btn--rounded pl-10 pr-10'
+                    className='xl:min-w-[350px] btn btn--main btn--main__small max-w-[230px] border-[2px] border-white btn--rounded pl-10 pr-10'
                   >
-                    {loading ? 'Wysyłanie...' : 'Wyślij'}
+                    {loading ? t('sending') : t('submitButton')}
                     {loading && (
                       <CircularProgress
                         classNames={{
@@ -328,9 +325,12 @@ export default function FormAside({ setFormAsideVisibility }) {
               </form>
             </div>
             <div
-              className=' hidden w-full lg:w-5/12 2xl:w-6/12 bg-main lg:flex flex-col items-center justify-center p-10 bg-cover bg-center'
+              className=' hidden w-full lg:w-5/12 2xl:w-6/12 bg-main lg:flex flex-col items-center justify-center p-10 bg-cover bg-center '
               style={{
                 backgroundImage: `url(${imageBaseUrl}/assets/ddgro-aside-bg.png)`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat',
               }}
             >
               {response?.errors && (
@@ -367,15 +367,6 @@ export default function FormAside({ setFormAsideVisibility }) {
                   </div>
                 </div>
               )}
-              {/* {response?.message && (
-                <div className='mt-4 text-white bg-main pt-12 pb-12 pl-6 pr-6 w-full rounded-lg flex items-center justify-center gap-3'>
-                  <div>
-                    <p className='text-3xl text-center font-medium'>
-                      {response?.message}
-                    </p>
-                  </div>
-                </div>
-              )} */}
             </div>
           </div>
         </div>

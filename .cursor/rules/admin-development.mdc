@@ -1,0 +1,85 @@
+# Admin Panel Development Guidelines
+
+## Admin Architecture
+The admin panel is located in [src/app/admin/](mdc:src/app/admin/) with the following structure:
+
+### Core Components
+- Layout: [src/app/admin/layout.jsx](mdc:src/app/admin/layout.jsx)
+- Main page: [src/app/admin/page.jsx](mdc:src/app/admin/page.jsx)
+- Sidebar: [src/components/admin/Sidebar.jsx](mdc:src/components/admin/Sidebar.jsx)
+
+### Admin Sections
+- Products: [src/app/admin/products/](mdc:src/app/admin/products/)
+- Applications: [src/app/admin/applications/](mdc:src/app/admin/applications/)
+- Accessories: [src/app/admin/accessories/](mdc:src/app/admin/accessories/)
+
+## Data Management Patterns
+
+### Table Components
+Follow the pattern established in [src/app/admin/products/Table.jsx](mdc:src/app/admin/products/Table.jsx):
+
+```jsx
+const AdminTable = ({ data, columns, actions }) => {
+  return (
+    <div className="admin-table">
+      <table>
+        <thead>
+          {/* Column headers */}
+        </thead>
+        <tbody>
+          {data.map(item => (
+            <tr key={item.id}>
+              {/* Table cells */}
+              <td className="actions">
+                {/* Edit, Delete, View actions */}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+};
+```
+
+### API Integration
+Admin pages should integrate with backend APIs from [ddgro-nowy-backend/routes/api/](mdc:ddgro-nowy-backend/routes/api/):
+
+```jsx
+// Products API: ddgro-nowy-backend/routes/api/products.js
+// Accessories API: ddgro-nowy-backend/routes/api/accesories.js
+// Applications API: ddgro-nowy-backend/routes/api/application.js
+
+const fetchData = async () => {
+  try {
+    const response = await fetch('/api/products');
+    const data = await response.json();
+    // Handle data
+  } catch (error) {
+    // Handle error
+  }
+};
+```
+
+## Authentication & Security
+- Implement authentication checks for all admin routes
+- Use middleware to protect admin endpoints
+- Follow authentication patterns from [ddgro-nowy-backend/routes/api/auth.js](mdc:ddgro-nowy-backend/routes/api/auth.js)
+
+## Navigation & Layout
+- Use consistent sidebar navigation from [src/components/admin/Sidebar.jsx](mdc:src/components/admin/Sidebar.jsx)
+- Maintain breadcrumb navigation for deep admin sections
+- Implement responsive admin layouts
+
+## CRUD Operations
+Standard patterns for Create, Read, Update, Delete operations:
+- List views with pagination and search
+- Modal or page-based forms for create/edit
+- Confirmation dialogs for delete operations
+- Proper error handling and user feedback
+
+## Data Validation
+- Client-side validation for forms
+- Server-side validation in API endpoints
+- Consistent error messaging
+- Form state management with proper loading states

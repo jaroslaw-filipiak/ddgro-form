@@ -1,0 +1,224 @@
+---
+globs: *.scss,*.css,*.tsx,*.jsx
+description: Styling guidelines and CSS patterns for SCSS and Tailwind CSS
+---
+
+# Styling Guidelines
+
+## SCSS Structure
+
+Follow the established pattern from [src/scss/](mdc:src/scss/):
+
+### Main Entry Point
+
+- [src/scss/main.scss](mdc:src/scss/main.scss) is the main entry point
+- Import in root layout: [src/app/layout.tsx](mdc:src/app/layout.tsx)
+
+### Component-Specific SCSS
+
+Organize component styles in [src/scss/components/](mdc:src/scss/components/):
+
+```scss
+// Component-specific styles
+.component-name {
+  // Styles here
+
+  &__element {
+    // BEM naming convention
+  }
+
+  &--modifier {
+    // BEM modifier styles
+  }
+}
+```
+
+### Vendor Styles
+
+- Third-party overrides in [src/scss/vendors/](mdc:src/scss/vendors/)
+- Debug styles in [src/scss/vendors/\_debug.scss](mdc:src/scss/vendors/_debug.scss)
+
+## Font Configuration
+
+Based on [src/app/layout.tsx](mdc:src/app/layout.tsx):
+
+```javascript
+// Local font setup
+const greo = localFont({
+  src: [
+    {
+      path: './fonts/Geogrotesque-Regular.woff2',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: './fonts/Geogrotesque-Medium.woff2',
+      weight: '500',
+      style: 'medium',
+    },
+    {
+      path: './fonts/Geogrotesque-SemiBold.woff2',
+      weight: '600',
+      style: 'semibold',
+    },
+    {
+      path: './fonts/Geogrotesque-Bold.woff2',
+      weight: '900',
+      style: 'bold',
+    },
+  ],
+  variable: '--font-greo',
+});
+```
+
+## Tailwind CSS Integration
+
+Configuration in [tailwind.config.js](mdc:tailwind.config.js):
+
+### Utility-First Approach
+
+- Use Tailwind classes for spacing, colors, and layout
+- Combine with custom SCSS for complex components
+- Use CSS custom properties for dynamic values
+
+### PostCSS Configuration
+
+Follow [postcss.config.js](mdc:postcss.config.js) for processing:
+
+```javascript
+module.exports = {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  },
+};
+```
+
+## Global Styles
+
+Use [src/app/globals.css](mdc:src/app/globals.css) for:
+
+- CSS reset and normalization
+- Global CSS custom properties
+- Base element styles
+- Utility classes that extend Tailwind
+
+## HeroUI Component Styling
+
+Integration with HeroUI components from [package.json](mdc:package.json):
+
+### Theme Configuration
+
+- Use HeroUI theme system from `@heroui/theme`
+- Customize via Tailwind configuration
+- Override with CSS custom properties when needed
+
+### Component Overrides
+
+```scss
+// Override HeroUI components
+.heroui-button {
+  // Custom button styles
+  &.custom-variant {
+    // Custom variant styles
+  }
+}
+```
+
+## Responsive Design Patterns
+
+```scss
+// Mobile-first approach
+.component {
+  // Base mobile styles
+
+  @media (min-width: 768px) {
+    // Tablet styles
+  }
+
+  @media (min-width: 1024px) {
+    // Desktop styles
+  }
+}
+```
+
+## SCSS Best Practices
+
+### Variable Usage
+
+```scss
+// Define variables for consistency
+$primary-color: #007bff;
+$font-family-primary: var(--font-greo);
+$breakpoint-md: 768px;
+
+// Use variables consistently
+.component {
+  color: $primary-color;
+  font-family: $font-family-primary;
+}
+```
+
+### Mixins for Reusability
+
+```scss
+// Common mixins
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin button-base {
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  border: none;
+  cursor: pointer;
+}
+```
+
+### Nesting Guidelines
+
+- Limit nesting to 3 levels deep
+- Use & for pseudo-selectors and modifiers
+- Group related properties together
+
+## CSS Custom Properties
+
+```css
+:root {
+  --font-greo: 'Geogrotesque', sans-serif;
+  --color-primary: #007bff;
+  --spacing-base: 1rem;
+}
+
+/* Use in components */
+.component {
+  font-family: var(--font-greo);
+  color: var(--color-primary);
+  padding: var(--spacing-base);
+}
+```
+
+## File Organization
+
+```
+src/
+├── scss/
+│   ├── main.scss           # Main entry point
+│   ├── components/         # Component-specific styles
+│   │   ├── _header.scss
+│   │   ├── _form.scss
+│   │   └── _steps.scss
+│   └── vendors/           # Third-party overrides
+│       └── _debug.scss
+├── app/
+│   └── globals.css        # Global CSS styles
+```
+
+## Performance Considerations
+
+- Use CSS modules for component isolation when needed
+- Minimize global CSS
+- Leverage Tailwind's purge capabilities
+- Use SCSS compression in production

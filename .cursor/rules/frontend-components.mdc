@@ -1,0 +1,93 @@
+---
+globs: *.tsx,*.jsx,*.ts,*.js
+description: Frontend component development standards and patterns
+---
+
+# Frontend Component Development Standards
+
+## Component Structure
+
+Follow the established pattern from [src/components/](mdc:src/components/):
+
+### Next.js App Router Layout
+
+- Use [src/app/layout.tsx](mdc:src/app/layout.tsx) as reference for root layout patterns
+- Implement proper font loading with `localFont` from `next/font/local`
+- Import global styles: SCSS from [src/scss/main.scss](mdc:src/scss/main.scss) and CSS from [src/app/globals.css](mdc:src/app/globals.css)
+
+### Component File Organization
+
+```
+src/components/
+├── admin/           # Admin-specific components
+├── form/           # Form-related components
+│   ├── steps/      # Multi-step form components
+│   └── ...         # Other form components
+└── Header.tsx      # Shared components
+```
+
+### Component Import Patterns
+
+```javascript
+// Always use absolute imports with @ alias
+import { useSelector, useDispatch } from 'react-redux';
+import { useTranslations } from 'next-intl';
+import Image from 'next/image';
+import { actionName } from '@/store/slices/formSlice';
+
+// HeroUI components
+import { Button, Input, Select, Modal } from '@heroui/react';
+```
+
+## Redux Integration
+
+- Always use `useSelector` and `useDispatch` hooks
+- Import actions from [src/store/slices/formSlice.js](mdc:src/store/slices/formSlice.js)
+- Access state with: `const state = useSelector(state => state.form)`
+- Dispatch actions with proper payload structure
+
+## Internationalization
+
+- Use `useTranslations` hook from `next-intl`
+- Initialize with: `const t = useTranslations()`
+- Access translations with: `t('key')`
+- Support languages: en, de, es, fr, pl from [messages/](mdc:messages/)
+
+## Image Handling
+
+- Use `next/image` component for all images
+- Store assets in [public/assets/](mdc:public/assets/)
+- Reference with relative paths: `/assets/image-name.ext`
+
+## State Management Patterns
+
+- Use `useState` for local component state
+- Use `useRef` for DOM references and initialization flags
+- Use `useEffect` for side effects and calculations
+- Follow the pattern: `const initialized = useRef(false)` for preventing double effects
+
+## HeroUI Component Usage
+
+Based on dependencies in [package.json](mdc:package.json):
+
+- Use HeroUI components: Button, Input, Select, Modal, Table, Pagination
+- Apply Framer Motion animations where appropriate
+- Use Tabler Icons for iconography: `@tabler/icons-react`
+
+## Form Validation Patterns
+
+- Implement step-based validation as seen in form slice
+- Use validation flags: `step2validation`, `step3validation`, etc.
+- Dispatch validation updates to Redux store
+
+## Component Naming Conventions
+
+- Use PascalCase for component files and names
+- Use descriptive names that indicate purpose (e.g., `Step7.js`, `Header.tsx`)
+- Place step components in `src/components/form/steps/`
+
+## Event Handling
+
+- Use arrow functions for event handlers
+- Dispatch Redux actions for state updates
+- Handle async operations with try-catch blocks

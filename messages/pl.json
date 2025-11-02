@@ -1,0 +1,177 @@
+{
+  "Common": {
+    "close": "Zamknij"
+  },
+  "Header": {
+    "home": "Strona główna",
+    "about": "O nas"
+  },
+  "LoginForm": {
+    "title": "Zaloguj się do panelu administracyjnego",
+    "emailLabel": "Adres email",
+    "emailPlaceholder": "Wpisz adres email",
+    "passwordLabel": "Hasło",
+    "passwordPlaceholder": "Wpisz hasło",
+    "submitButton": "Zaloguj się",
+    "emailValueMissing": "Podaj adres email",
+    "emailPatternMismatch": "Podaj poprawny adres email",
+    "passwordValueMissing": "Podaj hasło",
+    "passwordPatternMismatch": "Podaj poprawne hasło"
+  },
+  "HomePage": {
+    "helloWorld": "Witaj świecie!"
+  },
+  "AboutPage": {
+    "aboutText": "O naszej firmie"
+  },
+  "Form": {
+    "title": "Konfigurator tarasu"
+  },
+  "FormNav": {
+    "step1": "Wybór nawierzchni tarasu",
+    "step2": "Parametry tarasu",
+    "step3": "Rodzaj podparcia",
+    "step4": "System",
+    "step5": "Akcesoria",
+    "step6": "Dodatkowa konfiguracja",
+    "step7": "Podsumowanie"
+  },
+  "ItemCounter": {
+    "label": "Podaj dodatkową ilość"
+  },
+  "Step1": {
+    "title": "Wybór nawierzchni tarasu",
+    "question": "Co będzie na tarasie?",
+    "slabs": "Płyty",
+    "slabsAlt": "Zdjęcie płyt",
+    "planks": "Deski",
+    "planksAlt": "Zdjęcie desek",
+    "nextButton": "Następny krok",
+    "nextArrow": "Strzałka do przodu"
+  },
+  "Step2": {
+    "dimensionsInfo": "Podaj wymiary w milimetrach (1cm = 10 milimetrów)",
+    "totalArea": "Łączna powierzchnia (m²)",
+    "totalAreaPlaceholder": "ilość m²",
+    "terraceCount": "Ilość tarasów/balkonów (szt.)",
+    "terraceCountPlaceholder": "szt.",
+    "gapBetweenSlabs": "Szczelina pomiędzy płytami (mm.)",
+    "gapBetweenSlabsPlaceholder": "mm",
+    "lowestSupport": "Najniższy wspornik (mm.)",
+    "lowestSupportPlaceholder": "min. 10mm",
+    "highestSupport": "Wyższy wspornik (mm.)",
+    "highestSupportPlaceholder": "max. 950mm",
+    "distanceBetweenJoists": "Odległość pomiędzy legarami (mm.)",
+    "distanceBetweenJoistsPlaceholder": "mm",
+    "distanceBetweenJoistsInfo": "Odległość pomiędzy legarami pod płytą",
+    "distanceBetweenSupports": "Odległość pomiędzy wspornikami pod legarem (mm.)",
+    "distanceBetweenSupportsPlaceholder": "mm",
+    "slabWidth": "Szerokość płyty (mm.)",
+    "distanceBetweenSupportsPlaceholderInfo": "Odległość pomiędzy wspornikami pod legarem",
+    "slabWidthPlaceholder": "mm",
+    "slabLength": "Długość płyty (mm.)",
+    "slabLengthPlaceholder": "mm",
+    "errorLowestGreater": "Wartość dla: \"Najniższy wspornik (mm.)\" nie może być większa niż wartość dla: \"Wyższy wspornik (mm.)\"",
+    "errorLowestLess": "Wartość dla: \"Najniższy wspornik (mm.)\" nie może być mniejsza niż 10mm",
+    "errorHighestLess": "Wartość dla: \"Wyższy wspornik (mm.)\" nie może być mniejsza niż wartość dla: \"Najniższy wspornik (mm.)\"",
+    "errorHighestGreater": "Wartość dla: \"Wyższy wspornik (mm.)\" nie może być większa niż 950mm",
+    "backToStep1": "Wróć do kroku nr 1"
+  },
+  "Step3": {
+    "title": "Rodzaj podparcia",
+    "type1": "Typ 1",
+    "type2": "Typ 2",
+    "type3": "Typ 3",
+    "type4": "Typ 4",
+    "nextButton": "Następny krok",
+    "nextArrow": "Strzałka do przodu"
+  },
+  "Step4": {
+    "title": "System",
+    "warning": "Uwaga - wybierz główny system wsporników który ma zostać użyty. Jeśli zakresy wysokości będą wykraczać poza zakresy danego typu program dobierze brakujące wysokości z innego typu.",
+    "seriesSpiral": "Seria Spiral",
+    "seriesStandard": "Seria Standard",
+    "seriesMax": "Seria Max",
+    "seriesRaptor": "Seria Raptor",
+    "selectSurfaceFirst": "Wybierz rodzaj nawierzchni tarasu (pkt 1), bez tych danych nie będziemy w stanie wyświelić systemu wsporników"
+  },
+  "Step5": {
+    "title": "Dodatkowe akcesoria do wsporników",
+    "selectSurfaceFirst": "Wybierz rodzaj nawierzchni tarasu (pkt 1), bez tych danych nie będziemy w stanie wyświelić listy akcesoriów",
+    "loading": "Wczytuje dane...",
+    "selectedSystem": "Wybierz dodatkowe akcesoria, wybrany system:",
+    "backToStep1": "Wróć do kroku nr 1",
+    "modal": {
+      "title": "Kolejny krok",
+      "description": "W kolejnym kroku masz możliwość ręcznego dodania produktów z całego asortymentu ddgro. Jest to krok dodatkowy umożliwiający dodanie dodatkowej ilość produktów do zamówienia. Jeżeli nie chcesz dodawać dodatkowych produktów, kliknij przycisk Przechodze do podsumowania w prawym dolnym rogu.",
+      "addProducts": "Tak, chce dodać dodatkowe produkty samodzielnie",
+      "goToSummary": "Nie, przechodze do podsumowania"
+    }
+  },
+  "Step6": {
+    "title": "Dodaj ręcznie dodatkowe ilości produktów",
+    "warning": "Uwaga: krok dodatkowy umożliwiający ręczne dodanie produktów, można pominąć bez zaznaczania jakiejkolwiek opcji",
+    "skipInfo": "Jeśli nie chcesz dodawać ręcznie produktów",
+    "browseAssortment": "Przeglądaj cały asortyment DDGRO",
+    "search": "Szukaj po nazwie...",
+    "series": "Seria",
+    "table": {
+      "id": "ID",
+      "image": "Zdjęcie",
+      "name": "Nazwa",
+      "series": "Seria",
+      "actions": "Akcje"
+    },
+    "pagination": {
+      "selected": "z wybranych",
+      "previous": "Wstecz",
+      "next": "Dalej"
+    },
+    "noProducts": "Nie znaleziono produktów"
+  },
+  "Step7": {
+    "title": "Podsumowanie",
+    "parameters": "Wprowadzone parametry",
+    "surfaceType": "Rodzaj nawierzchni:",
+    "slabs": "Płyty",
+    "planks": "Deski",
+    "mainSystem": "Wybrany główny system:",
+    "totalArea": "Łączna powierzchnia:",
+    "terraceCount": "Ilość tarasów:",
+    "lowestPoint": "Najniższy punkt wysokości tarasu:",
+    "highestPoint": "Najwyższy punkt wysokości tarasu:",
+    "additionalAccessories": "Czy wybrano dodatkowe akcesoria:",
+    "yes": "Tak",
+    "no": "Nie",
+    "result": "Wynik:",
+    "supports": "Wsporników:",
+    "slabCount": "Liczba płyt:",
+    "selectedAccessories": "Wybrane akcesoria:",
+    "receivePDF": "Odbierz PDF"
+  },
+  "FormAside": {
+    "title": "Odbierz PDF z indywidualną ofertą",
+    "nameLabel": "Imię i nazwisko",
+    "namePlaceholder": "Imię, nazwisko",
+    "emailLabel": "Adres email",
+    "emailPlaceholder": "Wpisz adres email",
+    "phoneLabel": "Telefon",
+    "phonePlaceholder": "Telefon",
+    "roleLabel": "Jestem",
+    "submitButton": "Wyślij",
+    "sending": "Wysyłanie...",
+    "preparing": "Przygotowywanie formularza do wysłania",
+    "privacyPolicy": "Będziemy przetwarzać Twoje dane osobowe, aby udzielić odpowiedzi na Twoje pytanie. Administratorem Twoich danych osobowych jest \"DECK-DRY\" Sp. z o.o. Przysługuje Ci prawo wniesienia sprzeciwu, prawo dostępu do danych, prawo żądania ich sprostowania, ich usunięcia lub ograniczenia ich przetwarzania, a także ich przenoszenia. Szczegółowe informacje znajdziesz w naszej Polityce Prywatności.",
+    "rolesLabel": "Wybierz",
+    "applicationCreatedMessage": "Otrzymaliśmy formularz. Przygotowywanie do wysłania oferty PDF",
+    "successMessage": "Formularz wysłany pomyślnie!",
+    "genericErrorMessage": "Wystąpił błąd podczas wysyłania formularza. Spróbuj ponownie później.",
+    "roles": {
+      "klient-indywidualny": "Klientem indywidualnym",
+      "Wykowawca": "Wykonawcą",
+      "Dystrybutor": "Dystrybutorem",
+      "Architekt": "Architektem",
+      "GW/Deweloper": "GW/Deweloper"
+    }
+  }
+}

@@ -4,6 +4,7 @@ import {
   setAccesories,
   setAdditionalAccessories,
 } from '@/store/slices/formSlice';
+import { useTranslations } from 'next-intl';
 
 import {
   Modal,
@@ -11,297 +12,59 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
-  Button,
-  useDisclosure,
-} from '@nextui-org/react';
+} from '@heroui/modal';
+import { Button, ButtonGroup } from '@heroui/button';
+import { useDisclosure } from '@heroui/use-disclosure';
 
 import Image from 'next/image';
+import { fetchAccesoriesForSeries } from '@/app/lib/api';
+import { useLocale } from 'next-intl';
 
 export default function Step5({ activeStep, setActiveStep }) {
+  const locale = useLocale();
+  const t = useTranslations();
   const dispatch = useDispatch();
   const main_system = useSelector((state) => state.form.main_system);
   const type = useSelector((state) => state.form.type);
-  const accesories = useSelector((state) => state.form.accesories);
-  const accesoriesForType = accesories.filter((item) => item.for_type === type);
-  const filteredItems = useSelector(
-    (state) => state.form.additional_accessories
-  );
-
   const [checkedItems, setCheckedItems] = useState([]);
   const [data, setData] = useState([]);
   const [loading, isLoading] = useState(false);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [has3, setHas3] = useState(false);
   const [has8, setHas8] = useState(false);
+  const filteredItems = useSelector(
+    (state) => state.form.additional_accessories
+  );
+  const [accesoriesForProducts, setAccesoriesForProducts] = useState([]);
 
-  /**
-   *
-   *  TODO:
-   *  To powinno być pobierane z bazy danych
-   *
-   *
-   */
-  const [accesoriesForProducts, setAccesoriesForProducts] = useState([
-    {
-      id: 1,
-      slug: 'Podkładka wygłuszająco - wyrównująca SH na wspornik-10399',
-      for_client: 'Podkładka wygłuszająco - wyrównująca SH na wspornik',
-      to_series: ['standard'],
-      code: 10039,
-      img: '/assets/placeholder-96-68.png',
-      name: 'Podkładka wygłuszająco - wyrównująca SH100',
-      short_name: 'SH100',
-      visible: true,
-      //
-      _id: {
-        $oid: '66816d6d9bce9862a73a73cc',
-      },
-      short_name: 'SH100',
-      height_mm: 1.5,
-      height_inch: '1/16',
-      packaging: 1000,
-      euro_palet: 40000,
-      price_net: 1.29,
-      system: 'standard',
-     
-    },
-    {
-      id: 2,
-      slug: 'Podkładka wygłuszająco - wyrównująca SH na wspornik-10314',
-      for_client: 'Podkładka wygłuszająco - wyrównująca SH na wspornik',
-      to_series: ['spiral', 'max'],
-      code: 10314,
-      img: '/assets/placeholder-96-68.png',
-      visible: true,
-      //
-
-      _id: {
-        $oid: '66816d6d9bce9862a73a73cd',
-      },
-      name: 'Podkładka wygłuszająco - wyrównująca SH145',
-      short_name: 'SH145',
-      height_mm: 1.5,
-      height_inch: '1/17',
-      packaging: 500,
-      euro_palet: 20000,
-      price_net: 1.56,
-      
-    },
-    {
-      id: 3,
-      slug: 'Podkładki gumowe pod wsporniki SBR gr. 8 mm-102559',
-      for_client: 'Podkładki gumowe pod wsporniki SBR gr. 8 mm',
-      to_series: ['spiral', 'standard'],
-      code: 102559,
-      img: '/assets/placeholder-96-68.png',
-      name: 'Podkładki gumowe pod wsporniki MAX SBR  220x220 MM (Akcesoria) / SBR200/8',
-      short_name: 'SBR200/8',
-      visible: true,
-      height_mm: 8,
-      height_inch: '5/16',
-      packaging: 20,
-      euro_palet: 3200,
-      price_net: 5.67,
-      for_type: 'slab',
-      system: 'max', // system max w bazie danych ale tutaj dla spiral oraz standard ??? TODO: sprawdzić
-      
-    },
-    {
-      id: 4,
-      slug: 'Podkładki gumowe pod wsporniki SBR gr 3 mm-10414',
-      for_client: 'Podkładki gumowe pod wsporniki SBR gr 3 mm',
-      to_series: ['max'],
-      img: '/assets/placeholder-96-68.png',
-      visible: true,
-      //
-      _id: {
-        $oid: '66816d6d9bce9862a73a73d1',
-      },
-      code: 10414,
-      name: 'Podkładki gumowe pod wsporniki MAX SBR  220x220 MM (Akcesoria)',
-      short_name: 'SBR220/3',
-      height_mm: 3,
-      packaging: 40,
-      euro_palet: 6400,
-      price_net: 4.41,
-      for_type: 'slab',
-      system: 'max',
-      
-    },
-    {
-      // TODO: nie mam tego w bazie
-      id: 5,
-      slug: 'Podkładki gumowe pod wsporniki SBR gr 3 mm-107485',
-      for_client: 'Podkładki gumowe pod wsporniki SBR gr 3 mm',
-      to_series: ['raptor'],
-      code: 107485,
-      img: '/assets/placeholder-96-68.png',
-      name: 'Podkładki gumowe pod wsporniki SBR 170x170 MM',
-      short_name: 'DDR PG',
-      visible: true,
-    },
-    {
-      id: 6,
-      slug: 'Podkładki gumowe pod wsporniki SBR gr 3 mm-102557',
-      for_client: 'Podkładki gumowe pod wsporniki SBR gr 3 mm',
-      to_series: ['spiral', 'standard'],
-      img: '/assets/placeholder-96-68.png',
-      visible: true,
-      //
-      _id: {
-        $oid: '66816d6d9bce9862a73a73cf',
-      },
-      code: 102557,
-      name: 'Podkładki gumowe pod wsporniki SBR  200x200 MM',
-      short_name: 'SBR200/3',
-      height_mm: 3,
-      height_inch: '1/8',
-      packaging: 60,
-      euro_palet: 9600,
-      price_net: 3.68,
-      for_type: 'slab',
-      system: 'standard,spiral',
-    },
-    {
-      id: 7,
-      slug: 'Głowica samopoziomująca-10170',
-      for_client: 'Głowica samopoziomująca',
-      to_series: ['standard'],
-      code: 10170,
-      img: '/assets/placeholder-96-68.png',
-      name: 'Głowica samopoziomująca 7%',
-      visible: true,
-      //
-      _id: {
-        $oid: '66816d6d9bce9862a73a73f0',
-      },
-      // code: 1017010039, // TODO: sprawdzić ale chyba 10170
-      short_name: 'LE',
-      height_mm: 16,
-      height_inch: '5/8',
-      packaging: 250,
-      euro_palet: 5000,
-      price_net: 4.99,
-      for_type: 'slab',
-      system: 'standard',
-    },
-    {
-      // to jest w kolekcji produkty
-      id: 8,
-      slug: 'Głowica samopoziomująca-10680',
-      for_client: 'Głowica samopoziomująca',
-      to_series: ['max', 'spiral'],
-      code: 10680,
-      img: '/assets/placeholder-96-68.png',
-      name: 'Głowica samopoziomująca SPIRAL i dystanse 3 mm*',
-      visible: true,
-      //
-      _id: {
-        $oid: '6678676c0e5fa6eb83b6a5ae',
-      },
-      series: 'spiral',
-      type: 'slab',
-      distance_code: 10680,
-      name: 'Głowica samopoziomująca SPIRAL i dystanse 3 mm*',
-      short_name: 'SPIRAL LE',
-      height_mm: 16,
-      height_inch: '5/8',
-      packaging: 100,
-      euro_palet: 2000,
-      price_net: 7.44,
-      
-    },
-    {
-      // tez w produktach
-      id: 9,
-      slug: 'Podkładka ochronna-107483',
-      for_client: 'Podkładka ochronna',
-      to_series: ['raptor'],
-      code: 107483,
-      img: '/assets/placeholder-96-68.png',
-      name: 'Podkładka ochronna',
-      short_name: 'DDR PO',
-      visible: true,
-      price_net: 100.8,
-      //
-      _id: {
-        $oid: '6678676c0e5fa6eb83b6a604',
-      },
-      series: 'raptor',
-      type: 'wood',
-      distance_code: 107483,
-      height_mm: 2,
-      height_inch: '3/38',
-      packaging: 100,
-      euro_palet: 16000,
-      price_net: 1.62,
-      
-    },
-    {
-      // TODO: tego nie ma w bazie
-      id: 10,
-      slug: 'Podkładka akustyczna-107484',
-      for_client: 'Podkładka akustyczna',
-      to_series: ['raptor'],
-      code: 107484,
-      img: '/assets/placeholder-96-68.png',
-      name: 'Podkłakda akustyczna',
-      short_name: 'DDR PA',
-      visible: true,
-      price_net: 100.8,
-      
-    },
-    {
-      id: 11,
-      slug: 'Korektor nachylenia 7%-10908',
-      for_client: 'Korektor nachylenia 7%',
-      to_series: ['raptor'],
-      code: 10908,
-      img: '/assets/placeholder-96-68.png',
-      name: 'Korektor nachylenia 7%',
-      short_name: 'DDR KN',
-      visible: true,
-      //
-      _id: {
-        $oid: '66afa657f52db10b8fc3f886',
-      },
-      height_mm: 10,
-      packaging: 50,
-      euro_palet: 4000,
-      price_net: 3.47,
-      
-    },
-  ]);
+  useEffect(() => {
+    fetchAccesoriesForSeries(main_system).then((data) =>
+      setAccesoriesForProducts(data?.data)
+    );
+  }, [main_system]);
 
   useEffect(() => {
     setCheckedItems(filteredItems);
   }, [filteredItems, accesoriesForProducts]);
 
-  // TODO: full data from db record or fetch from db
-
-  const filteredAccesories = accesoriesForProducts.filter(
-    (item) => item.to_series.includes(main_system) && item.visible === true
-  );
-
   const onChangeValue = (event) => {
-    const search8mmString = /8 mm-.*/;
-    const search3mmString = /3 mm-.*/;
-
     let updatedCheckedItems;
 
+    // TODO: tutaj juz nie ma price
+
     if (event.target.checked) {
-      // Add the checked item
       updatedCheckedItems = [
         ...checkedItems,
         {
           id: event.target.id,
-          slug: event.target.dataset.slug,
+          image_url: event.target.dataset.image_url,
+          series: event.target.dataset.series,
+          distance_code: event.target.dataset.distance_code,
           for_client: event.target.dataset.name,
           code: event.target.dataset.code,
           name: event.target.dataset.name,
           short_name: event.target.dataset.short_name,
-          price_net: event.target.dataset.price_net,
-         
+          prices: event.target.dataset.prices,
         },
       ];
     } else {
@@ -311,50 +74,6 @@ export default function Step5({ activeStep, setActiveStep }) {
       );
     }
 
-    const found8mm = updatedCheckedItems.some((item) =>
-      search8mmString.test(item.slug)
-    );
-
-    const found3mm = updatedCheckedItems.some((item) =>
-      search3mmString.test(item.slug)
-    );
-
-    if (found8mm) {
-      setHas8(true);
-      // Disable 3mm items
-      accesoriesForProducts.forEach((item) => {
-        if (item.slug.match(search3mmString)) {
-          item.visible = false;
-        }
-      });
-    } else {
-      setHas8(false);
-      // Enable 3mm items
-      accesoriesForProducts.forEach((item) => {
-        if (item.slug.match(search3mmString)) {
-          item.visible = true;
-        }
-      });
-    }
-
-    if (found3mm) {
-      setHas3(true);
-      // Disable 8mm items
-      accesoriesForProducts.forEach((item) => {
-        if (item.slug.match(search8mmString)) {
-          item.visible = false;
-        }
-      });
-    } else {
-      setHas3(false);
-      // Enable 8mm items
-      accesoriesForProducts.forEach((item) => {
-        if (item.slug.match(search8mmString)) {
-          item.visible = true;
-        }
-      });
-    }
-
     // Update state and dispatch
     setCheckedItems(updatedCheckedItems);
     dispatch(setAdditionalAccessories(updatedCheckedItems));
@@ -362,14 +81,6 @@ export default function Step5({ activeStep, setActiveStep }) {
 
   const isChecked = (id) => {
     return checkedItems.some((item) => item.id == id);
-  };
-
-  const isChecked8mm = () => {
-    return checkedItems.some((item) => item.slug.match(/8 mm-.*/));
-  };
-
-  const isChecked3mm = () => {
-    return checkedItems.some((item) => item.slug.match(/3 mm-.*/));
   };
 
   return (
@@ -386,17 +97,10 @@ export default function Step5({ activeStep, setActiveStep }) {
             {(onClose) => (
               <>
                 <ModalHeader className='flex flex-col gap-1'>
-                  Kolejny krok
+                  {t('Step5.modal.title')}
                 </ModalHeader>
                 <ModalBody>
-                  <p>
-                    W kolejnym kroku masz możliwość ręcznego dodania produktów z
-                    całego asortymentu ddgro. Jest to krok dodatkowy
-                    umożliwiający dodanie dodatkowej ilość produktów do
-                    zamówienia. Jeżeli nie chcesz dodawać dodatkowych produktów,
-                    kliknij przycisk Przechodze do podsumowania w prawym dolnym
-                    rogu.
-                  </p>
+                  <p>{t('Step5.modal.description')}</p>
                 </ModalBody>
                 <ModalFooter>
                   <div className='flex flex-col lg:flex-row items-stretch gap-2 justify-center mx-auto'>
@@ -405,14 +109,14 @@ export default function Step5({ activeStep, setActiveStep }) {
                       color='primary'
                       onPress={() => setActiveStep(activeStep + 1)}
                     >
-                      Tak, chce dodać dodatkowe produkty samodzielnie
+                      {t('Step5.modal.addProducts')}
                     </Button>
                     <Button
                       radius='lg'
                       color='primary'
                       onPress={() => setActiveStep(activeStep + 2)}
                     >
-                      Nie ,przechodze do podsumowania
+                      {t('Step5.modal.goToSummary')}
                     </Button>
                   </div>
                 </ModalFooter>
@@ -424,34 +128,35 @@ export default function Step5({ activeStep, setActiveStep }) {
         <div className='step--wrapper step-5 bg-[#f7f5f5] '>
           {/* label absolute */}
           <div className='absolue inline-flex left-0 top-0  text-white font-bold text-base  flex-col gap-1 items-start justify-center'>
-            <p className='bg-main pt-3 pb-3 pl-8 pr-8'>
-              Dodatkowe akcesoria do wsporników
-            </p>
+            <p className='bg-main pt-3 pb-3 pl-8 pr-8'>{t('Step5.title')}</p>
           </div>
           {/* content + padding */}
           <div className='step--inner pt-20 pb-20 lg:pl-10 lg:pr-10 lg:w-10/12 mx-auto'>
-            {/* one serie db info */}
-
             {!type && (
               <div className='text-2xl lg:text-4xl text-center'>
-                Wybierz rodzaj nawierzchni tarasu (pkt 1), bez tych danych nie
-                będziemy w stanie wyświelić listy akcesoriów
+                {t('Step5.selectSurfaceFirst')}
               </div>
             )}
-
             {type && (
               <div className='series--info'>
                 <p className='text-2xl font-bold textaccesories-black text-opacity-70 pt-16 pb-9'>
                   {loading
-                    ? 'Wczytuje dane...'
-                    : `Wybierz dodatkowe akcesoria, wybrany system: ${main_system}`}
+                    ? t('Step5.loading')
+                    : `${t(
+                        'Step5.selectedSystem'
+                      )} ${main_system.toUpperCase()}`}
                 </p>
 
                 {loading ? (
-                  'wczytywanie danych...'
+                  t('Step5.loading')
                 ) : (
                   <div className='series--accesories flex flex-col gap-6'>
-                    {filteredAccesories.map((item) => (
+                    <pre>
+                      {/* {JSON.stringify(accesoriesForProducts[0], null, 2)} */}
+
+                      {/* {JSON.stringify(checkedItems, null, 2)} */}
+                    </pre>
+                    {accesoriesForProducts.map((item) => (
                       <div
                         key={item.id}
                         className={`relative hover:opacity-80 input-accesories--wrapper item-id-${
@@ -466,24 +171,26 @@ export default function Step5({ activeStep, setActiveStep }) {
                             onChange={onChangeValue}
                             className='hidden input-accesories'
                             data-id={item.id}
-                            data-slug={item.slug}
-                            data-code={item.code}
-                            data-name={item.name}
-                            data-short_name={item.short_name}
-                            data-price_net={item.price_net}
+                            data-image_url={item.image_url}
+                            data-series={item.series}
+                            data-code={item.distance_code}
+                            data-name={item.name[locale]}
                             data-count={item.count}
+                            data-prices={item.prices}
                           />
-                          <div className='flex items-center justify-between'>
+                          <div className='flex items-center justify-between group'>
                             <div className='flex items-center justify-start gap-3 lg:gap-6'>
-                              <Image
-                                width={96}
-                                height={68}
-                                src='/assets/placeholder-96-68.png'
-                                alt='placeholder'
-                              />
-                              <div>
-                                <p className='text-lg lg:text-2xl font-bold text-black text-opacity-70 selection:bg-none'>
-                                  {item.for_client}
+                              <div className='lg:w-40 lg:h-40 w-28 h-28 min-w-28 min-h-28 lg:min-w-40 lg:min-h-40 lg:max-w-40 lg:max-h-40 aspect-square   bg-white flex items-center justify-center border lg:p-6 p-3 rounded-lg group-hover:opacity-80 transition-all duration-200'>
+                                <img
+                                  className='w-full h-full object-cover'
+                                  src={`/assets/${item.image_url}`}
+                                  alt='placeholder'
+                                />
+                              </div>
+
+                              <div className='selection:bg-transparent'>
+                                <p className='text-lg lg:text-2xl font-bold text-black text-opacity-70 selection:bg-transparent'>
+                                  {item.name[locale]}
                                 </p>
                               </div>
                             </div>
@@ -495,7 +202,6 @@ export default function Step5({ activeStep, setActiveStep }) {
                 )}
               </div>
             )}
-
             {/* mobile btn */}
             <div className='w-full flex items-center justify-center mt-20 mb-16'>
               {!type && (
@@ -510,7 +216,7 @@ export default function Step5({ activeStep, setActiveStep }) {
                     width={42}
                     height={42}
                   />
-                  Wróć do kroku nr 1
+                  {t('Step5.backToStep1')}
                 </button>
               )}
 
@@ -519,13 +225,13 @@ export default function Step5({ activeStep, setActiveStep }) {
                   onClick={() => setActiveStep(activeStep + 1)}
                   className='btn btn--main btn--rounded disabled:opacity-50 disabled:cursor-not-allowed'
                 >
-                  Następny krok
+                  {t('Step1.nextButton')}
                   <Image
                     width={42}
                     height={42}
                     className='ml-5'
                     src='/assets/arrow-next.svg'
-                    alt=''
+                    alt={t('Step1.nextArrow')}
                   />
                 </button>
               )}
@@ -537,7 +243,7 @@ export default function Step5({ activeStep, setActiveStep }) {
                 <Image
                   className='min-w-[42px]'
                   src='/assets/arrow-next.svg'
-                  alt=''
+                  alt={t('Step1.nextArrow')}
                   width={42}
                   height={42}
                 />

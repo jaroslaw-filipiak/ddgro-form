@@ -1,53 +1,44 @@
-import React, { useEffect } from "react";
-import { MinusIcon } from "./MinusIcon";
-import { PlusIcon } from "./PlusIcon";
-import { Button } from "@nextui-org/react";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  addExtraCountToProduct,
-  setAdditionalProducts,
-} from "@/store/slices/formSlice";
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { setAdditionalProducts } from '@/store/slices/formSlice'
+import { useTranslations } from 'next-intl'
 
-export const ItemCounter = (props) => {
-  const dispatch = useDispatch();
-  const [count, setCount] = React.useState(0);
-  const products = useSelector((state) => state.form.products);
-  const [filteredProducts, setFilteredProducts] = React.useState([]);
+export const ItemCounter = props => {
+    const dispatch = useDispatch()
+    const [count, setCount] = React.useState(0)
+    const products = useSelector(state => state.form.products)
+    const [filteredProducts, setFilteredProducts] = React.useState([])
 
-  useEffect(() => {
-    setFilteredProducts(products);
-  }, [products]);
+    const t = useTranslations()
 
-  const handleChange = (e) => {
-    const newCount = e.target.value;
-    const ID = props.item.id;
+    useEffect(() => {
+        setFilteredProducts(products)
+    }, [products])
 
-    setCount(newCount);
+    const handleChange = e => {
+        const newCount = e.target.value
+        const ID = props.item.id
 
-    const updatedProducts = filteredProducts.map((product) => {
-      if (product.id === ID) {
-        return {
-          ...product,
-          count: parseInt(newCount),
-        };
-      } else {
-        return product;
-      }
-    });
+        setCount(newCount)
 
-    setFilteredProducts(updatedProducts);
-    dispatch(setAdditionalProducts(updatedProducts));
-  };
+        const updatedProducts = filteredProducts.map(product => {
+            if (product.id === ID) {
+                return {
+                    ...product,
+                    count: parseInt(newCount),
+                }
+            } else {
+                return product
+            }
+        })
 
-  return (
-    <>
-      <input
-        onChange={handleChange}
-        type='number'
-        className='border p-1'
-        placeholder='podaj dodatkową ilość'
-        value={count ? count : ""}
-      />
-    </>
-  );
-};
+        setFilteredProducts(updatedProducts)
+        dispatch(setAdditionalProducts(updatedProducts))
+    }
+
+    return (
+        <>
+            <input onChange={handleChange} type='number' className='border p-1' placeholder={t('ItemCounter.label')} value={count ? count : ''} />
+        </>
+    )
+}

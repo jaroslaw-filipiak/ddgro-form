@@ -2,9 +2,9 @@ import FormNav from './FormNav';
 import { useSelector, useDispatch } from 'react-redux';
 import { use, useEffect } from 'react';
 import { setAccesories, setProducts } from '@/store/slices/formSlice';
+import { fetchProducts, fetchAccesories, updateProduct } from '@/app/lib/api';
 
 import Image from 'next/image';
-import useSWR from 'swr';
 
 export default function FormHeader({
   activeStep,
@@ -13,32 +13,28 @@ export default function FormHeader({
   setFormAsideVisibility,
 }) {
   const dispatch = useDispatch();
-  const fetcher = (...args) => fetch(...args).then((res) => res.json());
-
-  const accesoriesURL = () => {
-    return `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/accesories`;
-  };
-
-  const productsURL = () => {
-    return `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/products`;
-  };
-
-  const { data: accesories } = useSWR(accesoriesURL(), fetcher);
-  const { data: products } = useSWR(productsURL(), fetcher);
 
   useEffect(() => {
-    console.log(`---`);
-    console.log('API Base URL:', process.env.NEXT_PUBLIC_API_BASE_URL);
-    console.log('update 18.11.2024');
-    console.log(`${process.env.NODE_ENV} mode`);
-    console.log(`---`);
-    if (products) {
-      dispatch(setProducts(products?.data || []));
-    }
-    if (accesories) {
-      dispatch(setAccesories(accesories?.data || []));
-    }
-  }, [products, accesories, dispatch]);
+    const loadProducts = async () => {
+      try {
+        const data = await fetchProducts();
+        dispatch(setProducts(data?.data));
+      } catch (err) {
+        console.log('Error fetching products', err);
+      }
+    };
+
+    const loadAccesories = async () => {
+      try {
+        const data = await fetchAccesories();
+        dispatch(setAccesories(data));
+      } catch (err) {
+        console.log('Error fetching accesories', err);
+      }
+    };
+    loadProducts();
+    loadAccesories();
+  }, []);
 
   return (
     <>

@@ -1,0 +1,177 @@
+{
+  "Common": {
+    "close": "Schließen"
+  },
+  "Header": {
+    "home": "Startseite",
+    "about": "Über uns"
+  },
+  "LoginForm": {
+    "title": "Anmeldung zum Administrationspanel",
+    "emailLabel": "E-Mail-Adresse",
+    "emailPlaceholder": "Geben Sie die E-Mail-Adresse ein",
+    "passwordLabel": "Passwort",
+    "passwordPlaceholder": "Geben Sie das Passwort ein",
+    "submitButton": "Anmelden",
+    "emailValueMissing": "Geben Sie die E-Mail-Adresse ein",
+    "emailPatternMismatch": "Geben Sie eine gültige E-Mail-Adresse ein",
+    "passwordValueMissing": "Geben Sie das Passwort ein",
+    "passwordPatternMismatch": "Geben Sie ein gültiges Passwort ein"
+  },
+  "HomePage": {
+    "helloWorld": "Hallo Welt!"
+  },
+  "AboutPage": {
+    "aboutText": "Über unser Unternehmen"
+  },
+  "Form": {
+    "title": "Terrassenkonfigurator"
+  },
+  "FormNav": {
+    "step1": "Wahl der Terrassenoberfläche",
+    "step2": "Terrassenparameter",
+    "step3": "Art der Unterstützung",
+    "step4": "System",
+    "step5": "Zubehör",
+    "step6": "Zusätzliche Konfiguration",
+    "step7": "Zusammenfassung"
+  },
+  "ItemCounter": {
+    "label": "Zusätzliche Menge angeben"
+  },
+  "Step1": {
+    "title": "Wahl der Terrassenoberfläche",
+    "question": "Was wird auf der Terrasse sein?",
+    "slabs": "Platten",
+    "slabsAlt": "Bild von Platten",
+    "planks": "Dielen",
+    "planksAlt": "Bild von Dielen",
+    "nextButton": "Nächster Schritt",
+    "nextArrow": "Pfeil nach vorne"
+  },
+  "Step2": {
+    "dimensionsInfo": "Geben Sie die Abmessungen in Millimetern an (1cm = 10 Millimeter)",
+    "totalArea": "Gesamtfläche (m²)",
+    "totalAreaPlaceholder": "Anzahl m²",
+    "terraceCount": "Anzahl der Terrassen/Balkone (Stk.)",
+    "terraceCountPlaceholder": "Stk.",
+    "gapBetweenSlabs": "Lücke zwischen den Platten (mm)",
+    "gapBetweenSlabsPlaceholder": "mm",
+    "lowestSupport": "Niedrigste Stütze (mm)",
+    "lowestSupportPlaceholder": "min. 10mm",
+    "highestSupport": "Höchste Stütze (mm)",
+    "highestSupportPlaceholder": "max. 950mm",
+    "distanceBetweenJoists": "Abstand zwischen den Balken (mm)",
+    "distanceBetweenJoistsPlaceholder": "mm",
+    "distanceBetweenJoistsInfo": "Abstand zwischen den Balken unter der Platte",
+    "distanceBetweenSupports": "Abstand zwischen den Stützen unter dem Balken (mm)",
+    "distanceBetweenSupportsPlaceholder": "mm",
+    "slabWidth": "Plattenbreite (mm)",
+    "distanceBetweenSupportsPlaceholderInfo": "Abstand zwischen den Stützen unter dem Balken",
+    "slabWidthPlaceholder": "mm",
+    "slabLength": "Plattenlänge (mm)",
+    "slabLengthPlaceholder": "mm",
+    "errorLowestGreater": "Der Wert für: \"Niedrigste Stütze (mm)\" darf nicht größer sein als der Wert für: \"Höchste Stütze (mm)\"",
+    "errorLowestLess": "Der Wert für: \"Niedrigste Stütze (mm)\" darf nicht kleiner als 10mm sein",
+    "errorHighestLess": "Der Wert für: \"Höchste Stütze (mm)\" darf nicht kleiner sein als der Wert für: \"Niedrigste Stütze (mm)\"",
+    "errorHighestGreater": "Der Wert für: \"Höchste Stütze (mm)\" darf nicht größer als 950mm sein",
+    "backToStep1": "Zurück zu Schritt 1"
+  },
+  "Step3": {
+    "title": "Art der Unterstützung",
+    "type1": "Typ 1",
+    "type2": "Typ 2",
+    "type3": "Typ 3",
+    "type4": "Typ 4",
+    "nextButton": "Nächster Schritt",
+    "nextArrow": "Pfeil nach vorne"
+  },
+  "Step4": {
+    "title": "System",
+    "warning": "Achtung - wählen Sie das Hauptstützsystem aus, das verwendet werden soll. Wenn die Höhenbereiche über die Bereiche dieses Typs hinausgehen, wird das Programm die fehlenden Höhen aus einem anderen Typ auswählen.",
+    "seriesSpiral": "Serie Spiral",
+    "seriesStandard": "Serie Standard",
+    "seriesMax": "Serie Max",
+    "seriesRaptor": "Serie Raptor",
+    "selectSurfaceFirst": "Wählen Sie zuerst die Art der Terrassenoberfläche (Punkt 1), ohne diese Daten können wir das Stützsystem nicht anzeigen"
+  },
+  "Step5": {
+    "title": "Zusätzliches Zubehör für Stützen",
+    "selectSurfaceFirst": "Wählen Sie zuerst die Art der Terrassenoberfläche (Punkt 1), ohne diese Daten können wir die Zubehörliste nicht anzeigen",
+    "loading": "Lade Daten...",
+    "selectedSystem": "Wählen Sie zusätzliches Zubehör, ausgewähltes System:",
+    "backToStep1": "Zurück zu Schritt 1",
+    "modal": {
+      "title": "Nächster Schritt",
+      "description": "Im nächsten Schritt haben Sie die Möglichkeit, Produkte aus dem gesamten ddgro-Sortiment manuell hinzuzufügen. Dies ist ein zusätzlicher Schritt, der es ermöglicht, eine zusätzliche Menge an Produkten zur Bestellung hinzuzufügen. Wenn Sie keine zusätzlichen Produkte hinzufügen möchten, klicken Sie auf die Schaltfläche 'Zur Zusammenfassung' in der unteren rechten Ecke.",
+      "addProducts": "Ja, ich möchte zusätzliche Produkte selbst hinzufügen",
+      "goToSummary": "Nein, ich gehe zur Zusammenfassung"
+    }
+  },
+  "Step6": {
+    "title": "Zusätzliche Produktmengen manuell hinzufügen",
+    "warning": "Hinweis: Dies ist ein zusätzlicher Schritt, der das manuelle Hinzufügen von Produkten ermöglicht und ohne Auswahl einer Option übersprungen werden kann",
+    "skipInfo": "Wenn Sie keine Produkte manuell hinzufügen möchten",
+    "browseAssortment": "Durchsuchen Sie das gesamte DDGRO-Sortiment",
+    "search": "Nach Namen suchen...",
+    "series": "Serie",
+    "table": {
+      "id": "ID",
+      "image": "Bild",
+      "name": "Name",
+      "series": "Serie",
+      "actions": "Aktionen"
+    },
+    "pagination": {
+      "selected": "aus ausgewählten",
+      "previous": "Zurück",
+      "next": "Weiter"
+    },
+    "noProducts": "Keine Produkte gefunden"
+  },
+  "Step7": {
+    "title": "Zusammenfassung",
+    "parameters": "Eingegebene Parameter",
+    "surfaceType": "Oberflächentyp:",
+    "slabs": "Platten",
+    "planks": "Dielen",
+    "mainSystem": "Ausgewähltes Hauptsystem:",
+    "totalArea": "Gesamtfläche:",
+    "terraceCount": "Anzahl der Terrassen:",
+    "lowestPoint": "Niedrigster Punkt der Terrassenhöhe:",
+    "highestPoint": "Höchster Punkt der Terrassenhöhe:",
+    "additionalAccessories": "Zusätzliches Zubehör ausgewählt:",
+    "yes": "Ja",
+    "no": "Nein",
+    "result": "Ergebnis:",
+    "supports": "Stützen:",
+    "slabCount": "Anzahl der Platten:",
+    "selectedAccessories": "Ausgewähltes Zubehör:",
+    "receivePDF": "PDF erhalten"
+  },
+  "FormAside": {
+    "title": "Erhalten Sie ein PDF mit einem individuellen Angebot",
+    "nameLabel": "Vor- und Nachname",
+    "namePlaceholder": "Vorname, Nachname",
+    "emailLabel": "E-Mail-Adresse",
+    "emailPlaceholder": "E-Mail-Adresse eingeben",
+    "phoneLabel": "Telefon",
+    "phonePlaceholder": "Telefon",
+    "roleLabel": "Ich bin",
+    "submitButton": "Senden",
+    "sending": "Senden...",
+    "preparing": "Formular zum Senden vorbereiten",
+    "privacyPolicy": "Wir werden Ihre persönlichen Daten verarbeiten, um Ihre Anfrage zu beantworten. Der Verantwortliche für Ihre persönlichen Daten ist \"DECK-DRY\" Sp. z o.o. Sie haben das Recht auf Widerspruch, Zugang zu Ihren Daten, das Recht, deren Berichtigung, Löschung oder Einschränkung der Verarbeitung zu verlangen sowie deren Übertragbarkeit. Detaillierte Informationen finden Sie in unserer Datenschutzrichtlinie.",
+    "rolesLabel": "Auswählen",
+    "applicationCreatedMessage": "Wir haben Ihr Formular erhalten. Vorbereitung zum Senden des PDF-Angebots",
+    "successMessage": "Formular erfolgreich gesendet!",
+    "genericErrorMessage": "Beim Senden des Formulars ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut.",
+    "roles": {
+      "klient-indywidualny": "Privatkunde",
+      "Wykowawca": "Auftragnehmer",
+      "Dystrybutor": "Distributor",
+      "Architekt": "Architekt",
+      "GW/Deweloper": "Generalunternehmer/Bauträger"
+    }
+  }
+}

@@ -1,0 +1,288 @@
+---
+globs: *.tsx,*.jsx,*.js,*.json
+description: Internationalization patterns and translation management
+---
+
+# Internationalization Patterns
+
+## Translation Structure
+
+Based on [messages/](mdc:messages/) directory structure:
+
+### Supported Languages
+
+- English: [messages/en.json](mdc:messages/en.json)
+- German: [messages/de.json](mdc:messages/de.json)
+- Spanish: [messages/es.json](mdc:messages/es.json)
+- French: [messages/fr.json](mdc:messages/fr.json)
+- Polish: [messages/pl.json](mdc:messages/pl.json)
+
+### Translation File Structure
+
+```json
+{
+  "common": {
+    "next": "Next",
+    "previous": "Previous",
+    "submit": "Submit",
+    "cancel": "Cancel"
+  },
+  "form": {
+    "steps": {
+      "step1": "Basic Information",
+      "step2": "Measurements",
+      "step3": "Configuration"
+    },
+    "validation": {
+      "required": "This field is required",
+      "invalid": "Invalid value"
+    }
+  },
+  "terrace": {
+    "types": {
+      "slab": "Slab Terrace",
+      "wood": "Wood Terrace"
+    },
+    "systems": {
+      "spiral": "Spiral System",
+      "standard": "Standard System",
+      "max": "Max System",
+      "raptor": "Raptor System"
+    }
+  }
+}
+```
+
+## Next-Intl Integration
+
+Based on component usage patterns from [src/components/form/steps/Step7.js](mdc:src/components/form/steps/Step7.js):
+
+### Hook Usage
+
+```javascript
+import { useTranslations } from 'next-intl';
+
+const MyComponent = () => {
+  const t = useTranslations();
+
+  return (
+    <div>
+      <h1>{t('form.title')}</h1>
+      <p>{t('form.description')}</p>
+    </div>
+  );
+};
+```
+
+### Namespaced Translations
+
+```javascript
+// Use specific namespace
+const t = useTranslations('form');
+
+// Access nested keys
+const title = t('steps.step1');
+const validation = t('validation.required');
+```
+
+### Conditional Translations
+
+```javascript
+// Dynamic key selection
+const systemName = t(`terrace.systems.${state.main_system}`);
+const supportType = t(`terrace.support.${state.support_type}`);
+
+// Pluralization
+const itemCount = t('items', { count: products.length });
+```
+
+## Middleware Configuration
+
+Follow [middleware.ts](mdc:middleware.ts) for locale handling:
+
+```typescript
+import createMiddleware from 'next-intl/middleware';
+
+export default createMiddleware({
+  locales: ['en', 'de', 'es', 'fr', 'pl'],
+  defaultLocale: 'pl',
+});
+
+export const config = {
+  matcher: ['/((?!api|_next|_vercel|.*\\..*).*)'],
+};
+```
+
+## Locale-Based Routing
+
+Based on [src/app/[locale]/](mdc:src/app/[locale]/) structure:
+
+### Page Structure
+
+```
+src/app/
+├── [locale]/
+│   ├── layout.tsx        # Locale-specific layout
+│   ├── page.tsx         # Locale-specific homepage
+│   ├── about/
+│   │   └── page.tsx     # Locale-specific about page
+│   └── login/
+│       └── page.tsx     # Locale-specific login page
+```
+
+### Layout Configuration
+
+```typescript
+// src/app/[locale]/layout.tsx
+import { NextIntlClientProvider } from 'next-intl';
+import { getMessages } from 'next-intl/server';
+
+export default async function LocaleLayout({
+  children,
+  params: { locale },
+}: {
+  children: React.ReactNode;
+  params: { locale: string };
+}) {
+  const messages = await getMessages();
+
+  return (
+    <html lang={locale}>
+      <body>
+        <NextIntlClientProvider messages={messages}>
+          {children}
+        </NextIntlClientProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+## Translation Key Patterns
+
+### Hierarchical Organization
+
+```json
+{
+  "navigation": {
+    "home": "Home",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "form": {
+    "terrace": {
+      "title": "Terrace Calculator",
+      "fields": {
+        "totalArea": "Total Area",
+        "slabCount": "Number of Slabs"
+      }
+    }
+  }
+}
+```
+
+### Form-Specific Translations
+
+```json
+{
+  "form": {
+    "steps": {
+      "step1": {
+        "title": "Basic Information",
+        "fields": {
+          "name": "Name and Surname",
+          "email": "Email Address",
+          "phone": "Phone Number"
+        }
+      }
+    },
+    "validation": {
+      "required": "This field is required",
+      "email": "Please enter a valid email address",
+      "phone": "Please enter a valid phone number"
+    }
+  }
+}
+```
+
+### System-Specific Translations
+
+```json
+{
+  "systems": {
+    "spiral": {
+      "name": "Spiral System",
+      "description": "Adjustable spiral pedestals"
+    },
+    "standard": {
+      "name": "Standard System",
+      "description": "Standard fixed pedestals"
+    }
+  }
+}
+```
+
+## Dynamic Content Translation
+
+### Calculated Values
+
+```javascript
+const formatMeasurement = (value, unit) => {
+  return t('measurements.value', {
+    value: value.toFixed(2),
+    unit: t(`units.${unit}`),
+  });
+};
+```
+
+### Product Information
+
+```javascript
+const getProductName = (product) => {
+  const locale = useLocale();
+  return product[`name_${locale}`] || product.name_en;
+};
+```
+
+### Error Messages
+
+```javascript
+const getErrorMessage = (errorType, field) => {
+  return t(`validation.${errorType}`, {
+    field: t(`form.fields.${field}`),
+  });
+};
+```
+
+## Best Practices
+
+### Translation Keys
+
+- Use dot notation for nested keys
+- Use descriptive, hierarchical names
+- Group related translations together
+- Maintain consistent naming conventions
+
+### Content Management
+
+- Keep translations synchronized across all language files
+- Use placeholders for dynamic content: `{variable}`
+- Implement fallback to default language
+- Use TypeScript for translation key validation
+
+### Performance
+
+- Use namespaced translations to reduce bundle size
+- Implement lazy loading for large translation files
+- Cache translations on client side
+- Use static generation when possible
+
+### Testing
+
+```javascript
+// Test translation keys exist
+const testTranslation = (key) => {
+  const translation = t(key);
+  expect(translation).not.toBe(key); // Should not return the key itself
+};
+```

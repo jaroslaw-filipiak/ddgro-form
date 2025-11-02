@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useTranslations } from 'next-intl';
 import {
   calculateHowManyTitlesCanFillTheSquare,
   calculateSupportsCount,
@@ -32,9 +33,12 @@ function capitalizeFirstLetter(string) {
 }
 
 export default function Step7({ setFormAsideVisibility }) {
+  const t = useTranslations();
   const initialized = useRef(false);
   const state = useSelector((state) => state.form);
-  const additional_accessories = useSelector((state) => state.form.additional_accessories);
+  const additional_accessories = useSelector(
+    (state) => state.form.additional_accessories
+  );
   const dispatch = useDispatch();
 
   //  M_STANDARD SET
@@ -594,16 +598,16 @@ export default function Step7({ setFormAsideVisibility }) {
 
   const matrixCalculate = () => {
     try {
-      console.log('creating matrix M_STANDARD MATRIX');
+      //console.log('creating matrix M_STANDARD MATRIX')
       M_STANDARD();
-      console.log('creating matrix M_SPIRAL MATRIX');
+      //console.log('creating matrix M_SPIRAL MATRIX')
       M_SPIRAL();
-      console.log('creating matrix M_MAX');
+      //console.log('creating matrix M_MAX')
       M_MAX();
-      console.log('creating matrix M_RAPTOR');
+      //console.log('creating matrix M_RAPTOR')
       M_RAPTOR();
     } catch (error) {
-      console.log('problem with creating matrix...');
+      //console.log('problem with creating matrix...')
       console.log(error);
     }
   };
@@ -621,7 +625,7 @@ export default function Step7({ setFormAsideVisibility }) {
       finalCalculate();
       return;
     }
-  }, []);
+  }, [finalCalculate]);
 
   function finalCalculate() {
     dispatch(calculateLA());
@@ -631,6 +635,7 @@ export default function Step7({ setFormAsideVisibility }) {
 
     // !!!! IMPORTANT <====
     matrixCalculate();
+    // !!!! IMPORTANT <====
   }
 
   return (
@@ -639,22 +644,24 @@ export default function Step7({ setFormAsideVisibility }) {
         <div className='step--wrapper step-7 bg-[#f7f5f5]  relative'>
           {/* label absolute */}
           <div className='absolue inline-flex left-0 top-0  text-white font-bold text-bas flex-col gap-1 items-start justify-center'>
-            <p className='bg-main pt-3 pb-3 pl-8 pr-8'>Podsumowanie</p>
+            <p className='bg-main pt-3 pb-3 pl-8 pr-8'>{t('Step7.title')}</p>
           </div>
           {/* content + padding */}
           <div className='step--inner pt-20 pb-20 lg:pl-10 lg:pr-10 lg:w-10/12 mx-auto'>
             <div>
               <p className='text-2xl font-bold text-black text-opacity-70 pb-9'>
-                Wprowadzone parametry
+                {t('Step7.parameters')}
               </p>
               <ul className='flex flex-wrap items-center justify-start gap-6'>
                 {state?.type && (
                   <li className='flex items-center justify-start gap-2'>
                     <p className=' text-lg text-black text-opacity-50 font-normal'>
-                      Rodzaj nawierzchni:
+                      {t('Step7.surfaceType')}
                     </p>
                     <p className='text-lg text-black text-opacity-70 font-bold'>
-                      {state.type === 'wood' ? 'Deski' : 'Płyty'}
+                      {state.type === 'wood'
+                        ? t('Step7.planks')
+                        : t('Step7.slabs')}
                     </p>
                   </li>
                 )}
@@ -662,7 +669,7 @@ export default function Step7({ setFormAsideVisibility }) {
                 {state?.main_system && (
                   <li className='flex items-center justify-start gap-2'>
                     <p className=' text-lg text-black text-opacity-50 font-normal'>
-                      Wybrany główny system:
+                      {t('Step7.mainSystem')}
                     </p>
                     <p className='text-lg text-black text-opacity-70 font-bold'>
                       {capitalizeFirstLetter(state?.main_system)}
@@ -673,7 +680,7 @@ export default function Step7({ setFormAsideVisibility }) {
                 {state?.total_area && (
                   <li className='flex items-center justify-start gap-2'>
                     <p className=' text-lg text-black text-opacity-50 font-normal'>
-                      Łączna powierzchnia:
+                      {t('Step7.totalArea')}
                     </p>
                     <p className='text-lg text-black text-opacity-70 font-bold'>
                       {state?.total_area} m2
@@ -684,7 +691,7 @@ export default function Step7({ setFormAsideVisibility }) {
                 {state.count && (
                   <li className='flex items-center justify-start gap-2'>
                     <p className=' text-lg text-black text-opacity-50 font-normal'>
-                      Ilość tarasów:
+                      {t('Step7.terraceCount')}
                     </p>
                     <p className='text-lg text-black text-opacity-70 font-bold'>
                       {state?.count}
@@ -695,7 +702,7 @@ export default function Step7({ setFormAsideVisibility }) {
                 {state?.lowest && (
                   <li className='flex items-center justify-start gap-2'>
                     <p className=' text-lg text-black text-opacity-50 font-normal'>
-                      Najniższy punkt wysokości tarasu:
+                      {t('Step7.lowestPoint')}
                     </p>
                     <p className='text-lg text-black text-opacity-70 font-bold'>
                       {state?.lowest} mm
@@ -706,7 +713,7 @@ export default function Step7({ setFormAsideVisibility }) {
                 {state?.highest && (
                   <li className='flex items-center justify-start gap-2'>
                     <p className=' text-lg text-black text-opacity-50 font-normal'>
-                      Najwyższy punkt wysokości tarasu:
+                      {t('Step7.highestPoint')}
                     </p>
                     <p className='text-lg text-black text-opacity-70 font-bold'>
                       {state?.highest} mm
@@ -717,10 +724,12 @@ export default function Step7({ setFormAsideVisibility }) {
                 {state?.additional_accessories && (
                   <li className='flex items-center justify-start gap-2'>
                     <p className=' text-lg text-black text-opacity-50 font-normal'>
-                      Czy wybrano dodatkowe akcesoria:
+                      {t('Step7.additionalAccessories')}
                     </p>
                     <p className='text-lg text-black text-opacity-70 font-bold'>
-                      {state?.additional_accessories ? 'Tak' : 'Nie'}
+                      {state?.additional_accessories
+                        ? t('Step7.yes')
+                        : t('Step7.no')}
                     </p>
                   </li>
                 )}
@@ -729,7 +738,7 @@ export default function Step7({ setFormAsideVisibility }) {
 
             <div className='summary mt-20 pb-9'>
               <p className='text-2xl font-bold text-black text-opacity-70 '>
-                Wynik:
+                {t('Step7.result')}
               </p>
 
               <div className='square--wrapper'></div>
@@ -737,7 +746,7 @@ export default function Step7({ setFormAsideVisibility }) {
               <ul>
                 <li className='flex items-center justify-between border-b border-black border-opacity-50 p-6'>
                   <p className='text-xl text-black text-opacity-50 font-normal'>
-                    Wsporników:
+                    {t('Step7.supports')}
                   </p>
                   <div className='flex items-center'>
                     <p className='text-black text-opacity-50 text-base pl-4'>
@@ -756,7 +765,7 @@ export default function Step7({ setFormAsideVisibility }) {
                       state.type === 'wood' ? 'hidden' : ''
                     }`}
                   >
-                    Liczba płyt:
+                    {t('Step7.slabCount')}
                   </p>
                   <div
                     className={`flex items-center ${
@@ -774,27 +783,30 @@ export default function Step7({ setFormAsideVisibility }) {
             {/* Dodatkowe akcesoria */}
             <div className='summary pb-9'>
               <p className='text-2xl font-bold text-black text-opacity-70'>
-                Wybrane akcesoria:
+                {t('Step7.selectedAccessories')}
               </p>
 
               <div className='square--wrapper'></div>
 
               <ul>
                 {additional_accessories?.map((item, index) => (
-
-                  <li key={index} className='flex items-center justify-between border-b border-black border-opacity-50 p-6'>
+                  <li
+                    key={index}
+                    className='flex items-center justify-start gap-6 border-b border-black border-opacity-50 p-6'
+                  >
+                    <div className='flex items-center'>
+                      <div className='w-28 h-28 min-w-28 min-h-28 aspect-square   bg-white flex items-center justify-center border lg:p-6 p-3 rounded-lg group-hover:opacity-80 transition-all duration-200'>
+                        <img
+                          src={`/assets/${item.image_url}`}
+                          alt={item.for_client}
+                        />
+                      </div>
+                    </div>
                     <p className='text-xl text-black text-opacity-50 font-normal'>
                       {item.for_client}
                     </p>
-                    <div className='flex items-center'>
-                      <p className='text-black text-opacity-50 text-base pl-4'>
-                        {item.count}
-                      </p>
-                    </div>
                   </li>
                 ))}
-                
-
               </ul>
             </div>
 
@@ -807,18 +819,17 @@ export default function Step7({ setFormAsideVisibility }) {
                 }}
                 className='btn btn--main btn--rounded'
               >
-                Odbierz PDF
+                {t('Step7.receivePDF')}
                 <Image
                   width={42}
                   height={42}
                   className='ml-5'
                   src='/assets/arrow-next.svg'
-                  alt='arrow next'
+                  alt={t('Step1.nextArrow')}
                 />
               </button>
             </div>
           </div>
-          
         </div>
       </section>
     </>

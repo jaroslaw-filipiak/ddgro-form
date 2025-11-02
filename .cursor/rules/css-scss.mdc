@@ -1,0 +1,84 @@
+# CSS & SCSS Styling Guidelines
+
+## Architecture Overview
+The project uses a hybrid approach with Tailwind CSS and custom SCSS:
+
+### Main Styles
+- Global CSS: [src/app/globals.css](mdc:src/app/globals.css)
+- Main SCSS: [src/scss/main.scss](mdc:src/scss/main.scss)
+- Tailwind config: [tailwind.config.js](mdc:tailwind.config.js)
+
+### Component-Specific SCSS
+- Form styles: [src/scss/components/_form.scss](mdc:src/scss/components/_form.scss)
+- Button styles: [src/scss/components/_buttons.scss](mdc:src/scss/components/_buttons.scss)
+- Navigation: [src/scss/components/_form-nav.scss](mdc:src/scss/components/_form-nav.scss)
+
+## Styling Conventions
+
+### Class Naming
+Use BEM methodology for custom classes:
+```scss
+.form-step {
+  // Block
+  
+  &__header {
+    // Element
+  }
+  
+  &--active {
+    // Modifier
+  }
+}
+```
+
+### Tailwind First Approach
+1. **Primary**: Use Tailwind utility classes for layout and common styling
+2. **Secondary**: Create custom SCSS for complex components
+3. **Custom Properties**: Use CSS custom properties for theming
+
+### Component Structure
+```scss
+// Component: _component-name.scss
+.component-name {
+  // Base styles
+  
+  // Responsive breakpoints
+  @media (min-width: 768px) {
+    // Tablet styles
+  }
+  
+  @media (min-width: 1024px) {
+    // Desktop styles
+  }
+  
+  // State variations
+  &.is-active {
+    // Active state
+  }
+  
+  // Nested elements
+  .sub-element {
+    // Nested styles
+  }
+}
+```
+
+## Font Management
+Custom fonts are located in [src/app/fonts/](mdc:src/app/fonts/):
+- Use font-face declarations from [src/app/fonts/stylesheet.css](mdc:src/app/fonts/stylesheet.css)
+- Follow the established font family hierarchy
+
+## Responsive Design
+- Mobile-first approach
+- Use consistent breakpoints aligned with Tailwind
+- Test across all supported devices
+
+## Color System
+- Define color variables in main SCSS files
+- Use consistent naming conventions
+- Maintain accessibility contrast ratios
+
+## Performance Considerations
+- Minimize custom CSS where Tailwind suffices
+- Use SCSS nesting judiciously (max 3 levels deep)
+- Organize imports efficiently in main.scss

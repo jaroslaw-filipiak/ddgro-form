@@ -1,0 +1,183 @@
+---
+globs: *.js,*.jsx,*.ts,*.tsx
+description: Redux state management patterns and best practices
+---
+
+# Redux State Management Patterns
+
+## Store Structure
+
+Follow the established pattern from [src/store/](mdc:src/store/):
+
+### Store Configuration
+
+- Main store configuration in [src/store/index.js](mdc:src/store/index.js)
+- Slices organized in [src/store/slices/](mdc:src/store/slices/)
+- Use Redux Toolkit's `configureStore` and `createSlice`
+
+### Form Slice Pattern
+
+Based on [src/store/slices/formSlice.js](mdc:src/store/slices/formSlice.js):
+
+```javascript
+import { createSlice } from '@reduxjs/toolkit';
+
+// Define comprehensive initial state
+const initialState = {
+  // Basic form fields
+  type: '', // slab or wood
+  total_area: '',
+  count: '',
+
+  // User information
+  name_surname: '',
+  email: '',
+  phone: '',
+  proffestion: '',
+
+  // Validation states
+  step2validation: 0,
+  step3validation: 0,
+  step4validation: 0,
+
+  // Complex calculation arrays
+  M_STANDARD: [],
+  M_SPIRAL: [],
+  M_MAX: [],
+  M_RAPTOR: [],
+};
+```
+
+## Action Patterns
+
+### Simple Value Updates
+
+```javascript
+changeSomeValue: (state, action) => {
+    state.someValue = action.payload
+},
+```
+
+### Conditional Logic in Reducers
+
+```javascript
+changeType: (state, action) => {
+    state.type = action.payload
+    // Reset dependent values when type changes
+    if (action.payload === 'wood') {
+        state.support_type = 'type1'
+    }
+    state.main_system = null
+},
+```
+
+### Calculated Updates
+
+```javascript
+changeTotalArea: (state, action) => {
+    state.total_area = action.payload
+    // Update dependent calculations
+    state.medium_size = Math.floor(action.payload / state.count)
+    state.sqrt = Math.floor(Math.sqrt(state.medium_size))
+},
+```
+
+### Complex Calculations
+
+```javascript
+calculateLA: state => {
+    const L = Math.sqrt(state.total_area / state.count) * 1000
+    const r = (L * 12 + L) / (state.slab_width * 12 + state.slab_width)
+
+    state.LA = r
+    state.LA_INT = Math.floor(r)
+    // ... more calculations
+},
+```
+
+### Array Filtering and Updates
+
+```javascript
+getAccesoriesByType: (state, action) => {
+    const accesories = state.accesories.filter(item => item.type === action.payload)
+    state.accesoriesForSelectedType = accesories
+},
+
+addExtraCountToProduct: (state, action) => {
+    const product = state.productsWithExtraValues.find(item => item.id === action.payload.id)
+    product.extra = action.payload.count
+},
+```
+
+## Component Integration Patterns
+
+### Hook Usage
+
+```javascript
+// Component state management
+const state = useSelector((state) => state.form);
+const dispatch = useDispatch();
+
+// Specific state selections
+const additional_accessories = useSelector(
+  (state) => state.form.additional_accessories
+);
+const support_type = useSelector((state) => state.form.support_type);
+```
+
+### Action Dispatching
+
+```javascript
+// Simple value updates
+dispatch(changeEmail(value));
+dispatch(changeType('wood'));
+
+// Complex calculations
+dispatch(calculateLA());
+dispatch(calculateSupportsCount());
+
+// Array operations
+dispatch(setProducts(productsArray));
+dispatch(addExtraCountToProduct({ id: productId, count: extraCount }));
+```
+
+## Export Patterns
+
+Always export both the slice and individual actions:
+
+```javascript
+// Export all actions
+export const {
+  changeEmail,
+  changePhone,
+  changeType,
+  calculateLA,
+  setProducts,
+  // ... all other actions
+} = formSlice.actions;
+
+// Export reducer as default
+export default formSlice.reducer;
+```
+
+## State Organization Principles
+
+### Grouped Related Data
+
+- User info: `name_surname`, `email`, `phone`, `proffestion`
+- Measurements: `total_area`, `count`, `lowest`, `highest`
+- Calculations: `LA`, `LA_INT`, `WB`, `supports_count`
+- Validation: `step2validation`, `step3validation`, etc.
+
+### System-Specific Arrays
+
+- M_STANDARD: Standard system calculations
+- M_SPIRAL: Spiral system calculations
+- M_MAX: Max system calculations
+- M_RAPTOR: Raptor/Alu system calculations
+
+### Validation State Management
+
+- Use numeric validation states (0, 1, 2, etc.)
+- Update validation after form changes
+- Reset validation when dependent fields change

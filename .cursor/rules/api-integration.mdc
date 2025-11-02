@@ -1,0 +1,383 @@
+---
+globs: *.js,*.jsx,*.ts,*.tsx
+description: API integration patterns and data fetching best practices
+---
+
+# API Integration Patterns
+
+## API Service Structure
+
+Based on [src/app/lib/api.js](mdc:src/app/lib/api.js):
+
+### Base API Configuration
+
+```javascript
+// API base URL configuration
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+
+// Common headers
+const defaultHeaders = {
+  'Content-Type': 'application/json',
+  Accept: 'application/json',
+};
+```
+
+### HTTP Client Pattern
+
+```javascript
+// Generic API client
+const apiClient = {
+  async get(endpoint) {
+    const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+      method: 'GET',
+      headers: defaultHeaders,
+    });
+
+    if (!response.ok) {
+      throw new Error(`API Error: ${response.status}`);
+    }
+
+    return response.json();
+  },
+
+  async post(endpoint, data) {
+    const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+      method: 'POST',
+      headers: defaultHeaders,
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      throw new Error(`API Error: ${response.status}`);
+    }
+
+    return response.json();
+  },
+};
+```
+
+## Backend API Endpoints
+
+Reference backend routes from [ddgro-nowy-backend/routes/api/](mdc:ddgro-nowy-backend/routes/api/):
+
+### Application Endpoints
+
+Based on [ddgro-nowy-backend/routes/api/application.js](mdc:ddgro-nowy-backend/routes/api/application.js):
+
+```javascript
+// Submit application
+const submitApplication = async (formData) => {
+  try {
+    const response = await apiClient.post('/api/application', formData);
+    return response;
+  } catch (error) {
+    console.error('Application submission failed:', error);
+    throw error;
+  }
+};
+
+// Get application preview
+const getApplicationPreview = async (id) => {
+  try {
+    const response = await apiClient.get(`/api/application/preview/${id}`);
+    return response;
+  } catch (error) {
+    console.error('Failed to fetch application preview:', error);
+    throw error;
+  }
+};
+```
+
+### Products and Accessories
+
+Based on [ddgro-nowy-backend/routes/api/products.js](mdc:ddgro-nowy-backend/routes/api/products.js) and [ddgro-nowy-backend/routes/api/accesories.js](mdc:ddgro-nowy-backend/routes/api/accesories.js):
+
+```javascript
+// Fetch products
+const fetchProducts = async () => {
+  try {
+    const response = await apiClient.get('/api/products');
+    return response.data || response;
+  } catch (error) {
+    console.error('Failed to fetch products:', error);
+    throw error;
+  }
+};
+
+// Fetch accessories
+const fetchAccessories = async () => {
+  try {
+    const response = await apiClient.get('/api/accessories');
+    return response.data || response;
+  } catch (error) {
+    console.error('Failed to fetch accessories:', error);
+    throw error;
+  }
+};
+
+// Fetch accessories by type
+const fetchAccessoriesByType = async (type) => {
+  try {
+    const response = await apiClient.get(`/api/accessories?type=${type}`);
+    return response.data || response;
+  } catch (error) {
+    console.error('Failed to fetch accessories by type:', error);
+    throw error;
+  }
+};
+```
+
+## SWR Integration
+
+Using SWR for data fetching as seen in [package.json](mdc:package.json):
+
+### Data Fetching Hooks
+
+```javascript
+import useSWR from 'swr';
+
+// Generic fetcher function
+const fetcher = (url) => fetch(url).then((res) => res.json());
+
+// Products hook
+export const useProducts = () => {
+  const { data, error, isLoading } = useSWR('/api/products', fetcher);
+
+  return {
+    products: data,
+    isLoading,
+    error,
+  };
+};
+
+// Accessories hook
+export const useAccessories = (type = null) => {
+  const url = type ? `/api/accessories?type=${type}` : '/api/accessories';
+  const { data, error, isLoading } = useSWR(url, fetcher);
+
+  return {
+    accessories: data,
+    isLoading,
+    error,
+  };
+};
+```
+
+### Conditional Data Fetching
+
+```javascript
+// Fetch data only when condition is met
+export const useConditionalData = (shouldFetch, endpoint) => {
+  const { data, error, isLoading } = useSWR(
+    shouldFetch ? endpoint : null,
+    fetcher
+  );
+
+  return { data, error, isLoading };
+};
+```
+
+## Error Handling Patterns
+
+### API Error Response Format
+
+Based on backend response patterns from [ddgro-nowy-backend/routes/api/](mdc:ddgro-nowy-backend/routes/api/):
+
+```javascript
+// Success response
+{
+    success: true,
+    data: result,
+    message: 'Operation completed successfully'
+}
+
+// Error response
+{
+    success: false,
+    error: errorMessage,
+    details: errorDetails // optional
+}
+```
+
+### Frontend Error Handling
+
+```javascript
+const handleApiCall = async (apiFunction, ...args) => {
+  try {
+    const response = await apiFunction(...args);
+
+    if (response.success === false) {
+      throw new Error(response.error || 'API call failed');
+    }
+
+    return response.data || response;
+  } catch (error) {
+    console.error('API call failed:', error);
+
+    // Handle specific error types
+    if (error.message.includes('Network')) {
+      throw new Error('Network connection failed');
+    }
+
+    throw error;
+  }
+};
+```
+
+### Component Error States
+
+```javascript
+const MyComponent = () => {
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  const loadData = async () => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const data = await fetchProducts();
+      // Handle success
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  // Render data
+};
+```
+
+## Data Transformation
+
+### Form Data Preparation
+
+```javascript
+const prepareFormData = (state) => {
+  return {
+    // User information
+    name_surname: state.name_surname,
+    email: state.email,
+    phone: state.phone,
+    profession: state.proffestion,
+
+    // Technical data
+    type: state.type,
+    total_area: parseFloat(state.total_area),
+    count: parseInt(state.count),
+
+    // Calculations
+    supports_count: state.supports_count,
+    slabs_count: state.slabs_count,
+
+    // System data
+    main_system: state.main_system,
+    support_type: state.support_type,
+
+    // Additional items
+    additional_accessories: state.additional_accessories,
+    additional_products: state.additional_products,
+
+    // Timestamp
+    created_at: new Date().toISOString(),
+  };
+};
+```
+
+### Response Data Processing
+
+```javascript
+const processApplicationResponse = (response) => {
+  return {
+    id: response.id,
+    message: response.message,
+    pdfUrl: response.pdf_url,
+    previewUrl: `/api/application/preview/${response.id}`,
+  };
+};
+```
+
+## File Upload Patterns
+
+### PDF Generation Request
+
+```javascript
+const requestPDFGeneration = async (applicationId) => {
+  try {
+    const response = await apiClient.post('/api/application/generate-pdf', {
+      application_id: applicationId,
+    });
+
+    return response.pdf_url;
+  } catch (error) {
+    console.error('PDF generation failed:', error);
+    throw error;
+  }
+};
+```
+
+### File Download
+
+```javascript
+const downloadFile = async (url, filename) => {
+  try {
+    const response = await fetch(url);
+    const blob = await response.blob();
+
+    const downloadUrl = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = downloadUrl;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(downloadUrl);
+  } catch (error) {
+    console.error('File download failed:', error);
+    throw error;
+  }
+};
+```
+
+## Performance Optimization
+
+### Request Caching
+
+```javascript
+// Cache frequently requested data
+const cache = new Map();
+
+const cachedFetch = async (url, maxAge = 300000) => {
+  // 5 minutes
+  const cached = cache.get(url);
+
+  if (cached && Date.now() - cached.timestamp < maxAge) {
+    return cached.data;
+  }
+
+  const data = await fetcher(url);
+  cache.set(url, { data, timestamp: Date.now() });
+
+  return data;
+};
+```
+
+### Request Debouncing
+
+```javascript
+import { debounce } from 'lodash';
+
+const debouncedSearch = debounce(async (query) => {
+  const results = await apiClient.get(`/api/search?q=${query}`);
+  // Handle results
+}, 300);
+```

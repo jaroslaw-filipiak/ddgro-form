@@ -1,20 +1,20 @@
 .btn {
-  @apply inline-flex items-center justify-center max-lg:w-full lg:pl-10 lg:pr-10 pt-3 lg:pt-5 lg:pb-5 pb-3 font-bold text-xl lg:text-2xl hover:opacity-90 transition-all cursor-pointer;
+    @apply inline-flex items-center justify-center max-lg:w-full lg:pl-10 lg:pr-10 pt-3 lg:pt-5 lg:pb-5 pb-3 font-bold text-xl lg:text-2xl hover:opacity-90 transition-all cursor-pointer;
 
-  &--main {
-    @apply bg-main text-white;
+    &--main {
+        @apply bg-main text-white;
 
-    &__small {
-      @apply text-base pl-6 pr-6  pt-0 pb-0 inline-flex max-w-[240px]
+        &__small {
+            @apply text-base pl-6 pr-6  pt-0 pb-0 inline-flex max-w-[240px]
       2xl:pl-16 2xl:pr-16 2xl:pt-5 2xl:pb-5 2xl:text-2xl;
+        }
     }
-  }
 
-  &--circle {
-    @apply rounded-full w-20 h-20 bg-main text-white text-2xl lg:text-4xl hidden xl:flex;
-  }
+    &--circle {
+        @apply rounded-full w-20 h-20 bg-main text-white text-2xl lg:text-4xl hidden xl:flex;
+    }
 
-  &--rounded {
-    @apply rounded-full;
-  }
+    &--rounded {
+        @apply rounded-full;
+    }
 }

@@ -1,0 +1,290 @@
+---
+globs: *.js,*.jsx,*.ts,*.tsx
+description: Form structure, validation, and multi-step form patterns
+---
+
+# Form Structure and Validation Patterns
+
+## Multi-Step Form Architecture
+
+Based on [src/components/form/steps/](mdc:src/components/form/steps/) structure:
+
+### Step Component Pattern
+
+Follow the pattern established in [src/components/form/steps/Step7.js](mdc:src/components/form/steps/Step7.js):
+
+```javascript
+export default function StepX({ setFormAsideVisibility }) {
+    const t = useTranslations()
+    const initialized = useRef(false)
+    const state = useSelector(state => state.form)
+    const dispatch = useDispatch()
+
+    // Local state for step-specific data
+    const [localState, setLocalState] = useState([])
+
+    // Initialization effect
+    useEffect(() => {
+        if (!initialized.current) {
+            initialized.current = true
+            // Initialize step data
+        }
+    }, [])
+
+    return (
+        // Step JSX
+    )
+}
+```
+
+### Form State Management
+
+Use Redux for form state as defined in [src/store/slices/formSlice.js](mdc:src/store/slices/formSlice.js):
+
+#### Basic Form Fields
+
+```javascript
+// User information
+name_surname: '',
+email: '',
+phone: '',
+proffestion: '',
+
+// Form configuration
+type: '', // 'slab' or 'wood'
+support_type: '', // 'type1', 'type2', 'type3', 'type4'
+main_system: '', // 'spiral', 'standard', 'max', 'raptor'
+```
+
+#### Measurement Fields
+
+```javascript
+// Area and dimensions
+total_area: '',
+count: '',
+lowest: '',
+highest: '',
+
+// Slab specifications
+slab_width: '',
+slab_height: '',
+slab_thickness: '',
+
+// System measurements
+distance_between_joists: '',
+distance_between_supports_under_the_joist: '',
+joist_height: '',
+terrace_thickness: '',
+```
+
+## Validation Patterns
+
+### Step-Based Validation
+
+```javascript
+// Validation state in Redux
+step2validation: 0,
+step3validation: 0,
+step4validation: 0,
+
+// Validation actions
+setStep2Validation: (state, action) => {
+    state.step2validation = action.payload
+},
+```
+
+### Field Validation
+
+```javascript
+// Validate required fields
+const validateStep = () => {
+  let isValid = true;
+
+  if (!state.total_area) isValid = false;
+  if (!state.count) isValid = false;
+
+  dispatch(setStepValidation(isValid ? 1 : 0));
+  return isValid;
+};
+```
+
+### Conditional Validation
+
+```javascript
+// Type-dependent validation
+const validateByType = () => {
+  if (state.type === 'wood') {
+    return state.support_type === 'type1' && state.joist_height;
+  } else if (state.type === 'slab') {
+    return state.slab_thickness && state.slab_width;
+  }
+};
+```
+
+## Complex Calculations Pattern
+
+### Mathematical Calculations
+
+```javascript
+// Area and support calculations
+calculateLA: state => {
+    const L = Math.sqrt(state.total_area / state.count) * 1000
+    const r = (L * 12 + L) / (state.slab_width * 12 + state.slab_width)
+
+    state.LA = r
+    state.LA_INT = Math.floor(r)
+    // ... more calculations
+},
+
+calculateSupportsCount: (state, action) => {
+    if (state.support_type === 'type1') {
+        const totalSupports = (state.NO_PAYERS_PER_ROW + 1) * (state.NO_PAYERS_PER_COLUMN + 1)
+        state.supports_count = totalSupports * state.count
+    }
+    // ... other support type calculations
+},
+```
+
+### Matrix Generation Pattern
+
+```javascript
+// System-specific matrices
+const generateMatrix = (system) => {
+  const sections = state[`sections${system}`];
+  const avgPerSection = state[`count_in_each_section_${system.toLowerCase()}`];
+
+  // Matrix calculation logic
+  const matrix = [];
+  // ... calculation logic
+
+  dispatch(setMatrix(matrix));
+};
+```
+
+## Product and Accessory Management
+
+### Dynamic Product Loading
+
+```javascript
+// Load products and accessories
+useEffect(() => {
+  const loadData = async () => {
+    try {
+      const products = await fetchProducts();
+      const accessories = await fetchAccessories();
+
+      dispatch(setProducts(products));
+      dispatch(setAccesories(accessories));
+    } catch (error) {
+      console.error('Failed to load data:', error);
+    }
+  };
+
+  loadData();
+}, []);
+```
+
+### Type-Based Filtering
+
+```javascript
+// Filter accessories by type
+dispatch(getAccesoriesByType(state.type));
+
+// Add extra count to products
+const handleExtraCount = (productId, count) => {
+  dispatch(addExtraCountToProduct({ id: productId, count }));
+};
+```
+
+## Input Handling Patterns
+
+### Debounced Input Updates
+
+```javascript
+const handleInputChange = useCallback(
+  debounce((value, actionCreator) => {
+    dispatch(actionCreator(value));
+  }, 300),
+  [dispatch]
+);
+```
+
+### Linked Field Updates
+
+```javascript
+// Fields that update together
+const handleSlabWidthChange = (value) => {
+  dispatch(changeSlabWidth(value));
+  // Automatically updates distance_between_supports_under_the_joist
+};
+
+const handleDistanceChange = (value) => {
+  dispatch(changeDistanceBetweenSupportsUnderTheJoist(value));
+  // Automatically updates slab_width
+};
+```
+
+## Form Navigation
+
+### Step Progression
+
+```javascript
+const canProceedToNext = () => {
+  return state[`step${currentStep}validation`] === 1;
+};
+
+const handleNextStep = () => {
+  if (canProceedToNext()) {
+    setCurrentStep((prev) => prev + 1);
+  }
+};
+```
+
+### Form Completion
+
+```javascript
+const handleFormSubmit = async () => {
+  try {
+    const formData = {
+      ...state,
+      timestamp: new Date().toISOString(),
+    };
+
+    const response = await submitForm(formData);
+    // Handle success
+  } catch (error) {
+    // Handle error
+  }
+};
+```
+
+## Error Handling
+
+### Field Error States
+
+```javascript
+const [errors, setErrors] = useState({});
+
+const validateField = (fieldName, value) => {
+  const newErrors = { ...errors };
+
+  if (!value) {
+    newErrors[fieldName] = t('validation.required');
+  } else {
+    delete newErrors[fieldName];
+  }
+
+  setErrors(newErrors);
+};
+```
+
+### Form-Level Error Handling
+
+```javascript
+const [formError, setFormError] = useState(null);
+
+const handleSubmitError = (error) => {
+  setFormError(t('form.submitError'));
+  console.error('Form submission failed:', error);
+};
+```
