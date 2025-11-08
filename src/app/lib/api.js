@@ -27,7 +27,7 @@ export async function updateProduct(id, productData) {
 /*
  *
  * AKCESORIA
- *
+ * to jest deprecated, akcesoria pobieram z kolekcji produktów po prefixie AKCW-
  */
 
 export async function fetchAccesories() {
