@@ -13,9 +13,10 @@
   # Serve existing files and directories as they are
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME} !-l
   
   # Route everything else to index.html for client-side routing
-  RewriteRule ^(.*)$ /index.html [L,QSA]
+  RewriteRule ^(.*)$ index.html [L]
 </IfModule>
 
 # Gzip Compression
@@ -97,6 +98,9 @@
 # Disable directory browsing
 Options -Indexes
 
+# Enable FollowSymLinks if needed
+Options +FollowSymLinks
+
 # Error Pages (optional)
-ErrorDocument 404 /404.html
+# ErrorDocument 404 /404.html
 
