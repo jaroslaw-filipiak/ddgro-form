@@ -1,11 +1,4 @@
 Options -MultiViews
 RewriteEngine On
-
-# Remove trailing slash
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)/$ /$1 [R=301,L]
-
-# Route all non-file requests to index.html
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^ index.html [QSA,L]
