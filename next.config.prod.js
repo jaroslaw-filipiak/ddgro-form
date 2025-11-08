@@ -19,6 +19,7 @@ const nextConfig = {
     unoptimized: process.env.NODE_ENV === 'production',
   },
   output: 'export',
+  trailingSlash: false,
 };
 
 module.exports = nextConfig;
