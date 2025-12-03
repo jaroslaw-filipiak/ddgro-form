@@ -303,26 +303,12 @@ export default function Step7({ setFormAsideVisibility }) {
           return '35-65';
         case item.wys_mm >= 65 && item.wys_mm <= 94:
           return '65-95';
-        case item.wys_mm >= 95 && item.wys_mm <= 124:
-          return '95-125';
-        case item.wys_mm >= 125 && item.wys_mm <= 154:
-          return '125-155';
-        case item.wys_mm >= 155 && item.wys_mm <= 184:
-          return '155-185';
-        case item.wys_mm >= 185 && item.wys_mm <= 214:
-          return '185-215';
-        case item.wys_mm >= 215 && item.wys_mm <= 245:
-          return '215-245';
-        case item.wys_mm >= 246 && item.wys_mm <= 319:
-          return '220-320';
-        case item.wys_mm >= 320 && item.wys_mm <= 420:
-          return '320-420';
-        case item.wys_mm >= 421 && item.wys_mm <= 549:
-          return '350-550';
-        case item.wys_mm >= 550 && item.wys_mm <= 749:
-          return '550-750';
-        case item.wys_mm >= 750 && item.wys_mm <= 950:
-          return '750-950';
+        case item.wys_mm >= 95 && item.wys_mm <= 119:
+          return '90-120';
+        // Produkty Raptor kończą się na zakresie 90-120mm dla drewna
+        // Dla wysokości > 120mm zwracam po prostu pusty string (brak produktów Raptor w bazie danych) lub ewentulanie reczne zrobić podstawke innych produktów
+        default:
+          return '';
       }
     };
 
@@ -353,8 +339,9 @@ export default function Step7({ setFormAsideVisibility }) {
     |
     */
 
-    // M_STANDARD
-    const result = standardMatrix.map((item) => {
+    // M_STANDARD - get fresh matrix data
+    const matrixData = M_STANDARD();
+    const result = matrixData.map((item) => {
       if (item.wys_mm > min && item.wys_mm < max) {
         return {
           ...item,
@@ -414,9 +401,9 @@ export default function Step7({ setFormAsideVisibility }) {
     |
     */
 
-    // M_SPIRAL
-    // !important ...Matrix.map - change for every handle function
-    const result = spiralMatrix.map((item) => {
+    // M_SPIRAL - get fresh matrix data
+    const matrixData = M_SPIRAL();
+    const result = matrixData.map((item) => {
       if (item.wys_mm > min && item.wys_mm < max) {
         return {
           ...item,
@@ -476,9 +463,9 @@ export default function Step7({ setFormAsideVisibility }) {
     |
     */
 
-    // M_MAX
-    // !important ...Matrix.map - change for every handle function
-    const result = maxMatrix.map((item) => {
+    // M_MAX - get fresh matrix data
+    const matrixData = M_MAX();
+    const result = matrixData.map((item) => {
       if (item.wys_mm > min && item.wys_mm < max) {
         return {
           ...item,
@@ -538,9 +525,9 @@ export default function Step7({ setFormAsideVisibility }) {
     |
     */
 
-    // M_RAPTOR
-    // !important ...Matrix.map - change for every handle function
-    const result = raptorMatrix.map((item) => {
+    // M_RAPTOR - get fresh matrix data
+    const matrixData = M_RAPTOR();
+    const result = matrixData.map((item) => {
       if (item.wys_mm > min && item.wys_mm < max) {
         return {
           ...item,
@@ -634,7 +621,8 @@ export default function Step7({ setFormAsideVisibility }) {
     dispatch(calculateSupportsCount());
 
     // !!!! IMPORTANT <====
-    matrixCalculate();
+    // Calculate matrices and dispatch to Redux
+    handleCalculate();
     // !!!! IMPORTANT <====
   }
 
