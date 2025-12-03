@@ -11,7 +11,7 @@ export default function HomePage() {
     <main className='container min-h-screen'>
       <Form />
       <footer className='text-xs py-3 text-center opacity-40'>
-        ver: 2.0.0
+        ver: 2.1.0
       </footer>
     </main>
   );
