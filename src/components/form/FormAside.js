@@ -122,7 +122,7 @@ export default function FormAside({ setFormAsideVisibility }) {
       // =============================
 
       sections_raptor: state.sectionsRaptor,
-      count_in_each_section_max: state.count_in_each_section_raptor,
+      count_in_each_section_raptor: state.count_in_each_section_raptor,
       m_raptor: state.M_RAPTOR,
       m_raptor_order: state.M_RAPTOR_ORDER,
 

@@ -108,13 +108,9 @@ export default function Step7({ setFormAsideVisibility }) {
 
     const calculateRange = (item) => {
       switch (true) {
-        case item.wys_mm >= 10 && item.wys_mm <= 16:
-          return '10-17';
-        case item.wys_mm >= 17 && item.wys_mm <= 29:
-          return '17-30';
-        case item.wys_mm >= 30 && item.wys_mm <= 45:
+        case item.wys_mm >= 30 && item.wys_mm <= 44:
           return '30-45';
-        case item.wys_mm >= 46 && item.wys_mm <= 69:
+        case item.wys_mm >= 45 && item.wys_mm <= 69:
           return '45-70';
         case item.wys_mm >= 70 && item.wys_mm <= 119:
           return '70-120';
@@ -124,12 +120,9 @@ export default function Step7({ setFormAsideVisibility }) {
           return '220-320';
         case item.wys_mm >= 320 && item.wys_mm <= 420:
           return '320-420';
-        case item.wys_mm >= 421 && item.wys_mm <= 549:
-          return '350-550';
-        case item.wys_mm >= 550 && item.wys_mm <= 749:
-          return '550-750';
-        case item.wys_mm >= 750 && item.wys_mm <= 950:
-          return '750-950';
+        // Standard ranges: 30-45, 45-70, 70-120, 120-220, 220-320, 320-420 mm
+        default:
+          return '';
       }
     };
 
@@ -188,19 +181,7 @@ export default function Step7({ setFormAsideVisibility }) {
           return '170-190';
         case item.wys_mm >= 190 && item.wys_mm <= 210:
           return '190-210';
-        case item.wys_mm >= 211 && item.wys_mm <= 219:
-          return '120-220';
-        case item.wys_mm >= 220 && item.wys_mm <= 319:
-          return '220-320';
-        case item.wys_mm >= 320 && item.wys_mm <= 420:
-          return '320-420';
-        case item.wys_mm >= 421 && item.wys_mm <= 549:
-          return '350-550';
-        case item.wys_mm >= 550 && item.wys_mm <= 749:
-          return '550-750';
-        case item.wys_mm >= 750 && item.wys_mm <= 950:
-          return '750-950';
-
+        // Spiral ranges: 10-17, 17-30, 30-50, 50-70, 70-90, 90-110, 110-130, 130-150, 150-170, 170-190, 190-210 mm
         default:
           return '';
       }
@@ -240,12 +221,6 @@ export default function Step7({ setFormAsideVisibility }) {
 
     const calculateRange = (item) => {
       switch (true) {
-        case item.wys_mm >= 10 && item.wys_mm <= 16:
-          return '10-17';
-        case item.wys_mm >= 17 && item.wys_mm <= 29:
-          return '17-30';
-        case item.wys_mm >= 30 && item.wys_mm <= 44:
-          return '30-50';
         case item.wys_mm >= 45 && item.wys_mm <= 74:
           return '45-75';
         case item.wys_mm >= 75 && item.wys_mm <= 149:
@@ -258,6 +233,9 @@ export default function Step7({ setFormAsideVisibility }) {
           return '550-750';
         case item.wys_mm >= 750 && item.wys_mm <= 950:
           return '750-950';
+        // Max ranges: 45-75, 75-150, 150-350, 350-550, 550-750, 750-950 mm
+        default:
+          return '';
       }
     };
 
@@ -303,10 +281,17 @@ export default function Step7({ setFormAsideVisibility }) {
           return '35-65';
         case item.wys_mm >= 65 && item.wys_mm <= 94:
           return '65-95';
-        case item.wys_mm >= 95 && item.wys_mm <= 119:
-          return '90-120';
-        // Produkty Raptor kończą się na zakresie 90-120mm dla drewna
-        // Dla wysokości > 120mm zwracam po prostu pusty string (brak produktów Raptor w bazie danych) lub ewentulanie reczne zrobić podstawke innych produktów
+        case item.wys_mm >= 95 && item.wys_mm <= 124:
+          return '95-125';
+        case item.wys_mm >= 125 && item.wys_mm <= 154:
+          return '125-155';
+        case item.wys_mm >= 155 && item.wys_mm <= 184:
+          return '155-185';
+        case item.wys_mm >= 185 && item.wys_mm <= 214:
+          return '185-215';
+        case item.wys_mm >= 215 && item.wys_mm <= 245:
+          return '215-245';
+        // Produkty Raptor dla drewna: 15-35, 35-65, 65-95, 95-125, 125-155, 155-185, 185-215, 215-245 mm
         default:
           return '';
       }
